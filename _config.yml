@@ -1,0 +1,28 @@
+title: "ODS-E Documentation"
+remote_theme: "just-the-docs/just-the-docs"
+
+# Search configuration
+search_enabled: true
+heading_anchors: true
+
+# Sidebar navigation
+nav_external_links:
+  - title: Asoba Website
+    url: https://asoba.co
+    hide_icon: false
+  - title: GitHub
+    url: https://github.com/AsobaCloud/odse
+    hide_icon: false
+
+# Sidebar styling
+color_scheme: light
+
+# Table of contents settings
+toc:
+  enabled: true
+  h_min: 2
+  h_max: 3
+
+# Production settings
+baseurl: ""
+url: "https://opendataschema.energy"

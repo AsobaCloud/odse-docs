@@ -1,0 +1,42 @@
+---
+layout: null
+---
+[
+{%- assign comma = "" -%}
+{%- for page in site.pages -%}
+  {%- assign page_ext = page.path | split: "." | last -%}
+  {%- unless page_ext == "md" or page_ext == "html" -%}{%- continue -%}{%- endunless -%}
+  {%- if page.path == "search-index.json" or page.path contains "404" -%}{%- continue -%}{%- endif -%}
+  {%- if page.path contains "_" -%}{%- continue -%}{%- endif -%}
+  {%- assign cleaned_content = page.content | strip_html | normalize_whitespace | truncatewords: 80 -%}
+  {%- assign url_parts = page.url | split: "/" -%}
+  {%- assign real_parts = "" | split: "" -%}
+  {%- for part in url_parts -%}
+    {%- if part != "" and part != "index.html" -%}
+      {%- assign stripped = part | remove: ".html" -%}
+      {%- assign real_parts = real_parts | push: stripped -%}
+    {%- endif -%}
+  {%- endfor -%}
+  {%- assign section = real_parts[0] | default: "Home" | replace: "-", " " | capitalize -%}
+  {%- assign hierarchy = "" -%}
+  {%- if real_parts.size > 1 -%}
+    {%- assign h_parts = "" | split: "" -%}
+    {%- for part in real_parts -%}
+      {%- unless forloop.last -%}
+        {%- assign formatted = part | replace: "-", " " | capitalize -%}
+        {%- assign h_parts = h_parts | push: formatted -%}
+      {%- endunless -%}
+    {%- endfor -%}
+    {%- assign hierarchy = h_parts | join: " > " -%}
+  {%- endif -%}
+  {%- assign page_title = page.title | default: page.name | replace: ".md", "" | replace: ".html", "" | replace: "-", " " -%}
+{{ comma }}{
+    "title": {{ page_title | jsonify }},
+    "url": {{ page.url | jsonify }},
+    "content": {{ cleaned_content | jsonify }},
+    "hierarchy": {% if hierarchy != "" %}{{ hierarchy | jsonify }}{% else %}null{% endif %},
+    "section": {{ section | jsonify }}
+  }
+  {%- assign comma = "," -%}
+{%- endfor -%}
+]

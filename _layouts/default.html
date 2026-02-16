@@ -1,0 +1,312 @@
+---
+layout: default
+---
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{{ page.title }} - {{ site.title }}</title>
+  <!-- Favicon -->
+  <link rel="icon" type="image/png" sizes="32x32" href="{{ site.baseurl }}/assets/images/brand/favicon.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="{{ site.baseurl }}/assets/images/brand/favicon.png">
+  <link rel="shortcut icon" href="{{ site.baseurl }}/assets/images/brand/favicon.png">
+  <link rel="apple-touch-icon" href="{{ site.baseurl }}/assets/images/brand/favicon.png">
+  <meta name="theme-color" content="#4551bf">
+  <link rel="stylesheet" href="{{ site.baseurl }}/assets/css/styles.css">
+  <script src="{{ site.baseurl }}/assets/js/search.js"></script>
+  <!-- Mermaid for rendering fenced diagrams -->
+  <script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
+</head>
+<body>
+  <header class="header-bar">
+    <div class="branding">
+      <a href="{{ site.baseurl }}/">
+        <img src="{{ site.baseurl }}/assets/images/brand/logo.png" alt="Asoba">
+      </a>
+      <span class="site-title">ODS-E Documentation</span>
+    </div>
+    <div class="search-container-top">
+      <input type="text" id="search-input" placeholder="Search ODS-E Docs">
+      <div id="search-results" class="search-results"></div>
+    </div>
+    <div class="top-links">
+      <a href="https://asoba.co/">Asoba</a>
+      <a href="https://github.com/AsobaCloud/odse">GitHub</a>
+      <a href="https://asoba.co/contact-us">Contact</a>
+    </div>
+  </header>
+
+  <!-- NAV START -->
+  <div class="sidebar">
+    <nav class="side-nav">
+      <ul class="nav-list">
+        <!-- Home -->
+        <li class="nav-item">
+          <div class="nav-header">
+            <a href="{{ site.baseurl }}/">Home</a>
+          </div>
+        </li>
+
+        <!-- Getting Started -->
+        <li class="nav-item">
+          <div class="nav-header">
+            <a href="{{ site.baseurl }}/get-started">Getting Started</a>
+          </div>
+        </li>
+
+        <!-- Schema Reference -->
+        <li class="nav-item">
+          <div class="nav-header">
+            <a href="{{ site.baseurl }}/schemas/overview">Schema Reference</a>
+            <span class="toggle-icon">+</span>
+          </div>
+          <ul class="sub-menu">
+            <li><a href="{{ site.baseurl }}/schemas/overview">Overview</a></li>
+            <li><a href="{{ site.baseurl }}/schemas/energy-timeseries">Energy Timeseries</a></li>
+            <li><a href="{{ site.baseurl }}/schemas/asset-metadata">Asset Metadata</a></li>
+          </ul>
+        </li>
+
+        <!-- Transforms -->
+        <li class="nav-item">
+          <div class="nav-header">
+            <a href="{{ site.baseurl }}/transforms/overview">Transforms</a>
+            <span class="toggle-icon">+</span>
+          </div>
+          <ul class="sub-menu">
+            <li><a href="{{ site.baseurl }}/transforms/overview">Overview</a></li>
+            <li><a href="{{ site.baseurl }}/transforms/supported-oems">Supported OEMs</a></li>
+          </ul>
+        </li>
+
+        <!-- Validation -->
+        <li class="nav-item">
+          <div class="nav-header">
+            <a href="{{ site.baseurl }}/validation/overview">Validation</a>
+            <span class="toggle-icon">+</span>
+          </div>
+          <ul class="sub-menu">
+            <li><a href="{{ site.baseurl }}/validation/overview">Overview</a></li>
+            <li><a href="{{ site.baseurl }}/validation/schema-validation">Schema Validation</a></li>
+            <li><a href="{{ site.baseurl }}/validation/semantic-validation">Semantic Validation</a></li>
+          </ul>
+        </li>
+
+        <!-- Building Integration -->
+        <li class="nav-item">
+          <div class="nav-header">
+            <a href="{{ site.baseurl }}/building-integration/overview">Building Integration</a>
+            <span class="toggle-icon">+</span>
+          </div>
+          <ul class="sub-menu">
+            <li><a href="{{ site.baseurl }}/building-integration/overview">Overview</a></li>
+            <li><a href="{{ site.baseurl }}/building-integration/comstock-resstock">ComStock/ResStock Guide</a></li>
+          </ul>
+        </li>
+
+        <!-- Contributing -->
+        <li class="nav-item">
+          <div class="nav-header">
+            <a href="https://github.com/AsobaCloud/odse/blob/main/CONTRIBUTING.md">Contributing</a>
+          </div>
+        </li>
+      </ul>
+    </nav>
+  </div>
+  <!-- NAV END -->
+
+  <div class="content">
+    {{ content }}
+  </div>
+
+  <nav class="page-toc" id="page-toc">
+    <h4>On this page</h4>
+    <ul id="toc-list"></ul>
+  </nav>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', function () {
+      var tocNav = document.getElementById('page-toc');
+      var tocList = document.getElementById('toc-list');
+      var headings = document.querySelectorAll('.content h2, .content h3');
+
+      if (headings.length < 2) {
+        tocNav.style.display = 'none';
+        return;
+      }
+
+      headings.forEach(function (heading) {
+        if (!heading.id) return;
+        var li = document.createElement('li');
+        if (heading.tagName === 'H3') {
+          li.setAttribute('data-level', '3');
+        }
+        var a = document.createElement('a');
+        a.href = '#' + heading.id;
+        a.textContent = heading.textContent.replace(/^#\s*/, '');
+        li.appendChild(a);
+        tocList.appendChild(li);
+      });
+
+      var tocLinks = tocList.querySelectorAll('a');
+
+      function updateActive() {
+        var current = null;
+        headings.forEach(function (heading) {
+          if (heading.getBoundingClientRect().top <= 100) {
+            current = heading;
+          }
+        });
+        tocLinks.forEach(function (link) {
+          link.classList.remove('active');
+          if (current && link.getAttribute('href') === '#' + current.id) {
+            link.classList.add('active');
+          }
+        });
+      }
+
+      window.addEventListener('scroll', updateActive);
+      updateActive();
+    });
+  </script>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      const currentPath = window.location.pathname;
+
+      // Handle main navigation toggles
+      const toggleIcons = document.querySelectorAll('.toggle-icon');
+
+      toggleIcons.forEach(icon => {
+        icon.addEventListener('click', function(e) {
+          e.preventDefault();
+          const navItem = this.closest('.nav-item');
+          const subMenu = navItem.querySelector('.sub-menu');
+
+          if (subMenu) {
+            const isActive = subMenu.classList.contains('active');
+            subMenu.classList.toggle('active');
+            subMenu.style.display = isActive ? 'none' : 'block';
+            this.classList.toggle('active');
+            this.textContent = isActive ? '+' : '\u2212';
+          }
+        });
+      });
+
+      // Handle sub-category toggles
+      const subToggleIcons = document.querySelectorAll('.sub-toggle-icon');
+
+      subToggleIcons.forEach(icon => {
+        icon.addEventListener('click', function(e) {
+          e.preventDefault();
+          const navSubsection = this.closest('.nav-subsection');
+          const subSubMenu = navSubsection.querySelector('.sub-sub-menu');
+
+          if (subSubMenu) {
+            const isActive = subSubMenu.classList.contains('active');
+            subSubMenu.classList.toggle('active');
+            subSubMenu.style.display = isActive ? 'none' : 'block';
+            this.classList.toggle('active');
+            this.textContent = isActive ? '+' : '\u2212';
+          }
+        });
+      });
+
+      // Auto-expand current section
+      document.querySelectorAll('.nav-header a, .sub-nav-header a').forEach(link => {
+        const href = link.getAttribute('href');
+        if (!href || href.startsWith('http')) return;
+        const linkPath = href.split('#')[0].replace(/\/$/, '') || '/';
+        const currentPathClean = currentPath.replace(/\/$/, '') || '/';
+
+        if (currentPathClean === linkPath || currentPathClean.startsWith(linkPath + '/')) {
+          link.classList.add('active');
+
+          let parent = link.closest('.nav-item, .nav-subsection');
+          while (parent) {
+            const subMenu = parent.querySelector('.sub-menu, .sub-sub-menu');
+            const toggleIcon = parent.querySelector('.toggle-icon, .sub-toggle-icon');
+
+            if (subMenu) {
+              subMenu.classList.add('active');
+              subMenu.style.display = 'block';
+            }
+
+            if (toggleIcon) {
+              toggleIcon.classList.add('active');
+              toggleIcon.textContent = '\u2212';
+            }
+
+            parent = parent.parentElement.closest('.nav-item, .nav-subsection');
+          }
+        }
+      });
+    });
+  </script>
+
+  <!-- Initialize Mermaid -->
+  <script>
+    document.addEventListener('DOMContentLoaded', function () {
+      const candidates = document.querySelectorAll('pre code.language-mermaid, pre code.lang-mermaid, code.mermaid');
+      candidates.forEach(function (code) {
+        const mermaidText = code.textContent;
+        const container = document.createElement('div');
+        container.className = 'mermaid';
+        container.textContent = mermaidText;
+        const pre = code.closest('pre');
+        if (pre && pre.parentNode) {
+          pre.parentNode.replaceChild(container, pre);
+        }
+      });
+
+      if (window.mermaid && typeof window.mermaid.initialize === 'function') {
+        mermaid.initialize({ startOnLoad: true, theme: 'default', securityLevel: 'loose' });
+      }
+    });
+  </script>
+
+  <!-- Copy-to-clipboard for code blocks -->
+  <script>
+    document.addEventListener('DOMContentLoaded', function () {
+      document.querySelectorAll('pre code').forEach(function (block) {
+        var button = document.createElement('button');
+        button.textContent = 'Copy';
+        button.style.cssText = 'position:absolute;top:10px;right:10px;padding:5px 10px;background:var(--primary-blue);color:white;border:none;border-radius:4px;font-size:0.8rem;cursor:pointer;opacity:0.8;';
+        block.parentElement.style.position = 'relative';
+        block.parentElement.appendChild(button);
+        button.addEventListener('click', function () {
+          navigator.clipboard.writeText(block.textContent).then(function () {
+            button.textContent = 'Copied!';
+            setTimeout(function () { button.textContent = 'Copy'; }, 2000);
+          });
+        });
+      });
+    });
+  </script>
+
+  <style>
+    .sub-nav-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 8px 0;
+      font-weight: 600;
+      font-size: 0.9em;
+      color: #4551bf;
+      cursor: pointer;
+    }
+    .sub-nav-header:hover { background-color: #f8f9fa; }
+    .sub-toggle-icon { font-size: 0.8em; color: #666; margin-left: auto; }
+    .sub-sub-menu { display: none; margin-left: 15px; border-left: 1px solid #e0e0e0; padding-left: 10px; }
+    .sub-sub-menu li { margin: 5px 0; }
+    .sub-sub-menu a { font-size: 12px; color: #666; text-decoration: none; display: block; padding: 4px 0; }
+    .sub-sub-menu a:hover { color: #4551bf; background-color: #f8f9fa; }
+    .nav-header a { font-weight: 700; font-size: 14px; }
+    @media (max-width: 768px) {
+      .sub-sub-menu { margin-left: 10px; padding-left: 5px; }
+    }
+  </style>
+</body>
+</html>

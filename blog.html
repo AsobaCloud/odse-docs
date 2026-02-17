@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ODS-E Blog</title>
+  <link rel="icon" type="image/png" sizes="32x32" href="/assets/images/brand/favicon.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/assets/images/brand/favicon.png">
+  <link rel="shortcut icon" href="/assets/images/brand/favicon.png">
+  <link rel="apple-touch-icon" href="/assets/images/brand/favicon.png">
+  <meta name="theme-color" content="#4551bf">
+  <link rel="stylesheet" href="/assets/css/styles.css">
+  <script src="/assets/js/search.js"></script>
+  <style>
+    .blog-page {
+      max-width: 980px;
+      margin: 0 auto;
+      padding: 128px 24px 56px;
+    }
+
+    .blog-hero {
+      margin-bottom: 36px;
+      border-bottom: 1px solid #e8eaf2;
+      padding-bottom: 24px;
+    }
+
+    .blog-hero h1 {
+      font-size: 2.4rem;
+      line-height: 1.2;
+      margin-bottom: 10px;
+      color: #111827;
+    }
+
+    .blog-hero p {
+      color: #4b5563;
+      max-width: 760px;
+      font-size: 1.05rem;
+    }
+
+    .blog-list {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 14px;
+      margin-top: 6px;
+    }
+
+    .blog-card {
+      display: block;
+      border: 1px solid #e5e7eb;
+      border-radius: 12px;
+      padding: 18px 20px;
+      background: #fff;
+      transition: border-color 0.2s ease, box-shadow 0.2s ease;
+      color: inherit;
+    }
+
+    .blog-card:hover {
+      border-color: #4551bf;
+      box-shadow: 0 6px 24px rgba(69, 81, 191, 0.12);
+    }
+
+    .blog-card h2 {
+      font-size: 1.2rem;
+      line-height: 1.35;
+      margin-bottom: 8px;
+      color: #111827;
+    }
+
+    .blog-meta {
+      font-size: 0.92rem;
+      color: #4f46e5;
+      font-weight: 600;
+      margin-bottom: 8px;
+    }
+
+    .blog-card p {
+      color: #4b5563;
+      font-size: 0.98rem;
+      margin: 0;
+    }
+
+    @media (max-width: 900px) {
+      .blog-page {
+        padding-top: 114px;
+      }
+
+      .blog-hero h1 {
+        font-size: 2rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header class="header-bar">
+    <div class="branding">
+      <a href="/docs/">
+        <img src="/assets/images/brand/logo.png" alt="Asoba">
+      </a>
+      <span class="site-title">ODS-E Documentation</span>
+    </div>
+    <div class="search-container-top">
+      <input type="text" id="search-input" placeholder="Search ODS-E Docs">
+      <div id="search-results" class="search-results"></div>
+    </div>
+    <div class="top-links">
+      <a href="https://opendataschema.energy/blog.html">Blog</a>
+      <a href="https://github.com/AsobaCloud/odse">GitHub</a>
+      <a href="https://asoba.co/contact-us">Contact</a>
+    </div>
+  </header>
+
+  <main class="blog-page">
+    <section class="blog-hero">
+      <h1>ODS-E Blog</h1>
+      <p>Perspectives and practical guidance on data interoperability, grid intelligence, and outcomes for operators, engineers, and finance teams.</p>
+    </section>
+
+    <section class="blog-list" aria-label="Blog articles">
+      <a class="blog-card" href="/articles/predictive-intelligence-case-studies-that-beat-the-status-quo.html">
+        <div class="blog-meta">Target audience: Heads of Engineering / O&amp;M</div>
+        <h2>Predictive Intelligence Case Studies That Beat the Status Quo</h2>
+        <p>Placeholder article page.</p>
+      </a>
+
+      <a class="blog-card" href="/articles/from-fragmented-scada-to-unified-intelligence.html">
+        <div class="blog-meta">Target audience: Data/SCADA Engineers</div>
+        <h2>From Fragmented SCADA to Unified Intelligence</h2>
+        <p>Placeholder article page.</p>
+      </a>
+
+      <a class="blog-card" href="/articles/portfolio-outcomes-finance-and-risk-benefits-of-esums.html">
+        <div class="blog-meta">Target audience: CFO / Finance</div>
+        <h2>Portfolio Outcomes: Finance &amp; Risk Benefits of eSUMS</h2>
+        <p>Placeholder article page.</p>
+      </a>
+
+      <a class="blog-card" href="/articles/om-playbook-scheduling-and-fault-detection-with-esums.html">
+        <div class="blog-meta">Target audience: Head of O&amp;M / Maintenance Leads</div>
+        <h2>O&amp;M Playbook: Scheduling &amp; Fault Detection with eSUMS</h2>
+        <p>Placeholder article page.</p>
+      </a>
+
+      <a class="blog-card" href="/articles/why-data-completeness-intelligence-matters-in-south-africa.html">
+        <div class="blog-meta">Target audience: Sustainability / Carbon Reporting</div>
+        <h2>Why Data Completeness Intelligence Matters in South Africa</h2>
+        <p>Placeholder article page.</p>
+      </a>
+
+      <a class="blog-card" href="/articles/edge-intelligence-in-unstable-connectivity-environments.html">
+        <div class="blog-meta">Target audience: Engineering / Operations in frontier networks</div>
+        <h2>Edge Intelligence in Unstable Connectivity Environments</h2>
+        <p>Placeholder article page.</p>
+      </a>
+
+      <a class="blog-card" href="/articles/unified-intelligence-for-multi-stakeholder-coordination.html">
+        <div class="blog-meta">Target audience: IPP / Owner / O&amp;M / Insurer</div>
+        <h2>Unified Intelligence for Multi-Stakeholder Coordination</h2>
+        <p>Placeholder article page.</p>
+      </a>
+    </section>
+  </main>
+</body>
+</html>

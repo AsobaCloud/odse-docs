@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ODSE in Practice: A 7-Day Multi-OEM Integration Sprint - ODS-E Blog</title>
+  <meta name="description" content="A day-by-day implementation sprint for integrating multiple OEM feeds into an ODSE-compliant pipeline.">
+  <link rel="icon" type="image/x-icon" href="../favicon.ico">
+  <link rel="icon" type="image/png" sizes="32x32" href="../Artboard-7.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="../Artboard-7.png">
+  <link rel="stylesheet" href="../includes/common.css">
+  <style>
+    :root {
+      --primary-black: #000000;
+      --primary-blue: #455BF1;
+      --accent-blue: #3748c8;
+      --text-dark: #333;
+      --text-light: #4D4D4D;
+      --white: #FFFFFF;
+      --border-grey: #E0E0E0;
+      --neutral-grey: #F4F4F4;
+      --accent-red: #E20419;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      font-family: 'DM Sans', Helvetica, Arial, sans-serif;
+      background-color: var(--white);
+      line-height: 1.75;
+      color: var(--text-dark);
+    }
+
+    .header-bar {
+      background-color: var(--primary-black);
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 70px;
+      z-index: 100;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 90px;
+    }
+
+    .branding { display: flex; align-items: center; }
+
+    .branding img { width: 50px; height: 50px; object-fit: contain; }
+
+    .site-title {
+      color: var(--white);
+      font-size: 20px;
+      font-weight: 700;
+      margin-left: 15px;
+      white-space: nowrap;
+    }
+
+    .top-links { display: flex; gap: 15px; }
+
+    .top-links a {
+      color: var(--white);
+      text-decoration: none;
+      font: normal 12px / 16px 'DM Sans', Helvetica, Arial, sans-serif;
+      padding: 5px;
+      transition: color 0.3s ease;
+    }
+
+    .top-links a:hover { color: var(--primary-blue); }
+
+    .article-container {
+      max-width: 920px;
+      margin: 0 auto;
+      padding: 120px 40px 80px;
+    }
+
+    .article-header {
+      margin-bottom: 48px;
+      text-align: center;
+      border-bottom: 1px solid var(--border-grey);
+      padding-bottom: 28px;
+    }
+
+    .article-type {
+      display: inline-block;
+      padding: 8px 16px;
+      background: var(--accent-red);
+      color: var(--white);
+      font-size: 0.8rem;
+      font-weight: 600;
+      border-radius: 20px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      margin-bottom: 20px;
+    }
+
+    .article-title {
+      font-size: 2.6rem;
+      font-weight: 700;
+      color: var(--text-dark);
+      margin-bottom: 14px;
+      line-height: 1.2;
+    }
+
+    .article-excerpt {
+      font-size: 1.15rem;
+      color: var(--text-light);
+      margin-bottom: 16px;
+      line-height: 1.5;
+    }
+
+    .article-meta {
+      font-size: 0.98rem;
+      color: var(--primary-blue);
+      font-weight: 600;
+    }
+
+    .article-content h2 {
+      font-size: 1.8rem;
+      margin: 36px 0 14px;
+      line-height: 1.3;
+    }
+
+    .article-content h3 {
+      font-size: 1.35rem;
+      margin: 24px 0 10px;
+      line-height: 1.3;
+    }
+
+    .article-content p { margin-bottom: 16px; }
+
+    .article-content ul {
+      margin: 0 0 16px 22px;
+    }
+
+    .article-content li { margin-bottom: 8px; }
+
+    pre {
+      background: var(--neutral-grey);
+      border-radius: 8px;
+      padding: 16px;
+      overflow-x: auto;
+      margin: 14px 0 20px;
+      line-height: 1.5;
+    }
+
+    code {
+      font-family: Menlo, Monaco, Consolas, 'Courier New', monospace;
+      font-size: 0.95em;
+    }
+
+    .cta-box {
+      border: 1px solid var(--border-grey);
+      border-left: 4px solid var(--primary-blue);
+      border-radius: 8px;
+      padding: 16px;
+      margin: 24px 0;
+      background: #fafbff;
+    }
+
+    .cta-box strong { display: block; margin-bottom: 8px; }
+
+    .back-link {
+      display: inline-block;
+      margin-top: 24px;
+      color: var(--primary-blue);
+      font-weight: 600;
+      text-decoration: none;
+    }
+
+    @media (max-width: 900px) {
+      .header-bar { padding: 0 16px; }
+      .site-title { font-size: 18px; }
+      .article-container { padding: 110px 20px 56px; }
+      .article-title { font-size: 2rem; }
+    }
+  </style>
+</head>
+<body>
+  <header class="header-bar">
+    <div class="branding">
+      <a href="/docs/">
+        <img src="/assets/images/brand/logo.png" alt="Asoba">
+      </a>
+      <span class="site-title">ODS-E Documentation</span>
+    </div>
+    <div class="top-links">
+      <a href="https://opendataschema.energy/blog.html">Blog</a>
+      <a href="https://github.com/AsobaCloud/odse">GitHub</a>
+      <a href="https://asoba.co/contact-us">Contact</a>
+    </div>
+  </header>
+
+  <main class="article-container">
+    <header class="article-header">
+      <span class="article-type">Implementation Guide</span>
+      <h1 class="article-title">ODSE in Practice: A 7-Day Multi-OEM Integration Sprint</h1>
+      <p class="article-excerpt">A practical, one-week execution plan for standardizing multi-OEM telemetry into one machine-validatable ODSE pipeline.</p>
+      <div class="article-meta">Target audience: Data/SCADA Engineers, Heads of Engineering, O&amp;M Leads</div>
+    </header>
+
+    <article class="article-content">
+      <p>You have three sites and three different OEM feeds. Huawei CSV from Site A. Enphase JSON from Site B. Solarman exports from Site C. You already know the pain: incompatible timestamps, inconsistent error codes, and no single query path across the fleet.</p>
+      <p>This guide is not a concept piece. It is a seven-day implementation sprint. At the end of the week, you should have one normalized output contract, one validation path, and one baseline fault view across all sites.</p>
+
+      <h2>Day 1: Define the Ingestion Contract</h2>
+      <p>Start by inventorying every data source you actually ingest, not what the vendor documentation claims is available. Document transport type, interval, timezone behavior, and known missing fields.</p>
+      <ul>
+        <li>List each OEM source and file/API shape.</li>
+        <li>Record interval and timestamp conventions.</li>
+        <li>Capture current failure modes (missing records, malformed timestamps, null energy fields).</li>
+      </ul>
+      <p>Your output for Day 1 is a simple source manifest that future transforms can reference.</p>
+
+      <h2>Day 2: Transform One OEM End-to-End</h2>
+      <p>Pick the noisiest or most business-critical feed first. Build the ODSE transform for that single source and keep scope strict: timestamp normalization, energy field mapping, and error classification.</p>
+      <pre><code>from odse import transform
+
+rows = transform("huawei_export.csv", source="huawei")
+print(rows[0])</code></pre>
+      <p>Do not optimize yet. The objective is one stable transform path from raw payload to ODSE-compliant records.</p>
+
+      <h2>Day 3: Add Validation as a Gate, Not a Report</h2>
+      <p>Validation should block bad data before it reaches analytics. If validation runs only as a weekly QA report, you will still make decisions on corrupted inputs.</p>
+      <pre><code>from odse import validate
+
+result = validate("site_a_odse.json")
+print(result.is_valid)
+print(result.errors)</code></pre>
+      <p>Track validation failure classes by frequency. This becomes your remediation backlog.</p>
+
+      <h2>Day 4: Normalize Two Additional OEMs</h2>
+      <p>Now bring in the other two OEM feeds using the same contract. Avoid custom per-site outputs. The purpose of ODSE is one schema, not three tidy silos.</p>
+      <ul>
+        <li>Map equivalent energy semantics to the same ODSE fields.</li>
+        <li>Map OEM-native errors to shared `error_type` values.</li>
+        <li>Preserve raw OEM code as optional diagnostic context.</li>
+      </ul>
+      <p>By end of day, you should be able to concatenate all three outputs without schema exceptions.</p>
+
+      <h2>Day 5: Build the Portfolio-Level Views</h2>
+      <p>Create two baseline outputs that stakeholders can trust immediately:</p>
+      <ul>
+        <li>Portfolio fault rollup by `error_type`</li>
+        <li>Completeness report by site and day</li>
+      </ul>
+      <p>This is where interoperability moves from engineering task to operating capability.</p>
+
+      <h2>Day 6: Harden for Real Operations</h2>
+      <p>Add retry handling, idempotent replay behavior, and explicit timezone guards. Most integration failures happen in operations, not during happy-path development.</p>
+      <ul>
+        <li>Implement replay-safe ingestion.</li>
+        <li>Add alerting for transform/validation failure spikes.</li>
+        <li>Document fallback behavior for delayed source data.</li>
+      </ul>
+
+      <h2>Day 7: Freeze the Contract and Publish Internal Runbook</h2>
+      <p>Finalize your ODSE contract and document ownership boundaries: who updates transforms, who handles validation failures, and who approves schema-version updates.</p>
+      <p>Your week-one success criteria:</p>
+      <ul>
+        <li>Three OEM sources normalized to one ODSE schema.</li>
+        <li>Validation running as a required gate.</li>
+        <li>Portfolio fault and completeness views available to operations.</li>
+      </ul>
+
+      <h2>Common Mistakes to Avoid</h2>
+      <h3>1) Treating ODSE as an analytics layer</h3>
+      <p>ODSE is a data interchange layer. Keep forecasting and anomaly models downstream.</p>
+      <h3>2) Deferring error taxonomy mapping</h3>
+      <p>If this is postponed, you preserve fragmentation under a new file format.</p>
+      <h3>3) Skipping validation in production pipelines</h3>
+      <p>Unvalidated records create silent failures that surface as bad decisions later.</p>
+
+      <h2>What “Done” Looks Like</h2>
+      <p>At the end of this sprint, you have not solved every analytics problem. You have done something more fundamental: you have created one trustworthy data contract across a fragmented OEM estate.</p>
+      <p>That becomes the foundation for everything else, from anomaly detection to utility reporting to compliance workflows.</p>
+
+      <div class="cta-box">
+        <strong>Next steps (OSS):</strong>
+        <p>Install `odse`, run your first transform, validate one week of historical data, and open an issue for any unsupported OEM mappings.</p>
+        <p><a href="/docs/get-started">Get Started</a> | <a href="/docs/schemas/overview">Schema Reference</a> | <a href="https://github.com/AsobaCloud/odse">GitHub</a></p>
+      </div>
+
+      <a class="back-link" href="/blog.html">&larr; Back to Blog</a>
+    </article>
+  </main>
+</body>
+</html>

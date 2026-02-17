@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="1400" height="900" viewBox="0 0 1400 900">
+  <defs>
+    <style>
+      @import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;600&amp;display=swap');
+      .title { font: 600 24px "DM Sans", sans-serif; fill: #0f172a; }
+      .subtitle { font: 400 15px "DM Sans", sans-serif; fill: #475569; }
+      .label { font: 600 18px "DM Sans", sans-serif; fill: #0f172a; }
+      .text  { font: 400 16px "DM Sans", sans-serif; fill: #0f172a; }
+      .muted { font: 400 14px "DM Sans", sans-serif; fill: #475569; }
+      .box { fill: #ffffff; stroke: #334155; stroke-width: 2; rx: 14; }
+      .boxSoft { fill: #f8fafc; stroke: #334155; stroke-width: 2; rx: 16; }
+      .boxAccent { fill: #eef2ff; stroke: #334155; stroke-width: 2; rx: 16; }
+      .pill { fill: #f1f5f9; stroke: #94a3b8; stroke-width: 1.5; rx: 14; }
+      .arrow { stroke: #0f172a; stroke-width: 2.5; fill: none; }
+      .dash { stroke-dasharray: 6 6; }
+    </style>
+    <marker id="arrowHead" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto">
+      <path d="M0,0 L10,3 L0,6 Z" fill="#0f172a"/>
+    </marker>
+  </defs>
+
+  <!-- Header -->
+  <text x="60" y="58" class="title">ODS-E Data Standardization Pipeline</text>
+  <text x="60" y="86" class="subtitle">OEM sources → Transform layer → Standardized ODS-E JSON → Downstream consumers</text>
+
+  <!-- Top row: OEM sources -->
+  <rect x="90"  y="130" width="300" height="120" class="box"/>
+  <text x="240" y="175" text-anchor="middle" class="label">Huawei</text>
+  <text x="240" y="205" text-anchor="middle" class="text">FusionSolar</text>
+
+  <rect x="550" y="130" width="300" height="120" class="box"/>
+  <text x="700" y="175" text-anchor="middle" class="label">Enphase</text>
+  <text x="700" y="205" text-anchor="middle" class="text">Envoy</text>
+
+  <rect x="1010" y="130" width="300" height="120" class="box"/>
+  <text x="1160" y="175" text-anchor="middle" class="label">Solarman</text>
+  <text x="1160" y="205" text-anchor="middle" class="text">Logger</text>
+
+  <rect x="1188" y="262" width="182" height="40" class="pill"/>
+  <text x="1279" y="288" text-anchor="middle" class="muted">... OEM APIs / Exports</text>
+
+  <!-- Arrows down from sources -->
+  <path d="M240 250 L240 300" class="arrow" marker-end="url(#arrowHead)"/>
+  <path d="M700 250 L700 300" class="arrow" marker-end="url(#arrowHead)"/>
+  <path d="M1160 250 L1160 300" class="arrow" marker-end="url(#arrowHead)"/>
+
+  <!-- Transform Layer -->
+  <rect x="120" y="310" width="1160" height="220" class="boxAccent"/>
+  <text x="700" y="352" text-anchor="middle" class="label">ODS-E Transform Layer</text>
+
+  <!-- Bullet list -->
+  <circle cx="190" cy="386" r="4" fill="#0f172a"/><text x="212" y="392" class="text">Declarative YAML transforms per OEM</text>
+  <circle cx="190" cy="421" r="4" fill="#0f172a"/><text x="212" y="427" class="text">Error code mapping → standard taxonomy</text>
+  <circle cx="190" cy="456" r="4" fill="#0f172a"/><text x="212" y="462" class="text">Timestamp normalization → ISO 8601 UTC</text>
+  <circle cx="190" cy="491" r="4" fill="#0f172a"/><text x="212" y="497" class="text">JSON Schema validation</text>
+
+  <!-- Dashed guides from sources into transform layer -->
+  <path d="M240 300 L240 310" class="arrow dash" marker-end="url(#arrowHead)"/>
+  <path d="M700 300 L700 310" class="arrow dash" marker-end="url(#arrowHead)"/>
+  <path d="M1160 300 L1160 310" class="arrow dash" marker-end="url(#arrowHead)"/>
+
+  <!-- Arrow down to ODS-E JSON -->
+  <path d="M700 530 L700 555" class="arrow" marker-end="url(#arrowHead)"/>
+
+  <!-- ODS-E JSON -->
+  <rect x="500" y="565" width="400" height="120" class="boxSoft"/>
+  <text x="700" y="608" text-anchor="middle" class="label">ODS-E JSON Records</text>
+  <text x="700" y="640" text-anchor="middle" class="muted">Standardized, validated, interoperable data</text>
+
+  <!-- Split arrows to consumers -->
+  <path d="M700 685 L700 710" class="arrow"/>
+  <path d="M700 710 C700 742, 420 742, 420 762" class="arrow" marker-end="url(#arrowHead)"/>
+  <path d="M700 710 C700 742, 700 742, 700 762" class="arrow" marker-end="url(#arrowHead)"/>
+  <path d="M700 710 C700 742, 980 742, 980 762" class="arrow" marker-end="url(#arrowHead)"/>
+
+  <!-- Bottom row: consumers -->
+  <rect x="250" y="765" width="340" height="95" class="box"/>
+  <text x="420" y="802" text-anchor="middle" class="label">Forecasting</text>
+  <text x="420" y="830" text-anchor="middle" class="text">&amp; Dispatch</text>
+
+  <rect x="610" y="765" width="180" height="95" class="box"/>
+  <text x="700" y="810" text-anchor="middle" class="label">Anomaly</text>
+  <text x="700" y="838" text-anchor="middle" class="text">Detection</text>
+
+  <rect x="820" y="765" width="320" height="95" class="box"/>
+  <text x="980" y="810" text-anchor="middle" class="label">Compliance</text>
+  <text x="980" y="838" text-anchor="middle" class="text">Reporting</text>
+
+  <rect x="1132" y="720" width="238" height="40" class="pill"/>
+  <text x="1251" y="746" text-anchor="middle" class="muted">... Downstream consumers</text>
+</svg>

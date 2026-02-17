@@ -19,6 +19,8 @@ ODS-E removes that fragmentation by defining:
 - A normalized error taxonomy for cross-OEM fault interpretation
 - A transform layer to convert OEM-native payloads into ODS-E records
 
+<img src="/assets/images/ods-e-pipeline-v4.svg" alt="ODS-E pipeline overview" style="max-width: 100%; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.1); margin: 20px 0;">
+
 ## Core Building Blocks
 
 ## 1. Schema

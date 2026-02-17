@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Nehanda + RAG + ODSE - NREL Regulatory Risk Workflow for Commercial Portfolios - ODS-E Blog</title>
+  <meta name="description" content="A practical and theoretical guide to using Nehanda with RAG, ODSE-normalized data, and NREL-aligned benchmarks to assess regulatory risk in commercial building portfolios.">
+  <link rel="icon" type="image/x-icon" href="../favicon.ico">
+  <link rel="icon" type="image/png" sizes="32x32" href="../Artboard-7.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="../Artboard-7.png">
+  <link rel="stylesheet" href="../includes/common.css">
+  <style>
+    :root {
+      --primary-black: #000000;
+      --primary-blue: #455BF1;
+      --accent-blue: #3748c8;
+      --text-dark: #333;
+      --text-light: #4D4D4D;
+      --white: #FFFFFF;
+      --border-grey: #E0E0E0;
+      --neutral-grey: #F4F4F4;
+      --accent-red: #E20419;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      font-family: 'DM Sans', Helvetica, Arial, sans-serif;
+      background-color: var(--white);
+      line-height: 1.75;
+      color: var(--text-dark);
+    }
+
+    .header-bar {
+      background-color: var(--primary-black);
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 70px;
+      z-index: 100;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 90px;
+    }
+
+    .branding { display: flex; align-items: center; }
+    .branding img { width: 50px; height: 50px; object-fit: contain; }
+
+    .site-title {
+      color: var(--white);
+      font-size: 20px;
+      font-weight: 700;
+      margin-left: 15px;
+      white-space: nowrap;
+    }
+
+    .top-links { display: flex; gap: 15px; }
+
+    .top-links a {
+      color: var(--white);
+      text-decoration: none;
+      font: normal 12px / 16px 'DM Sans', Helvetica, Arial, sans-serif;
+      padding: 5px;
+      transition: color 0.3s ease;
+    }
+
+    .top-links a:hover { color: var(--primary-blue); }
+
+    .article-container {
+      max-width: 920px;
+      margin: 0 auto;
+      padding: 120px 40px 80px;
+    }
+
+    .article-header {
+      margin-bottom: 48px;
+      text-align: center;
+      border-bottom: 1px solid var(--border-grey);
+      padding-bottom: 28px;
+    }
+
+    .article-type {
+      display: inline-block;
+      padding: 8px 16px;
+      background: var(--accent-red);
+      color: var(--white);
+      font-size: 0.8rem;
+      font-weight: 600;
+      border-radius: 20px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      margin-bottom: 20px;
+    }
+
+    .article-title {
+      font-size: 2.6rem;
+      font-weight: 700;
+      color: var(--text-dark);
+      margin-bottom: 14px;
+      line-height: 1.2;
+    }
+
+    .article-excerpt {
+      font-size: 1.15rem;
+      color: var(--text-light);
+      margin-bottom: 16px;
+      line-height: 1.5;
+    }
+
+    .article-meta {
+      font-size: 0.98rem;
+      color: var(--primary-blue);
+      font-weight: 600;
+    }
+
+    .article-content h2 { font-size: 1.8rem; margin: 36px 0 14px; line-height: 1.3; }
+    .article-content h3 { font-size: 1.3rem; margin: 24px 0 10px; line-height: 1.3; }
+    .article-content p { margin-bottom: 16px; }
+    .article-content ul { margin: 0 0 16px 22px; }
+    .article-content li { margin-bottom: 8px; }
+
+    pre {
+      background: var(--neutral-grey);
+      border-radius: 8px;
+      padding: 16px;
+      overflow-x: auto;
+      margin: 14px 0 20px;
+      line-height: 1.5;
+    }
+
+    code {
+      font-family: Menlo, Monaco, Consolas, 'Courier New', monospace;
+      font-size: 0.95em;
+    }
+
+    .pattern {
+      border-left: 3px solid var(--primary-blue);
+      padding-left: 14px;
+      margin-bottom: 24px;
+    }
+
+    .cta-box {
+      border: 1px solid var(--border-grey);
+      border-left: 4px solid var(--primary-blue);
+      border-radius: 8px;
+      padding: 16px;
+      margin: 24px 0;
+      background: #fafbff;
+    }
+
+    .cta-box strong { display: block; margin-bottom: 8px; }
+
+    .back-link {
+      display: inline-block;
+      margin-top: 24px;
+      color: var(--primary-blue);
+      font-weight: 600;
+      text-decoration: none;
+    }
+
+    @media (max-width: 900px) {
+      .header-bar { padding: 0 16px; }
+      .site-title { font-size: 18px; }
+      .article-container { padding: 110px 20px 56px; }
+      .article-title { font-size: 2rem; }
+    }
+  </style>
+</head>
+<body>
+  <header class="header-bar">
+    <div class="branding">
+      <a href="/docs/">
+        <img src="/assets/images/brand/logo.png" alt="Asoba">
+      </a>
+      <span class="site-title">ODS-E Documentation</span>
+    </div>
+    <div class="top-links">
+      <a href="https://opendataschema.energy/blog.html">Blog</a>
+      <a href="https://github.com/AsobaCloud/odse">GitHub</a>
+      <a href="https://asoba.co/contact-us">Contact</a>
+    </div>
+  </header>
+
+  <main class="article-container">
+    <header class="article-header">
+      <span class="article-type">How-To + Case Study</span>
+      <h1 class="article-title">Nehanda + RAG + ODSE -> NREL: A Regulatory Risk Workflow for Commercial Portfolios</h1>
+      <p class="article-excerpt">A practical method for combining ODSE-normalized telemetry, NREL benchmark context, and Nehanda RAG analysis to identify regulatory exposure in existing commercial building portfolios.</p>
+      <div class="article-meta">Target audience: Sustainability leads, portfolio risk teams, energy analysts, compliance strategy teams</div>
+    </header>
+
+    <article class="article-content">
+      <p>You have a commercial building portfolio with live energy data and emissions reporting obligations. Your risk is not just technical underperformance. It is policy exposure under changing carbon regimes, tariff rules, and disclosure standards.</p>
+      <p>Most teams cannot answer a basic question with confidence: which sites are most exposed if current regulatory interpretation tightens over the next reporting cycle? ODSE, NREL-aligned benchmarking, and Nehanda RAG can be combined into a repeatable workflow that answers that question with traceable evidence.</p>
+
+      <h2>The Problem: Regulatory Risk Is a Data + Interpretation Problem</h2>
+      <p>Portfolio-level compliance risk usually gets buried in siloed workflows:</p>
+      <ul>
+        <li>Site telemetry in incompatible OEM formats</li>
+        <li>Benchmark files in separate analytics systems</li>
+        <li>Regulatory documents interpreted manually, case by case</li>
+      </ul>
+      <p>The result is delay and inconsistency. Teams spend cycles assembling inputs instead of analyzing risk.</p>
+
+      <h2>Architecture: Why This Stack Works</h2>
+      <div class="pattern">
+        <p><strong>ODSE</strong> provides the data contract (schema, transforms, validation).</p>
+        <p><strong>NREL-aligned datasets</strong> provide benchmark context for building-level performance and emissions interpretation.</p>
+        <p><strong>Nehanda + RAG</strong> provides grounded regulatory analysis with citations against a curated policy corpus.</p>
+      </div>
+
+      <pre><code>OEM telemetry -> ODSE transform + validation -> portfolio energy/emissions features
+                              +
+                    NREL benchmark context
+                              +
+              Nehanda RAG regulatory analysis
+                              ->
+                    site-level risk narratives</code></pre>
+
+      <h2>How-To Workflow (Practical)</h2>
+      <h3>Step 1: Normalize the Portfolio with ODSE</h3>
+      <p>Convert source telemetry into ODSE records so every downstream risk calculation uses one contract.</p>
+      <pre><code>from odse import transform, validate
+
+rows = transform("site_a_huawei.csv", source="huawei")
+result = validate(rows)
+assert result.is_valid, result.errors</code></pre>
+
+      <h3>Step 2: Build Emissions-Relevant Features</h3>
+      <p>Aggregate ODSE records into monthly/quarterly features used in risk screening: consumption profiles, net export behavior, abnormal fault intervals, and completeness scores.</p>
+
+      <h3>Step 3: Join NREL-Aligned Building Context</h3>
+      <p>Map ODSE site/building metadata to benchmark cohorts (for example by building type, floor area bands, climate zone proxies, and end-use intensity patterns). The goal is not perfect parity. The goal is comparable context for outlier detection.</p>
+
+      <h3>Step 4: Initialize Nehanda RAG for Policy Grounding</h3>
+      <p>Use the Nehanda RAG stack in <code>~/Workbench/nehanda/RAG</code> with your policy/regulatory corpus and known jurisdiction filters. The Nehanda model is available at <code>asoba/nehanda-v1-7b</code>.</p>
+      <pre><code># Conceptual flow
+# 1) Retrieve policy chunks by jurisdiction + topic
+# 2) Inject ODSE/NREL-derived site context
+# 3) Ask Nehanda for risk interpretation with citations
+
+query = "Given this building's emissions profile and tariff structure, what compliance risks are most material next cycle?"
+</code></pre>
+
+      <h3>Step 5: Generate Site-Level Risk Memos</h3>
+      <p>For each site, produce structured outputs:</p>
+      <ul>
+        <li>Risk category (low/medium/high)</li>
+        <li>Primary trigger conditions</li>
+        <li>Supporting regulatory citations</li>
+        <li>Operational mitigations for next reporting window</li>
+      </ul>
+
+      <h3>Step 6: Portfolio Prioritization</h3>
+      <p>Roll site results into a portfolio view ranked by exposure and intervention urgency. This is where compliance planning becomes capital allocation logic.</p>
+
+      <h2>Theoretical Case Study: Three-Building Portfolio</h2>
+      <p>Consider a commercial portfolio with Office A, Retail B, and Mixed-Use C:</p>
+      <ul>
+        <li><strong>Office A</strong>: high evening load spikes, weak completeness in peak months, above-cohort emissions intensity.</li>
+        <li><strong>Retail B</strong>: stable load, low fault frequency, near-benchmark emissions profile.</li>
+        <li><strong>Mixed-Use C</strong>: intermittent meter gaps, frequent fallback states, high variance under net-metering periods.</li>
+      </ul>
+      <p>After ODSE normalization, NREL benchmark comparison, and Nehanda RAG interpretation, the portfolio team identifies:</p>
+      <ul>
+        <li>Office A as near-term disclosure and tariff-adjustment exposure</li>
+        <li>Mixed-Use C as data-governance and reporting-defensibility exposure</li>
+        <li>Retail B as monitoring baseline and low-intervention asset</li>
+      </ul>
+      <p>The key outcome is not a perfect forecast. It is a defensible risk posture tied to explicit data quality and policy references.</p>
+
+      <h2>Guardrails That Matter</h2>
+      <h3>1) Citation discipline</h3>
+      <p>RAG output must include retrievable source references for every material recommendation.</p>
+      <h3>2) Data quality gating</h3>
+      <p>No regulatory interpretation should run on unvalidated ODSE data or unknown completeness thresholds.</p>
+      <h3>3) Scenario framing</h3>
+      <p>Separate “current rule interpretation” from “potential tightening scenario” to avoid policy overclaim.</p>
+
+      <h2>What This Enables</h2>
+      <p>When this stack is in place, compliance analysis moves from reactive reporting to proactive risk management. ODSE standardizes input. NREL context calibrates expectations. Nehanda RAG converts policy text into portfolio-actionable intelligence.</p>
+      <p>That is the difference between checking compliance boxes and managing regulatory risk as an operating discipline.</p>
+
+      <div class="cta-box">
+        <strong>Next steps (OSS):</strong>
+        <p>Normalize one site with ODSE, run validation, map to one NREL-aligned benchmark cohort, and test one Nehanda RAG policy query with citation output.</p>
+        <p><a href="/docs/get-started">Get Started</a> | <a href="/docs/building-integration/overview">Building Integration</a> | <a href="https://github.com/AsobaCloud/odse">ODSE GitHub</a> | <a href="https://huggingface.co/asoba/nehanda-v1-7b">Nehanda Model</a></p>
+      </div>
+
+      <a class="back-link" href="/blog.html">&larr; Back to Blog</a>
+    </article>
+  </main>
+</body>
+</html>

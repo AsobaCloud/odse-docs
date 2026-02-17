@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Energy Research with ODSE + Zorora: 7 Repeatable Patterns - ODS-E Blog</title>
+  <meta name="description" content="Seven repeatable patterns for running energy research workflows with ODSE as the data contract and Zorora as the orchestration layer.">
+  <link rel="icon" type="image/x-icon" href="../favicon.ico">
+  <link rel="icon" type="image/png" sizes="32x32" href="../Artboard-7.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="../Artboard-7.png">
+  <link rel="stylesheet" href="../includes/common.css">
+  <style>
+    :root {
+      --primary-black: #000000;
+      --primary-blue: #455BF1;
+      --accent-blue: #3748c8;
+      --text-dark: #333;
+      --text-light: #4D4D4D;
+      --white: #FFFFFF;
+      --border-grey: #E0E0E0;
+      --neutral-grey: #F4F4F4;
+      --accent-red: #E20419;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      font-family: 'DM Sans', Helvetica, Arial, sans-serif;
+      background-color: var(--white);
+      line-height: 1.75;
+      color: var(--text-dark);
+    }
+
+    .header-bar {
+      background-color: var(--primary-black);
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 70px;
+      z-index: 100;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 90px;
+    }
+
+    .branding { display: flex; align-items: center; }
+    .branding img { width: 50px; height: 50px; object-fit: contain; }
+
+    .site-title {
+      color: var(--white);
+      font-size: 20px;
+      font-weight: 700;
+      margin-left: 15px;
+      white-space: nowrap;
+    }
+
+    .top-links { display: flex; gap: 15px; }
+
+    .top-links a {
+      color: var(--white);
+      text-decoration: none;
+      font: normal 12px / 16px 'DM Sans', Helvetica, Arial, sans-serif;
+      padding: 5px;
+      transition: color 0.3s ease;
+    }
+
+    .top-links a:hover { color: var(--primary-blue); }
+
+    .article-container {
+      max-width: 920px;
+      margin: 0 auto;
+      padding: 120px 40px 80px;
+    }
+
+    .article-header {
+      margin-bottom: 48px;
+      text-align: center;
+      border-bottom: 1px solid var(--border-grey);
+      padding-bottom: 28px;
+    }
+
+    .article-type {
+      display: inline-block;
+      padding: 8px 16px;
+      background: var(--accent-red);
+      color: var(--white);
+      font-size: 0.8rem;
+      font-weight: 600;
+      border-radius: 20px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      margin-bottom: 20px;
+    }
+
+    .article-title {
+      font-size: 2.6rem;
+      font-weight: 700;
+      color: var(--text-dark);
+      margin-bottom: 14px;
+      line-height: 1.2;
+    }
+
+    .article-excerpt {
+      font-size: 1.15rem;
+      color: var(--text-light);
+      margin-bottom: 16px;
+      line-height: 1.5;
+    }
+
+    .article-meta {
+      font-size: 0.98rem;
+      color: var(--primary-blue);
+      font-weight: 600;
+    }
+
+    .article-content h2 { font-size: 1.8rem; margin: 36px 0 14px; line-height: 1.3; }
+    .article-content h3 { font-size: 1.3rem; margin: 24px 0 10px; line-height: 1.3; }
+    .article-content p { margin-bottom: 16px; }
+
+    .article-content ul { margin: 0 0 16px 22px; }
+    .article-content li { margin-bottom: 8px; }
+
+    pre {
+      background: var(--neutral-grey);
+      border-radius: 8px;
+      padding: 16px;
+      overflow-x: auto;
+      margin: 14px 0 20px;
+      line-height: 1.5;
+    }
+
+    code {
+      font-family: Menlo, Monaco, Consolas, 'Courier New', monospace;
+      font-size: 0.95em;
+    }
+
+    .pattern {
+      border-left: 3px solid var(--primary-blue);
+      padding-left: 14px;
+      margin-bottom: 24px;
+    }
+
+    .cta-box {
+      border: 1px solid var(--border-grey);
+      border-left: 4px solid var(--primary-blue);
+      border-radius: 8px;
+      padding: 16px;
+      margin: 24px 0;
+      background: #fafbff;
+    }
+
+    .cta-box strong { display: block; margin-bottom: 8px; }
+
+    .back-link {
+      display: inline-block;
+      margin-top: 24px;
+      color: var(--primary-blue);
+      font-weight: 600;
+      text-decoration: none;
+    }
+
+    @media (max-width: 900px) {
+      .header-bar { padding: 0 16px; }
+      .site-title { font-size: 18px; }
+      .article-container { padding: 110px 20px 56px; }
+      .article-title { font-size: 2rem; }
+    }
+  </style>
+</head>
+<body>
+  <header class="header-bar">
+    <div class="branding">
+      <a href="/docs/">
+        <img src="/assets/images/brand/logo.png" alt="Asoba">
+      </a>
+      <span class="site-title">ODS-E Documentation</span>
+    </div>
+    <div class="top-links">
+      <a href="https://opendataschema.energy/blog.html">Blog</a>
+      <a href="https://github.com/AsobaCloud/odse">GitHub</a>
+      <a href="https://asoba.co/contact-us">Contact</a>
+    </div>
+  </header>
+
+  <main class="article-container">
+    <header class="article-header">
+      <span class="article-type">Research Patterns</span>
+      <h1 class="article-title">Energy Research with ODSE + Zorora: 7 Repeatable Patterns</h1>
+      <p class="article-excerpt">Use ODSE as the data contract and Zorora as the research orchestration layer to move from fragmented telemetry to repeatable energy analysis workflows.</p>
+      <div class="article-meta">Target audience: Energy researchers, data scientists, SCADA/data engineers, IPP analytics teams</div>
+    </header>
+
+    <article class="article-content">
+      <p>Most energy research pipelines fail for a predictable reason: they start with questions and end with exceptions. Not because the questions are wrong, but because the input data contract is unstable. Different OEM exports, different timestamp conventions, different fault semantics.</p>
+      <p>ODSE solves the contract problem. Zorora solves the workflow problem. Used together, they give you a repeatable way to run research without rewriting data plumbing for every study.</p>
+
+      <h2>Operating Model</h2>
+      <p>Think in two layers:</p>
+      <ul>
+        <li><strong>ODSE</strong>: ingestion contract (schema, transform, validation)</li>
+        <li><strong>Zorora</strong>: deterministic research orchestration (routing, multi-step analysis, synthesis)</li>
+      </ul>
+
+      <pre><code>OEM data -> ODSE transform -> ODSE validation -> ODSE records -> Zorora workflows -> research outputs</code></pre>
+
+      <h2>Pattern 1: Portfolio Baseline Normalization</h2>
+      <div class="pattern">
+        <p><strong>Use when:</strong> You need one baseline dataset across Huawei/Enphase/Solarman before any comparative analysis.</p>
+        <p><strong>Input:</strong> Mixed OEM exports for the same reporting period.</p>
+        <p><strong>Output:</strong> Single ODSE-aligned dataset with consistent timestamps and error taxonomy.</p>
+      </div>
+      <pre><code>from odse import transform
+
+site_a = transform("huawei.csv", source="huawei")
+site_b = transform("enphase.json", source="enphase")
+site_c = transform("solarman.csv", source="solarman")
+portfolio = site_a + site_b + site_c</code></pre>
+
+      <h2>Pattern 2: Validation-Gated Research Ingestion</h2>
+      <div class="pattern">
+        <p><strong>Use when:</strong> Research quality depends on hard rejection of malformed or ambiguous records.</p>
+        <p><strong>Input:</strong> ODSE candidate records from transform stage.</p>
+        <p><strong>Output:</strong> Validated corpus + explicit error ledger for auditability.</p>
+      </div>
+      <pre><code>from odse import validate
+
+result = validate("portfolio_odse.json", level="semantic", capacity_kw=10.0)
+if not result.is_valid:
+    print(result.errors)
+    raise ValueError("Fix data contract violations before research run")</code></pre>
+
+      <h2>Pattern 3: Completeness and Data Reliability Profiling</h2>
+      <div class="pattern">
+        <p><strong>Use when:</strong> You need to quantify confidence before computing trends, regressions, or forecast backtests.</p>
+        <p><strong>Input:</strong> Validated ODSE records by site and interval.</p>
+        <p><strong>Output:</strong> Missingness map, gap windows, reliability score by site.</p>
+      </div>
+      <p>This pattern is essential for South African and frontier-grid conditions where connectivity interruptions can mimic operational events.</p>
+
+      <h2>Pattern 4: Cross-OEM Fault Taxonomy Studies</h2>
+      <div class="pattern">
+        <p><strong>Use when:</strong> You need to analyze failure behavior across sites with different vendor ecosystems.</p>
+        <p><strong>Input:</strong> ODSE records with normalized <code>error_type</code> and preserved OEM-native codes.</p>
+        <p><strong>Output:</strong> Comparable incident distributions and triage signals across portfolios.</p>
+      </div>
+      <p>Without ODSE normalization, “top-3 fault classes” is usually meaningless at portfolio level. With it, fault analytics become comparable and reproducible.</p>
+
+      <h2>Pattern 5: Benchmarking Against External Research Sets</h2>
+      <div class="pattern">
+        <p><strong>Use when:</strong> You need to join field telemetry with benchmark models (for example ComStock/ResStock-aligned workflows).</p>
+        <p><strong>Input:</strong> ODSE records + building/asset metadata mappings.</p>
+        <p><strong>Output:</strong> Normalized comparative metrics and context-aware performance bands.</p>
+      </div>
+      <p>The key is that ODSE gives the analysis layer a stable interface regardless of upstream OEM diversity.</p>
+
+      <h2>Pattern 6: Multi-Source Research Synthesis in Zorora</h2>
+      <div class="pattern">
+        <p><strong>Use when:</strong> You need to combine ODSE data findings with external evidence (standards, policy, market data, technical papers).</p>
+        <p><strong>Input:</strong> ODSE-derived analysis + Zorora deep research workflow prompts.</p>
+        <p><strong>Output:</strong> Structured research brief with citations, assumptions, and decision implications.</p>
+      </div>
+      <p>In practice, teams run ODSE-normalized analysis first, then use Zorora to synthesize technical findings with external context into an executive-ready output.</p>
+
+      <h2>Pattern 7: Reproducible Research Packs for Collaboration</h2>
+      <div class="pattern">
+        <p><strong>Use when:</strong> Multiple teams (engineering, operations, finance, policy) need to review the same conclusions with traceability.</p>
+        <p><strong>Input:</strong> ODSE dataset snapshot + validation report + Zorora workflow outputs.</p>
+        <p><strong>Output:</strong> Reproducible research pack that can be rerun and audited.</p>
+      </div>
+      <p>This pattern is where interoperability turns into institutional memory: same inputs, same pipeline, same conclusions.</p>
+
+      <h2>Minimal Workflow Blueprint</h2>
+      <pre><code>1) Normalize OEM sources with ODSE transforms
+2) Validate with schema + semantic checks
+3) Profile completeness and reliability
+4) Run question-specific analysis
+5) Use Zorora for multi-source synthesis
+6) Publish reproducible research pack</code></pre>
+
+      <h2>Where Zorora Fits</h2>
+      <p>Zorora is especially useful once ODSE has stabilized your data contract. At that point, workflow routing and synthesis can focus on actual research questions instead of per-vendor parsing issues. That is the difference between ad-hoc analysis and a repeatable research system.</p>
+      <p>For implementation context, teams can align this with local Zorora workflows in <code>~/Workbench/zorora</code> and internal platform integrations at <code>code.asoba.co</code>.</p>
+
+      <div class="cta-box">
+        <strong>Next steps (OSS):</strong>
+        <p>Use one OEM feed to establish an ODSE contract, run validation on one historical month, then apply these 7 patterns in sequence.</p>
+        <p><a href="/docs/get-started">Get Started</a> | <a href="/docs/validation/overview">Validation</a> | <a href="https://github.com/AsobaCloud/odse">GitHub</a></p>
+      </div>
+
+      <a class="back-link" href="/blog.html">&larr; Back to Blog</a>
+    </article>
+  </main>
+</body>
+</html>

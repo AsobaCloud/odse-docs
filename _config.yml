@@ -26,3 +26,8 @@ toc:
 # Production settings
 baseurl: ""
 url: "https://opendataschema.energy"
+
+# Exclude landing page assets from Jekyll processing
+exclude:
+  - includes/
+  - images/

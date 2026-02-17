@@ -74,7 +74,7 @@ rows = transform(solax_json, source="solaxcloud")
 rows = transform(solarman_csv, source="solarman")
 ```
 
-See the [Supported OEMs](/transforms/supported-oems) page for the full list.
+See the [Supported OEMs](/docs/transforms/supported-oems) page for the full list.
 
 ## Step 3: Validate a Generation Record
 
@@ -172,8 +172,8 @@ You should see all tests pass, including the new consumption and net metering va
 
 You now know how to transform, validate, and work with both generation and consumption data. Explore further:
 
-- **[Schema Reference](/schemas/overview)** — Full field definitions for energy-timeseries and asset-metadata
-- **[Transforms](/transforms/supported-oems)** — Support matrix for all 10 OEMs
-- **[Building Integration](/building-integration/comstock-resstock)** — Join ODS-E data to NREL benchmarks for EUI analysis
-- **[Validation](/validation/overview)** — Schema and semantic validation details
+- **[Schema Reference](/docs/schemas/overview)** — Full field definitions for energy-timeseries and asset-metadata
+- **[Transforms](/docs/transforms/supported-oems)** — Support matrix for all 10 OEMs
+- **[Building Integration](/docs/building-integration/comstock-resstock)** — Join ODS-E data to NREL benchmarks for EUI analysis
+- **[Validation](/docs/validation/overview)** — Schema and semantic validation details
 - **[Contributing](https://github.com/AsobaCloud/odse/blob/main/CONTRIBUTING.md)** — Add OEM transforms and improve the spec

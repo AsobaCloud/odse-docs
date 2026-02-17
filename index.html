@@ -1,0 +1,913 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ona Protocol (ODS-E) - Open Data Schema for Energy</title>
+    <meta name="description" content="The open standard for energy asset data interchange. Eliminate vendor lock-in, accelerate integrations, and future-proof your energy data infrastructure.">
+    <link rel="icon" type="image/x-icon" href="favicon.ico">
+    <link rel="icon" type="image/png" sizes="32x32" href="Artboard-7.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="Artboard-7.png">
+    <link rel="stylesheet" href="includes/common.css">
+    <style>
+        :root {
+            --primary-black: #000000;
+            --primary-blue: #455BF1;
+            --accent-blue: #3748c8;
+            --text-dark: #333;
+            --text-light: #4D4D4D;
+            --background-light: #f5f5f5;
+            --white: #FFFFFF;
+            --neutral-light: #F9F9F9;
+            --neutral-grey: #F4F4F4;
+            --border-grey: #E0E0E0;
+            --success-green: #28ca42;
+            --warning-orange: #f39c12;
+            --code-bg: #1a1a2e;
+        }
+
+        body {
+            font-family: 'DM Sans', Helvetica, Arial, sans-serif;
+            color: var(--text-dark);
+            background-color: var(--white);
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 40px;
+        }
+
+        main {
+            margin-top: 70px;
+            min-height: calc(100vh - 70px);
+        }
+
+        /* Hero Section - Protocol specific */
+        .hero-protocol {
+            background: linear-gradient(135deg, var(--code-bg) 0%, #16213e 100%);
+            color: var(--white);
+            padding: 100px 0 120px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero-protocol::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23455BF1' fill-opacity='0.05'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+            opacity: 0.5;
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 2;
+            max-width: 800px;
+        }
+
+        .protocol-badge {
+            display: inline-block;
+            background: rgba(69, 91, 241, 0.2);
+            border: 1px solid var(--primary-blue);
+            color: var(--primary-blue);
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            margin-bottom: 20px;
+        }
+
+        .hero-protocol h1 {
+            font-size: 3.5rem;
+            font-weight: 800;
+            margin-bottom: 25px;
+            line-height: 1.1;
+        }
+
+        .hero-protocol h1 span {
+            color: var(--primary-blue);
+        }
+
+        .hero-protocol p {
+            font-size: 1.3rem;
+            margin-bottom: 40px;
+            opacity: 0.9;
+            max-width: 650px;
+        }
+
+        .cta-buttons {
+            display: flex;
+            gap: 20px;
+            margin-bottom: 60px;
+        }
+
+        .btn {
+            padding: 16px 32px;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: 600;
+            text-decoration: none;
+            transition: all 0.3s;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .btn-primary {
+            background: var(--primary-blue);
+            color: var(--white);
+        }
+
+        .btn-secondary {
+            background: transparent;
+            color: var(--white);
+            border: 2px solid rgba(255,255,255,0.3);
+        }
+
+        .btn-github {
+            background: var(--white);
+            color: var(--text-dark);
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(69, 91, 241, 0.3);
+        }
+
+        /* Code preview in hero */
+        .code-preview {
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 12px;
+            padding: 24px;
+            margin-top: 40px;
+            font-family: 'Fira Code', 'Monaco', monospace;
+            font-size: 0.85rem;
+            overflow-x: auto;
+            border: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .code-preview .comment {
+            color: #6c7a89;
+        }
+
+        .code-preview .key {
+            color: #82aaff;
+        }
+
+        .code-preview .string {
+            color: #c3e88d;
+        }
+
+        .code-preview .number {
+            color: #f78c6c;
+        }
+
+        /* Sections */
+        section {
+            padding: 100px 0;
+        }
+
+        .section-dark {
+            background: var(--white);
+        }
+
+        .section-light {
+            background: var(--neutral-light);
+        }
+
+        .section-title {
+            font-size: 2.5rem;
+            font-weight: 700;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .section-subtitle {
+            font-size: 1.15rem;
+            text-align: center;
+            margin-bottom: 60px;
+            color: var(--text-light);
+            max-width: 700px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        /* Value Props Grid */
+        .value-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 30px;
+            margin-top: 60px;
+        }
+
+        .value-card {
+            background: var(--white);
+            border: 1px solid var(--border-grey);
+            border-radius: 12px;
+            padding: 40px 30px;
+            transition: all 0.3s;
+        }
+
+        .value-card:hover {
+            transform: translateY(-5px);
+            border-color: var(--primary-blue);
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
+        }
+
+        .value-icon {
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, var(--primary-blue), var(--accent-blue));
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 20px;
+            font-size: 1.5rem;
+        }
+
+        .value-card h3 {
+            font-size: 1.3rem;
+            margin-bottom: 15px;
+            color: var(--text-dark);
+        }
+
+        .value-card p {
+            color: var(--text-light);
+            line-height: 1.7;
+        }
+
+        /* Technical specs */
+        .specs-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 60px;
+            align-items: start;
+        }
+
+        .spec-content h3 {
+            font-size: 1.8rem;
+            margin-bottom: 20px;
+        }
+
+        .spec-content p {
+            color: var(--text-light);
+            margin-bottom: 30px;
+            line-height: 1.8;
+        }
+
+        .spec-list {
+            list-style: none;
+            padding: 0;
+        }
+
+        .spec-list li {
+            padding: 12px 0;
+            border-bottom: 1px solid var(--border-grey);
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .spec-list li::before {
+            content: '✓';
+            color: var(--success-green);
+            font-weight: bold;
+        }
+
+        .spec-code {
+            background: var(--code-bg);
+            border-radius: 12px;
+            padding: 30px;
+            color: var(--white);
+            font-family: 'Fira Code', 'Monaco', monospace;
+            font-size: 0.85rem;
+            overflow-x: auto;
+        }
+
+        .spec-code .filename {
+            color: #6c7a89;
+            margin-bottom: 15px;
+            font-size: 0.8rem;
+        }
+
+        /* Certification tiers */
+        .tiers-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 20px;
+            margin-top: 60px;
+        }
+
+        .tier-card {
+            background: var(--white);
+            border: 2px solid var(--border-grey);
+            border-radius: 12px;
+            padding: 30px 25px;
+            text-align: center;
+            transition: all 0.3s;
+        }
+
+        .tier-card.featured {
+            border-color: var(--primary-blue);
+            transform: scale(1.05);
+        }
+
+        .tier-card:hover {
+            border-color: var(--primary-blue);
+        }
+
+        .tier-level {
+            font-size: 0.8rem;
+            font-weight: 600;
+            color: var(--text-light);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 10px;
+        }
+
+        .tier-name {
+            font-size: 1.2rem;
+            font-weight: 700;
+            margin-bottom: 15px;
+            color: var(--text-dark);
+        }
+
+        .tier-price {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--primary-blue);
+            margin-bottom: 20px;
+        }
+
+        .tier-price span {
+            font-size: 0.9rem;
+            font-weight: 400;
+            color: var(--text-light);
+        }
+
+        .tier-features {
+            list-style: none;
+            padding: 0;
+            text-align: left;
+            font-size: 0.9rem;
+        }
+
+        .tier-features li {
+            padding: 8px 0;
+            color: var(--text-light);
+        }
+
+        .tier-features li::before {
+            content: '•';
+            color: var(--primary-blue);
+            margin-right: 8px;
+        }
+
+        /* Adopters/Use cases */
+        .use-cases-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 30px;
+        }
+
+        .use-case-card {
+            background: var(--white);
+            border-radius: 12px;
+            padding: 40px 30px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+        }
+
+        .use-case-card h3 {
+            font-size: 1.2rem;
+            margin-bottom: 15px;
+            color: var(--primary-blue);
+        }
+
+        .use-case-card p {
+            color: var(--text-light);
+            margin-bottom: 20px;
+        }
+
+        .use-case-benefit {
+            background: var(--neutral-light);
+            padding: 15px;
+            border-radius: 8px;
+            font-size: 0.9rem;
+        }
+
+        .use-case-benefit strong {
+            color: var(--success-green);
+        }
+
+        /* License section */
+        .license-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 30px;
+            margin-top: 40px;
+        }
+
+        .license-card {
+            background: var(--neutral-light);
+            border-radius: 12px;
+            padding: 30px;
+            text-align: center;
+        }
+
+        .license-card h4 {
+            font-size: 1.1rem;
+            margin-bottom: 10px;
+        }
+
+        .license-card .license-type {
+            color: var(--primary-blue);
+            font-weight: 600;
+            font-size: 0.9rem;
+            margin-bottom: 15px;
+        }
+
+        .license-card p {
+            font-size: 0.9rem;
+            color: var(--text-light);
+        }
+
+        /* CTA Section */
+        .cta-section {
+            background: linear-gradient(135deg, var(--primary-blue) 0%, var(--accent-blue) 100%);
+            color: var(--white);
+            text-align: center;
+            padding: 100px 0;
+        }
+
+        .cta-section h2 {
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+        }
+
+        .cta-section p {
+            font-size: 1.2rem;
+            margin-bottom: 40px;
+            opacity: 0.9;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .cta-section .btn {
+            background: var(--white);
+            color: var(--primary-blue);
+        }
+
+        /* OEM Logos Section */
+        .oem-section {
+            background: var(--white);
+            padding: 60px 0;
+            border-bottom: 1px solid var(--border-grey);
+        }
+
+        .oem-section .section-label {
+            font-size: 0.85rem;
+            font-weight: 600;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            color: var(--text-light);
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .oem-grid {
+            display: grid;
+            grid-template-columns: repeat(6, 1fr);
+            gap: 30px;
+            align-items: center;
+        }
+
+        .oem-logo {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            min-height: 80px;
+            transition: all 0.3s;
+        }
+
+        .oem-logo img {
+            max-width: 120px;
+            max-height: 50px;
+            object-fit: contain;
+            filter: grayscale(100%);
+            opacity: 0.6;
+            transition: all 0.3s;
+        }
+
+        .oem-logo:hover img {
+            filter: grayscale(0%);
+            opacity: 1;
+        }
+
+        @media (max-width: 900px) {
+            .oem-grid {
+                grid-template-columns: repeat(3, 1fr);
+            }
+        }
+
+        @media (max-width: 500px) {
+            .oem-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        /* Animations */
+        .fade-in {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.8s ease;
+        }
+
+        .fade-in.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Mobile Responsiveness */
+        @media (max-width: 1024px) {
+            .tiers-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .tier-card.featured {
+                transform: none;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 0 20px;
+            }
+
+            .hero-protocol h1 {
+                font-size: 2.5rem;
+            }
+
+            .cta-buttons {
+                flex-direction: column;
+            }
+
+            .value-grid,
+            .specs-grid,
+            .use-cases-grid,
+            .license-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .tiers-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header class="header-bar">
+    <div class="branding">
+        <a href="https://asoba.co">
+            <img src="https://docs.asoba.co/assets/images/logo.png" alt="Asoba">
+        </a>
+        <span class="site-title">Asoba</span>
+    </div>
+    <div class="top-links">
+        <a href="https://asoba.co">Home</a>
+        <a href="https://asoba.co/about.html">About</a>
+        <a href="https://asoba.co/products.html">Products</a>
+        <a href="https://asoba.co/use-cases.html">Use Cases</a>
+        <a href="https://asoba.co/blog.html">Insights</a>
+        <a href="/docs/">Documentation</a>
+        <a href="https://calendar.google.com/calendar/appointments/schedules/AcZssZ3-n_SUGacXWO0GDVkR9J1LCNwoUEUPH_kTw-_yeDaVuFaMysg0rIiZLUy9cKeZlcziEYgFG8Kx?gv=true">Contact Us</a>
+    </div>
+</header>
+
+    <main>
+        <!-- Hero Section -->
+        <section class="hero-protocol">
+            <div class="container">
+                <div class="hero-content">
+                    <span class="protocol-badge">Open Standard</span>
+                    <h1>One Schema.<br><span>Every Energy Asset.</span></h1>
+                    <p>ODS-E (Open Data Schema for Energy) is the open standard for energy asset data interchange. Eliminate vendor lock-in, accelerate integrations, and future-proof your data infrastructure.</p>
+
+                    <div class="cta-buttons">
+                        <a href="/docs/" class="btn btn-primary">Read the Docs</a>
+                        <a href="https://github.com/AsobaCloud/odse" class="btn btn-github">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg>
+                            View on GitHub
+                        </a>
+                    </div>
+
+                    <div class="code-preview">
+                        <span class="comment">// ODS-E production timeseries - works with any OEM</span><br>
+                        {<br>
+                        &nbsp;&nbsp;<span class="key">"timestamp"</span>: <span class="string">"2026-02-05T14:00:00Z"</span>,<br>
+                        &nbsp;&nbsp;<span class="key">"kWh"</span>: <span class="number">847.5</span>,<br>
+                        &nbsp;&nbsp;<span class="key">"error_type"</span>: <span class="string">"normal"</span>,<br>
+                        &nbsp;&nbsp;<span class="key">"PF"</span>: <span class="number">0.98</span><br>
+                        }
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Supported OEMs -->
+        <section class="oem-section">
+            <div class="container">
+                <div class="section-label">Pre-built Transforms for Leading OEMs</div>
+                <div class="oem-grid">
+                    <div class="oem-logo">
+                        <img src="images/oem-logos/huawei.png" alt="Huawei FusionSolar">
+                    </div>
+                    <div class="oem-logo">
+                        <img src="images/oem-logos/enphase.svg" alt="Enphase">
+                    </div>
+                    <div class="oem-logo">
+                        <img src="images/oem-logos/solarman.webp" alt="Solarman">
+                    </div>
+                    <div class="oem-logo">
+                        <img src="images/oem-logos/solaredge.svg" alt="SolarEdge">
+                    </div>
+                    <div class="oem-logo">
+                        <img src="images/oem-logos/fronius.webp" alt="Fronius">
+                    </div>
+                    <div class="oem-logo">
+                        <img src="images/oem-logos/switch.png" alt="Switch Energy">
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Value Proposition -->
+        <section class="section-light">
+            <div class="container">
+                <h2 class="section-title">Why ODS-E?</h2>
+                <p class="section-subtitle">Your energy data shouldn't be trapped in proprietary formats. ODS-E gives you control.</p>
+
+                <div class="value-grid">
+                    <div class="value-card fade-in">
+                        <div class="value-icon">🔓</div>
+                        <h3>No Vendor Lock-in</h3>
+                        <p>Export, migrate, and integrate freely. Your data works with any ODS-E compatible system. Huawei, Enphase, Solarman, SCADA—one schema handles them all.</p>
+                    </div>
+                    <div class="value-card fade-in">
+                        <div class="value-icon">⚡</div>
+                        <h3>Faster Integrations</h3>
+                        <p>Stop writing custom parsers for every OEM. Pre-built transform specs get you from raw inverter data to standardized format in hours, not weeks.</p>
+                    </div>
+                    <div class="value-card fade-in">
+                        <div class="value-icon">🔮</div>
+                        <h3>Future-Proof Architecture</h3>
+                        <p>CC-BY-SA licensed specification means extensions stay open. No embrace-and-extend. Your investment in ODS-E compatibility compounds over time.</p>
+                    </div>
+                    <div class="value-card fade-in">
+                        <div class="value-icon">📊</div>
+                        <h3>Analytics-Ready</h3>
+                        <p>Standardized error taxonomy, consistent timestamps, and semantic validation ensure your data is ready for forecasting, anomaly detection, and carbon tracking.</p>
+                    </div>
+                    <div class="value-card fade-in">
+                        <div class="value-icon">🌍</div>
+                        <h3>Built for Africa</h3>
+                        <p>Designed for emerging market realities: intermittent connectivity, diverse OEM ecosystems, and regulatory compliance across SADC, NERSA, and ZERA jurisdictions.</p>
+                    </div>
+                    <div class="value-card fade-in">
+                        <div class="value-icon">🛡️</div>
+                        <h3>Production Tested</h3>
+                        <p>ODS-E powers the Ona platform managing MW-scale portfolios across Southern Africa. This isn't a theoretical spec—it's battle-tested infrastructure.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Technical Specification -->
+        <section class="section-dark">
+            <div class="container">
+                <h2 class="section-title">Technical Specification</h2>
+                <p class="section-subtitle">JSON Schema-based validation with semantic error classification and OEM-agnostic transforms.</p>
+
+                <div class="specs-grid">
+                    <div class="spec-content">
+                        <h3>Core Schema</h3>
+                        <p>The production-timeseries schema captures energy readings with standardized error classification. Required fields ensure data quality while optional fields maintain OEM signal fidelity.</p>
+
+                        <ul class="spec-list">
+                            <li>ISO 8601 timestamps with timezone</li>
+                            <li>Active energy (kWh) with physical bounds</li>
+                            <li>7-category error taxonomy (normal, warning, critical, fault, offline, standby, unknown)</li>
+                            <li>Original OEM error codes preserved</li>
+                            <li>Optional reactive power, apparent power, power factor</li>
+                            <li>JSON Schema Draft 2020-12 compliant</li>
+                        </ul>
+                    </div>
+
+                    <div class="spec-code">
+                        <div class="filename">// production-timeseries.json</div>
+{
+  <span style="color:#82aaff">"$schema"</span>: <span style="color:#c3e88d">"https://json-schema.org/draft/2020-12/schema"</span>,
+  <span style="color:#82aaff">"$id"</span>: <span style="color:#c3e88d">"https://ona-protocol.org/schemas/v1/production-timeseries.json"</span>,
+  <span style="color:#82aaff">"required"</span>: [<span style="color:#c3e88d">"timestamp"</span>, <span style="color:#c3e88d">"kWh"</span>, <span style="color:#c3e88d">"error_type"</span>],
+  <span style="color:#82aaff">"properties"</span>: {
+    <span style="color:#82aaff">"timestamp"</span>: {
+      <span style="color:#82aaff">"type"</span>: <span style="color:#c3e88d">"string"</span>,
+      <span style="color:#82aaff">"format"</span>: <span style="color:#c3e88d">"date-time"</span>
+    },
+    <span style="color:#82aaff">"kWh"</span>: {
+      <span style="color:#82aaff">"type"</span>: <span style="color:#c3e88d">"number"</span>,
+      <span style="color:#82aaff">"minimum"</span>: <span style="color:#f78c6c">0</span>
+    },
+    <span style="color:#82aaff">"error_type"</span>: {
+      <span style="color:#82aaff">"enum"</span>: [<span style="color:#c3e88d">"normal"</span>, <span style="color:#c3e88d">"warning"</span>,
+              <span style="color:#c3e88d">"critical"</span>, <span style="color:#c3e88d">"fault"</span>,
+              <span style="color:#c3e88d">"offline"</span>, <span style="color:#c3e88d">"standby"</span>,
+              <span style="color:#c3e88d">"unknown"</span>]
+    }
+  }
+}
+                    </div>
+                </div>
+
+                <div class="specs-grid" style="margin-top: 80px;">
+                    <div class="spec-code">
+                        <div class="filename">// huawei-to-ods.yaml</div>
+<span style="color:#82aaff">transform</span>:
+  <span style="color:#82aaff">name</span>: <span style="color:#c3e88d">huawei-fusionsolar</span>
+  <span style="color:#82aaff">version</span>: <span style="color:#c3e88d">"1.0"</span>
+
+<span style="color:#82aaff">output_mapping</span>:
+  <span style="color:#82aaff">timestamp</span>: <span style="color:#c3e88d">input.timestamp</span>
+  <span style="color:#82aaff">kWh</span>: <span style="color:#c3e88d">input.power * interval_hours</span>
+  <span style="color:#82aaff">error_type</span>:
+    <span style="color:#82aaff">function</span>: <span style="color:#c3e88d">map_error_code</span>
+    <span style="color:#82aaff">input</span>: <span style="color:#c3e88d">[inverter_state, run_state]</span>
+
+<span style="color:#82aaff">error_code_mapping</span>:
+  <span style="color:#82aaff">normal</span>: <span style="color:#c3e88d">[0, 1, 2, 3, 256, 512...]</span>
+  <span style="color:#82aaff">warning</span>: <span style="color:#c3e88d">[513, 514, 772...]</span>
+  <span style="color:#82aaff">critical</span>: <span style="color:#c3e88d">[768, 770, 771...]</span>
+                    </div>
+
+                    <div class="spec-content">
+                        <h3>Transform Specifications</h3>
+                        <p>Declarative YAML transforms map OEM-specific data formats to ODS-E. Error code mappings preserve original signals while normalizing to the standard taxonomy.</p>
+
+                        <ul class="spec-list">
+                            <li>Huawei FusionSolar transform included</li>
+                            <li>Enphase Envoy transform included</li>
+                            <li>Solarman Logger transform included</li>
+                            <li>Custom transform template for new OEMs</li>
+                            <li>Nighttime standby detection logic</li>
+                            <li>Interval normalization (5-min, 15-min, hourly)</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Use Cases -->
+        <section class="section-light">
+            <div class="container">
+                <h2 class="section-title">Who Uses ODS-E?</h2>
+                <p class="section-subtitle">Built for technical teams managing energy asset portfolios at scale.</p>
+
+                <div class="use-cases-grid">
+                    <div class="use-case-card fade-in">
+                        <h3>IPPs & Asset Managers</h3>
+                        <p>Managing multi-OEM portfolios across distributed sites? ODS-E gives you a single data model for unified monitoring, regardless of inverter manufacturer.</p>
+                        <div class="use-case-benefit">
+                            <strong>Result:</strong> One dashboard for Huawei, Enphase, and Solarman assets
+                        </div>
+                    </div>
+                    <div class="use-case-card fade-in">
+                        <h3>ESCOs & O&M Providers</h3>
+                        <p>Client data arrives in chaos. ODS-E pre-validation ensures data quality before it hits your analytics pipeline. Faster onboarding, fewer support tickets.</p>
+                        <div class="use-case-benefit">
+                            <strong>Result:</strong> 3x faster client data integration
+                        </div>
+                    </div>
+                    <div class="use-case-card fade-in">
+                        <h3>Utilities & Grid Operators</h3>
+                        <p>Aggregating distributed generation for grid planning? ODS-E provides the standardized interchange format for IPP data submission and visibility.</p>
+                        <div class="use-case-benefit">
+                            <strong>Result:</strong> Standardized DER data reporting
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- License Structure -->
+        <section class="section-light">
+            <div class="container">
+                <h2 class="section-title">Open by Design</h2>
+                <p class="section-subtitle">Permissive licensing for adoption. Copyleft protection against capture.</p>
+
+                <div class="license-grid">
+                    <div class="license-card">
+                        <h4>Specification & Schemas</h4>
+                        <div class="license-type">CC-BY-SA 4.0</div>
+                        <p>Extend freely. Extensions must be published openly. No proprietary embrace-and-extend.</p>
+                    </div>
+                    <div class="license-card">
+                        <h4>Reference Implementation</h4>
+                        <div class="license-type">Apache 2.0</div>
+                        <p>Use in commercial products without copyleft obligations. Maximum adoption velocity.</p>
+                    </div>
+                    <div class="license-card">
+                        <h4>Trademark</h4>
+                        <div class="license-type">Registered</div>
+                        <p>"ODS-E" and "ODS-E Certified" protected. Ensures quality standards.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- CTA Section -->
+        <section class="cta-section">
+            <div class="container">
+                <h2>Ready to Standardize Your Energy Data?</h2>
+                <p>Join asset managers, ESCOs, and utilities building on ODS-E. Get started with the reference implementation today.</p>
+                <div class="cta-buttons" style="justify-content: center;">
+                    <a href="/docs/" class="btn">Read the Documentation</a>
+                    <a href="https://github.com/AsobaCloud/odse" class="btn btn-secondary" style="background: transparent; color: white; border: 2px solid white;">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg>
+                        pip install odse
+                    </a>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Get Help & Stay Updated Footer -->
+<section class="section">
+    <div class="container">
+        <h2>Get Help & Stay Updated</h2>
+        <div class="footer-content">
+            <div class="contact-support">
+                <h3>Contact Support</h3>
+                <p>For technical assistance, feature requests, or any other questions, please reach out to our dedicated support team.</p>
+                <div class="support-buttons">
+                    <a href="mailto:support@asoba.co" class="support-button primary">Email Support</a>
+                    <a href="https://discord.gg/nNV5evcr" class="support-button secondary">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                            <path d="M20.317 4.37a19.791 19.791 0 0 0-4.885-1.515a.074.074 0 0 0-.079.037c-.211.375-.445.864-.608 1.25a18.27 18.27 0 0 0-5.487 0a12.64 12.64 0 0 0-.617-1.25a.077.077 0 0 0-.079-.037A19.736 19.736 0 0 0 3.677 4.37a.07.07 0 0 0-.032.027C.533 9.046-.32 13.58.099 18.057a.082.082 0 0 0 .031.057a19.9 19.9 0 0 0 5.993 3.03a.078.078 0 0 0 .084-.028a14.09 14.09 0 0 0 1.226-1.994a.076.076 0 0 0-.041-.106a13.107 13.107 0 0 1-1.872-.892a.077.077 0 0 1-.008-.128a10.2 10.2 0 0 0 .372-.292a.074.074 0 0 1 .077-.01c3.928 1.793 8.18 1.793 12.062 0a.074.074 0 0 1 .078.01c.12.098.246.198.373.292a.077.077 0 0 1-.006.127a12.299 12.299 0 0 1-1.873.892a.077.077 0 0 0-.041.107c.36.698.772 1.362 1.225 1.993a.076.076 0 0 0 .084.028a19.839 19.839 0 0 0 6.002-3.03a.077.077 0 0 0 .032-.054c.5-5.177-.838-9.674-3.549-13.66a.061.061 0 0 0-.031-.03zM8.02 15.33c-1.183 0-2.157-1.085-2.157-2.419c0-1.333.956-2.419 2.157-2.419c1.21 0 2.176 1.096 2.157 2.42c0 1.333-.956 2.418-2.157 2.418zm7.975 0c-1.183 0-2.157-1.085-2.157-2.419c0-1.333.955-2.419 2.157-2.419c1.21 0 2.176 1.096 2.157 2.42c0 1.333-.946 2.418-2.157 2.418z"/>
+                        </svg>
+                        Join Discord
+                    </a>
+                </div>
+            </div>
+            <div class="newsletter-signup">
+                <h3>Subscribe to Updates</h3>
+                <form class="newsletter-form">
+                    <div class="form-group">
+                        <label for="firstName">First Name</label>
+                        <input type="text" id="firstName" name="firstName" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="email">Email Address <span class="required">*</span></label>
+                        <input type="email" id="email" name="email" required>
+                    </div>
+                    <button type="submit" class="subscribe-button">Subscribe</button>
+                </form>
+                <p class="form-note"><span class="required">*</span> indicates required</p>
+            </div>
+        </div>
+    </div>
+</section>
+    <footer class="copyright-footer">
+    <div class="container">
+        <p>&copy; 2025 Asoba Corporation. All rights reserved.</p>
+    </div>
+</footer>
+
+    <script>
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.fade-in').forEach(el => {
+            observer.observe(el);
+        });
+    </script>
+</body>
+</html>

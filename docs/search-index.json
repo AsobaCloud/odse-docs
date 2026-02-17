@@ -7,6 +7,7 @@ layout: null
   {%- assign page_ext = page.path | split: "." | last -%}
   {%- unless page_ext == "md" or page_ext == "html" -%}{%- continue -%}{%- endunless -%}
   {%- if page.path == "search-index.json" or page.path contains "404" -%}{%- continue -%}{%- endif -%}
+  {%- if page.path == "index.html" -%}{%- continue -%}{%- endif -%}
   {%- if page.path contains "_" -%}{%- continue -%}{%- endif -%}
   {%- assign cleaned_content = page.content | strip_html | normalize_whitespace | truncatewords: 80 -%}
   {%- assign url_parts = page.url | split: "/" -%}

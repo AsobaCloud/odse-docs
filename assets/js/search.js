@@ -2,7 +2,7 @@
 
 async function loadSearchIndex() {
   try {
-    const response = await fetch('/search-index.json');
+    const response = await fetch('/docs/search-index.json');
     if (!response.ok) {
       throw new Error('Failed to load search index');
     }

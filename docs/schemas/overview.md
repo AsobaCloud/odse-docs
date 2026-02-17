@@ -22,7 +22,8 @@ The schema is split into two complementary surfaces:
 
 1. Start with [Energy Timeseries](/docs/schemas/energy-timeseries) for record-level requirements.
 2. Add [Asset Metadata](/docs/schemas/asset-metadata) for benchmarking, segmentation, and integration use cases.
-3. Run [Schema Validation](/docs/validation/schema-validation) before using records in analytics.
+3. Use [Inverter API Access](/docs/schemas/inverter-api-access) to operationalize OEM onboarding and transform verification.
+4. Run [Schema Validation](/docs/validation/schema-validation) before using records in analytics.
 
 ## Core Record Example
 
@@ -39,3 +40,4 @@ The schema is split into two complementary surfaces:
 - [Get Started](/docs/get-started)
 - [Validation Overview](/docs/validation/overview)
 - [Transforms Overview](/docs/transforms/overview)
+- [Inverter API Access](/docs/schemas/inverter-api-access)

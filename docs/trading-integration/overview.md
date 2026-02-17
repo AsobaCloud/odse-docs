@@ -27,6 +27,20 @@ ODS-E provides a neutral interoperability layer for:
 - tariff context (`tariff_schedule_id`, `tariff_period`, version-effective timestamps)
 - municipal/grid topology (`municipality_id`, feeder, zone, voltage metadata)
 
+## Market Reform Extensions
+
+Aligned with the SAETA "Policy to Power" report (February 2026), ODS-E adds optional fields for 7 reform areas:
+
+- [Wheeling Transaction Envelope](/docs/trading-integration/wheeling-extensions) -- traditional, virtual, and portfolio wheeling with reconciliation status
+- [Tariff Component Granularity](/docs/trading-integration/tariff-unbundling) -- unbundled generation, transmission, distribution, and ancillary charges
+- [Curtailment Event Tracking](/docs/trading-integration/curtailment-tracking) -- curtailment flags, causes, lost generation, and dispatch instruction references
+- [BRP / Imbalance Settlement](/docs/trading-integration/brp-imbalance-settlement) -- BRP context, forecasts, and imbalance calculations for the SAWEM
+- [Municipal Reconciliation](/docs/trading-integration/municipal-reconciliation) -- billing cycles, metered vs. billed quantities, and DAA references
+- [Green Attribute / Certificate Tracking](/docs/trading-integration/green-attributes) -- I-REC and other certificate references with carbon intensity
+- [Grid Capacity / Connection Status](/docs/schemas/grid-capacity) -- GCAR milestones and grid access lifecycle (asset-metadata fields)
+
+All extensions are additive and optional. Existing valid payloads remain valid.
+
 ## Why It Matters
 
 With a common data contract:

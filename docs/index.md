@@ -89,6 +89,12 @@ layout: default
       <p>ComStock/ResStock mapping</p>
     </a>
 
+    <a href="/docs/trading-integration/overview" class="quick-link-card">
+      <div class="quick-link-icon">&#x26A1;</div>
+      <h4>Trading Integration</h4>
+      <p>Settlement, wheeling &amp; tariffs</p>
+    </a>
+
     <a href="https://github.com/AsobaCloud/odse" class="quick-link-card">
       <div class="quick-link-icon">&#x1F4BB;</div>
       <h4>GitHub</h4>
@@ -184,6 +190,7 @@ print(result.is_valid)  # True</code></pre>
       <li>End-use tagging aligned with ComStock/ResStock</li>
       <li>Building metadata and asset type taxonomy</li>
       <li>10 OEM runtime transforms with test harness</li>
+      <li>Market reform extensions: wheeling, tariff unbundling, curtailment, BRP/imbalance, municipal reconciliation, grid capacity, green attributes</li>
     </ul>
     <a href="https://github.com/AsobaCloud/odse/blob/main/CHANGELOG.md" class="whats-new-link">Read Changelog &rarr;</a>
   </div>
@@ -221,6 +228,12 @@ print(result.is_valid)  # True</code></pre>
       <h3>Building Integration</h3>
       <p>Join ODS-E data to NREL ComStock/ResStock benchmarks for EUI analysis</p>
       <a href="/docs/building-integration/overview" class="section-link">View Guide &rarr;</a>
+    </div>
+
+    <div class="section-card">
+      <h3>Trading Integration</h3>
+      <p>Settlement, wheeling, tariffs, curtailment, BRP, and municipal reconciliation</p>
+      <a href="/docs/trading-integration/overview" class="section-link">View Guide &rarr;</a>
     </div>
 
     <div class="section-card">

@@ -1,1 +1,159 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>90-Day ODSE Adoption Plan: From First Transform to Production Workflow - ODS-E Blog</title><meta name="description" content="A practical 30/60/90 day plan for adopting ODSE from pilot transform to production-grade portfolio workflow."><link rel="icon" type="image/x-icon" href="../favicon.ico"><link rel="stylesheet" href="../includes/common.css"><style>body{font-family:'DM Sans',Helvetica,Arial,sans-serif;margin:0;line-height:1.7}.header-bar{background:#000;position:fixed;top:0;left:0;width:100%;height:70px;display:flex;align-items:center;justify-content:space-between;padding:0 90px}.branding{display:flex;align-items:center}.branding img{width:50px;height:50px}.site-title,.top-links a{color:#fff}.site-title{margin-left:15px;font-weight:700}.top-links{display:flex;gap:15px}.top-links a{text-decoration:none;font:normal 12px/16px 'DM Sans',Helvetica,Arial,sans-serif}.article-container{max-width:920px;margin:0 auto;padding:120px 40px 80px}.article-header{text-align:center;border-bottom:1px solid #e0e0e0;padding-bottom:24px;margin-bottom:34px}.article-type{display:inline-block;background:#E20419;color:#fff;padding:8px 16px;border-radius:20px;font-size:.8rem;font-weight:600}.article-title{font-size:2.5rem;margin:14px 0}.article-meta{color:#455BF1;font-weight:600}.article-content h2{margin:30px 0 12px}.article-content p{margin-bottom:14px}.back-link{display:inline-block;margin-top:20px;color:#455BF1;text-decoration:none;font-weight:600}</style></head><body><header class="header-bar"><div class="branding"><a href="/docs/"><img src="/assets/images/brand/logo.png" alt="Asoba"></a><span class="site-title">ODS-E Documentation</span></div><div class="top-links"><a href="https://opendataschema.energy/blog.html">Blog</a><a href="https://github.com/AsobaCloud/odse">GitHub</a><a href="https://asoba.co/contact-us">Contact</a></div></header><main class="article-container"><header class="article-header"><span class="article-type">Execution Plan</span><h1 class="article-title">90-Day ODSE Adoption Plan: From First Transform to Production Workflow</h1><p>A practical rollout sequence for teams that need measurable progress without platform disruption.</p><div class="article-meta">Target audience: Cross-functional deployment teams</div></header><article class="article-content"><h2>Days 1-30: Establish Contract</h2><p>Transform one OEM source, validate outputs, and publish a canonical record sample. Success metric: one stable dataset with repeatable ingestion.</p><h2>Days 31-60: Expand Coverage</h2><p>Add remaining OEM feeds, unify fault semantics, and introduce completeness/error dashboards. Success metric: cross-OEM comparability for core KPIs.</p><h2>Days 61-90: Production Hardening</h2><p>Add replay controls, regression tests, and governance ownership for transform/version changes. Success metric: production readiness with documented runbooks.</p><h2>Operating Metrics</h2><p>Track transform success rate, validation failure rate, completeness by site, and mean detection delay for critical faults.</p><h2>Decision Gate</h2><p>At day 90, decide whether to scale analytics and forecasting workflows on top of ODSE contract outputs.</p><p><a href="/docs/get-started">Get Started</a> | <a href="/docs/transforms/supported-oems">Supported OEMs</a> | <a href="/docs/validation/overview">Validation</a></p><a class="back-link" href="/blog.html">&larr; Back to Blog</a></article></main></body></html>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>90-Day ODSE Adoption Plan: From First Transform to Production Workflow - ODS-E Blog</title>
+  <meta name="description" content="A practical 30/60/90 day plan for adopting ODSE from pilot transform to production-grade portfolio workflow.">
+  <link rel="icon" type="image/x-icon" href="../favicon.ico">
+  <link rel="icon" type="image/png" sizes="32x32" href="../Artboard-7.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="../Artboard-7.png">
+  <link rel="stylesheet" href="../includes/common.css">
+  <style>
+    :root { --primary-black:#000; --primary-blue:#455BF1; --text-dark:#333; --text-light:#4D4D4D; --white:#FFF; --border-grey:#E0E0E0; --neutral-grey:#F4F4F4; --accent-red:#E20419; }
+    * { margin:0; padding:0; box-sizing:border-box; }
+    body { font-family:'DM Sans',Helvetica,Arial,sans-serif; background:var(--white); line-height:1.75; color:var(--text-dark); }
+    .header-bar { background:var(--primary-black); position:fixed; top:0; left:0; width:100%; height:70px; z-index:100; display:flex; align-items:center; justify-content:space-between; padding:0 90px; }
+    .branding { display:flex; align-items:center; }
+    .branding img { width:50px; height:50px; object-fit:contain; }
+    .site-title { color:var(--white); font-size:20px; font-weight:700; margin-left:15px; white-space:nowrap; }
+    .top-links { display:flex; gap:15px; }
+    .top-links a { color:var(--white); text-decoration:none; font:normal 12px/16px 'DM Sans',Helvetica,Arial,sans-serif; padding:5px; }
+    .article-container { max-width:920px; margin:0 auto; padding:120px 40px 80px; }
+    .article-header { margin-bottom:48px; text-align:center; border-bottom:1px solid var(--border-grey); padding-bottom:28px; }
+    .article-type { display:inline-block; padding:8px 16px; background:var(--accent-red); color:var(--white); font-size:.8rem; font-weight:600; border-radius:20px; text-transform:uppercase; letter-spacing:.5px; margin-bottom:20px; }
+    .article-title { font-size:2.6rem; font-weight:700; margin-bottom:14px; line-height:1.2; }
+    .article-excerpt { font-size:1.15rem; color:var(--text-light); margin-bottom:16px; line-height:1.5; }
+    .article-meta { font-size:.98rem; color:var(--primary-blue); font-weight:600; }
+    .article-content h2 { font-size:1.8rem; margin:36px 0 14px; line-height:1.3; }
+    .article-content h3 { font-size:1.3rem; margin:24px 0 10px; line-height:1.3; }
+    .article-content p { margin-bottom:16px; }
+    .article-content ul { margin:0 0 16px 22px; }
+    .article-content li { margin-bottom:8px; }
+    pre { background:var(--neutral-grey); border-radius:8px; padding:16px; overflow-x:auto; margin:14px 0 20px; line-height:1.5; }
+    code { font-family:Menlo,Monaco,Consolas,'Courier New',monospace; font-size:.95em; }
+    .callout { border:1px solid var(--border-grey); border-left:4px solid var(--primary-blue); border-radius:8px; padding:16px; margin:22px 0; background:#fafbff; }
+    .back-link { display:inline-block; margin-top:24px; color:var(--primary-blue); font-weight:600; text-decoration:none; }
+    @media (max-width:900px) { .header-bar{padding:0 16px;} .site-title{font-size:18px;} .article-container{padding:110px 20px 56px;} .article-title{font-size:2rem;} }
+  </style>
+</head>
+<body>
+  <header class="header-bar">
+    <div class="branding">
+      <a href="/docs/"><img src="/assets/images/brand/logo.png" alt="Asoba"></a>
+      <span class="site-title">ODS-E Documentation</span>
+    </div>
+    <div class="top-links">
+      <a href="https://opendataschema.energy/blog.html">Blog</a>
+      <a href="https://github.com/AsobaCloud/odse">GitHub</a>
+      <a href="https://asoba.co/contact-us">Contact</a>
+    </div>
+  </header>
+
+  <main class="article-container">
+    <header class="article-header">
+      <span class="article-type">Execution Plan</span>
+      <h1 class="article-title">90-Day ODSE Adoption Plan: From First Transform to Production Workflow</h1>
+      <p class="article-excerpt">A practical rollout sequence for teams that need measurable progress without disrupting existing operations.</p>
+      <div class="article-meta">Target audience: Cross-functional deployment teams (engineering, operations, reporting)</div>
+    </header>
+
+    <article class="article-content">
+      <p>Most interoperability programs stall because they start broad and abstract. A working 90-day ODSE adoption program should be execution-first: one contract, one validation gate, then controlled expansion.</p>
+      <p>This plan assumes you already have active OEM data sources and need to normalize them into one contract for analytics, compliance, and reliability workflows.</p>
+
+      <h2>Days 1-30: Establish the Contract Boundary</h2>
+      <h3>Objective</h3>
+      <p>Create one stable ODSE pipeline for one real source, with validation as a hard gate.</p>
+
+      <h3>Scope</h3>
+      <ul>
+        <li>Inventory active OEM source shape, cadence, and timezone behavior.</li>
+        <li>Implement one transform into ODSE required fields (<code>timestamp</code>, <code>kWh</code>, <code>error_type</code>).</li>
+        <li>Run schema validation immediately post-transform.</li>
+        <li>Publish transformed outputs to a staging destination used by at least one downstream consumer.</li>
+      </ul>
+
+      <h3>Success Criteria by Day 30</h3>
+      <ul>
+        <li>One source can run end-to-end without manual correction.</li>
+        <li>Validation failures are visible and triaged.</li>
+        <li>A canonical sample dataset is available for internal reference.</li>
+      </ul>
+
+      <h2>Days 31-60: Expand Coverage and Comparability</h2>
+      <h3>Objective</h3>
+      <p>Bring additional OEM feeds into the same contract and establish cross-source comparability.</p>
+
+      <h3>Scope</h3>
+      <ul>
+        <li>Add transforms for remaining priority OEM feeds.</li>
+        <li>Map source states/codes to ODSE <code>error_type</code> while preserving <code>error_code_original</code>.</li>
+        <li>Add completeness reporting by site/day.</li>
+        <li>Introduce semantic validation where capacity context exists.</li>
+      </ul>
+
+      <h3>Success Criteria by Day 60</h3>
+      <ul>
+        <li>Multiple OEMs emit the same ODSE contract with no schema exceptions.</li>
+        <li>Cross-OEM fault rollups can be queried without vendor-specific branches.</li>
+        <li>Completeness and validation metrics are part of operating review.</li>
+      </ul>
+
+      <h2>Days 61-90: Production Hardening and Governance</h2>
+      <h3>Objective</h3>
+      <p>Make the pipeline operationally durable and formally owned.</p>
+
+      <h3>Scope</h3>
+      <ul>
+        <li>Implement replay-safe ingestion and idempotent processing.</li>
+        <li>Add regression tests for transform mapping behavior.</li>
+        <li>Define transform versioning and release controls.</li>
+        <li>Document ownership for mapping changes, validation incidents, and schema updates.</li>
+      </ul>
+
+      <h3>Success Criteria by Day 90</h3>
+      <ul>
+        <li>Runbook exists for failures, backfills, and source changes.</li>
+        <li>Operational metrics are monitored and reviewed on cadence.</li>
+        <li>Downstream teams consume ODSE outputs as primary contract.</li>
+      </ul>
+
+      <h2>Operating Metrics to Track Throughout</h2>
+      <ul>
+        <li>Transform success/failure rate by source.</li>
+        <li>Schema and semantic validation error rates.</li>
+        <li>Completeness score by site and day.</li>
+        <li>Sync lag (event time vs ingestion time) for unstable networks.</li>
+        <li>Mean detection delay for critical fault classes.</li>
+      </ul>
+
+      <h2>Governance Model (Lightweight but Explicit)</h2>
+      <ul>
+        <li>Engineering owns transform logic and test coverage.</li>
+        <li>Operations owns incident response for data pipeline failures.</li>
+        <li>Reporting/compliance owns acceptance thresholds for quality gates.</li>
+        <li>Architecture owner approves contract changes affecting consumers.</li>
+      </ul>
+
+      <div class="callout">
+        <strong>Decision gate at Day 90:</strong>
+        Scale forecasting, regulatory, and portfolio analytics only if contract stability, validation health, and completeness thresholds are consistently met.
+      </div>
+
+      <h2>Common Reasons Programs Miss Day 90</h2>
+      <ul>
+        <li>Treating validation as reporting instead of ingestion gate.</li>
+        <li>Allowing one-off per-source exceptions in downstream consumers.</li>
+        <li>Skipping transform version control during OEM payload changes.</li>
+        <li>Deferring ownership decisions until after incidents occur.</li>
+      </ul>
+
+      <p>A successful 90-day ODSE adoption is not about shipping a large platform. It is about establishing one durable contract boundary and proving that teams can operate it predictably.</p>
+
+      <p><a href="/docs/get-started">Get Started</a> | <a href="/docs/transforms/supported-oems">Supported OEMs</a> | <a href="/docs/validation/overview">Validation</a></p>
+      <a class="back-link" href="/blog.html">&larr; Back to Blog</a>
+    </article>
+  </main>
+</body>
+</html>

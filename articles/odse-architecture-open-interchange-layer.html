@@ -1,1 +1,254 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>ODSE Architecture: Open Interchange Layer, Not Another Platform - ODS-E Blog</title><meta name="description" content="A technical architecture guide showing ODSE as the data contract layer between OEM systems and downstream consumers."><link rel="icon" type="image/x-icon" href="../favicon.ico"><link rel="stylesheet" href="../includes/common.css"><style>body{font-family:'DM Sans',Helvetica,Arial,sans-serif;margin:0;line-height:1.7}.header-bar{background:#000;position:fixed;top:0;left:0;width:100%;height:70px;display:flex;align-items:center;justify-content:space-between;padding:0 90px}.branding{display:flex;align-items:center}.branding img{width:50px;height:50px}.site-title,.top-links a{color:#fff}.site-title{margin-left:15px;font-weight:700}.top-links{display:flex;gap:15px}.top-links a{text-decoration:none;font:normal 12px/16px 'DM Sans',Helvetica,Arial,sans-serif}.article-container{max-width:920px;margin:0 auto;padding:120px 40px 80px}.article-header{text-align:center;border-bottom:1px solid #e0e0e0;padding-bottom:24px;margin-bottom:34px}.article-type{display:inline-block;background:#E20419;color:#fff;padding:8px 16px;border-radius:20px;font-size:.8rem;font-weight:600}.article-title{font-size:2.5rem;margin:14px 0}.article-meta{color:#455BF1;font-weight:600}.article-content h2{margin:30px 0 12px}.article-content p{margin-bottom:14px}pre{background:#f4f4f4;padding:14px;border-radius:8px;overflow:auto}.back-link{display:inline-block;margin-top:20px;color:#455BF1;text-decoration:none;font-weight:600}</style></head><body><header class="header-bar"><div class="branding"><a href="/docs/"><img src="/assets/images/brand/logo.png" alt="Asoba"></a><span class="site-title">ODS-E Documentation</span></div><div class="top-links"><a href="https://opendataschema.energy/blog.html">Blog</a><a href="https://github.com/AsobaCloud/odse">GitHub</a><a href="https://asoba.co/contact-us">Contact</a></div></header><main class="article-container"><header class="article-header"><span class="article-type">Architecture</span><h1 class="article-title">ODSE Architecture: Open Interchange Layer, Not Another Platform</h1><p>Why ODSE should be treated as a contract boundary, not an application stack replacement.</p><div class="article-meta">Target audience: Technical Leadership / Architects</div></header><article class="article-content"><p>ODSE sits between producers and consumers. It is intentionally small: transform, validate, publish records. Everything else remains optional and composable.</p><h2>Architecture Boundary</h2><pre><code>OEM/API exports -> ODSE transform+validate -> canonical records -> forecasting / anomaly / compliance</code></pre><p>This boundary prevents tool lock-in and allows multiple teams to innovate downstream without renegotiating source semantics.</p><h2>What ODSE Should Own</h2><p>Field definitions, enum semantics, timestamp normalization, and error taxonomy mapping.</p><h2>What ODSE Should Not Own</h2><p>Dashboard logic, forecasting model selection, alert policies, and business-specific KPI interpretation.</p><h2>Design Implication</h2><p>If your pipeline cannot swap downstream analytics without changing ingestion contracts, the boundary is in the wrong place.</p><p><a href="/docs/schemas/overview">Schema Reference</a> | <a href="/docs/transforms/overview">Transforms</a></p><a class="back-link" href="/blog.html">&larr; Back to Blog</a></article></main></body></html>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ODSE Architecture: Open Interchange Layer, Not Another Platform - ODS-E Blog</title>
+  <meta name="description" content="A technical architecture guide showing ODSE as the data contract layer between OEM systems and downstream consumers.">
+  <link rel="icon" type="image/x-icon" href="../favicon.ico">
+  <link rel="icon" type="image/png" sizes="32x32" href="../Artboard-7.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="../Artboard-7.png">
+  <link rel="stylesheet" href="../includes/common.css">
+  <style>
+    :root {
+      --primary-black: #000000;
+      --primary-blue: #455BF1;
+      --text-dark: #333;
+      --text-light: #4D4D4D;
+      --white: #FFFFFF;
+      --border-grey: #E0E0E0;
+      --neutral-grey: #F4F4F4;
+      --accent-red: #E20419;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      font-family: 'DM Sans', Helvetica, Arial, sans-serif;
+      background-color: var(--white);
+      line-height: 1.75;
+      color: var(--text-dark);
+    }
+
+    .header-bar {
+      background-color: var(--primary-black);
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 70px;
+      z-index: 100;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 90px;
+    }
+
+    .branding { display: flex; align-items: center; }
+    .branding img { width: 50px; height: 50px; object-fit: contain; }
+
+    .site-title {
+      color: var(--white);
+      font-size: 20px;
+      font-weight: 700;
+      margin-left: 15px;
+      white-space: nowrap;
+    }
+
+    .top-links { display: flex; gap: 15px; }
+
+    .top-links a {
+      color: var(--white);
+      text-decoration: none;
+      font: normal 12px / 16px 'DM Sans', Helvetica, Arial, sans-serif;
+      padding: 5px;
+    }
+
+    .article-container {
+      max-width: 920px;
+      margin: 0 auto;
+      padding: 120px 40px 80px;
+    }
+
+    .article-header {
+      margin-bottom: 48px;
+      text-align: center;
+      border-bottom: 1px solid var(--border-grey);
+      padding-bottom: 28px;
+    }
+
+    .article-type {
+      display: inline-block;
+      padding: 8px 16px;
+      background: var(--accent-red);
+      color: var(--white);
+      font-size: 0.8rem;
+      font-weight: 600;
+      border-radius: 20px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      margin-bottom: 20px;
+    }
+
+    .article-title {
+      font-size: 2.6rem;
+      font-weight: 700;
+      margin-bottom: 14px;
+      line-height: 1.2;
+    }
+
+    .article-excerpt {
+      font-size: 1.15rem;
+      color: var(--text-light);
+      margin-bottom: 16px;
+      line-height: 1.5;
+    }
+
+    .article-meta {
+      font-size: 0.98rem;
+      color: var(--primary-blue);
+      font-weight: 600;
+    }
+
+    .article-content h2 { font-size: 1.8rem; margin: 36px 0 14px; line-height: 1.3; }
+    .article-content h3 { font-size: 1.3rem; margin: 24px 0 10px; line-height: 1.3; }
+    .article-content p { margin-bottom: 16px; }
+    .article-content ul { margin: 0 0 16px 22px; }
+    .article-content li { margin-bottom: 8px; }
+
+    pre {
+      background: var(--neutral-grey);
+      border-radius: 8px;
+      padding: 16px;
+      overflow-x: auto;
+      margin: 14px 0 20px;
+      line-height: 1.5;
+    }
+
+    code {
+      font-family: Menlo, Monaco, Consolas, 'Courier New', monospace;
+      font-size: 0.95em;
+    }
+
+    .callout {
+      border: 1px solid var(--border-grey);
+      border-left: 4px solid var(--primary-blue);
+      border-radius: 8px;
+      padding: 16px;
+      margin: 22px 0;
+      background: #fafbff;
+    }
+
+    .back-link {
+      display: inline-block;
+      margin-top: 24px;
+      color: var(--primary-blue);
+      font-weight: 600;
+      text-decoration: none;
+    }
+
+    @media (max-width: 900px) {
+      .header-bar { padding: 0 16px; }
+      .site-title { font-size: 18px; }
+      .article-container { padding: 110px 20px 56px; }
+      .article-title { font-size: 2rem; }
+    }
+  </style>
+</head>
+<body>
+  <header class="header-bar">
+    <div class="branding">
+      <a href="/docs/">
+        <img src="/assets/images/brand/logo.png" alt="Asoba">
+      </a>
+      <span class="site-title">ODS-E Documentation</span>
+    </div>
+    <div class="top-links">
+      <a href="https://opendataschema.energy/blog.html">Blog</a>
+      <a href="https://github.com/AsobaCloud/odse">GitHub</a>
+      <a href="https://asoba.co/contact-us">Contact</a>
+    </div>
+  </header>
+
+  <main class="article-container">
+    <header class="article-header">
+      <span class="article-type">Architecture</span>
+      <h1 class="article-title">ODSE Architecture: Open Interchange Layer, Not Another Platform</h1>
+      <p class="article-excerpt">ODSE works best when treated as a narrow contract boundary between producer-specific telemetry and downstream analytics systems.</p>
+      <div class="article-meta">Target audience: Technical leadership, platform architects, data engineering teams</div>
+    </header>
+
+    <article class="article-content">
+      <p>Teams usually hit interoperability limits long before they hit compute limits. The root cause is not weak dashboards or slow models. It is unstable input shape: vendor-specific fields, mixed timestamp behavior, and unaligned state/error semantics.</p>
+      <p>ODSE is designed to solve exactly that boundary problem. It is not a replacement for your monitoring stack, warehouse, BI tools, or forecasting layer. It is the contract that lets those systems consume consistent records.</p>
+
+      <h2>The Boundary in One Diagram</h2>
+      <pre><code>OEM/API exports -> transform(source=...) -> validate() -> ODS-E records -> analytics, forecasting, reporting</code></pre>
+      <p>The key architectural decision is where standardization happens. If transform and validation happen late, every downstream consumer still inherits OEM complexity. If transform and validation happen early, downstream teams can build against one predictable interface.</p>
+
+      <h2>What ODSE Should Own</h2>
+      <ul>
+        <li>Record contract for required fields: <code>timestamp</code>, <code>kWh</code>, <code>error_type</code>.</li>
+        <li>Timestamp normalization to ISO 8601 timezone-explicit form.</li>
+        <li>Error taxonomy mapping into ODSE <code>error_type</code> enums.</li>
+        <li>Source traceability through optional fields like <code>error_code_original</code>.</li>
+      </ul>
+
+      <h2>What ODSE Should Not Own</h2>
+      <ul>
+        <li>Business KPI definitions and executive dashboard logic.</li>
+        <li>Model selection for forecasting or anomaly detection.</li>
+        <li>Dispatch policy and operations playbooks.</li>
+        <li>Vendor-specific UI workflows for field teams.</li>
+      </ul>
+      <p>Keeping ODSE narrow avoids platform lock-in and keeps ownership boundaries clear between data contract, analytics implementation, and operational decisions.</p>
+
+      <h2>Validation Is Part of the Architecture, Not a QA Add-On</h2>
+      <p>The architecture only works if invalid records are blocked before persistence and analysis. ODSE's pattern is schema validation first, then semantic validation where context is available (for example capacity-aware plausibility checks).</p>
+      <pre><code>result = validate(rows)
+if not result.is_valid:
+    stop_pipeline()</code></pre>
+      <p>This design prevents silent corruption where technically parseable data still creates wrong forecasts or compliance conclusions.</p>
+
+      <h2>Design Pattern for Existing Stacks</h2>
+      <h3>Pattern: Contract Insertion</h3>
+      <p>Insert ODSE immediately after ingestion parsing, then feed your existing lake/warehouse and reporting flows from ODSE-compliant outputs.</p>
+      <ul>
+        <li>No migration of BI layer required.</li>
+        <li>No rewrite of all downstream consumers required.</li>
+        <li>Progressively add OEM transforms without changing downstream interfaces.</li>
+      </ul>
+
+      <h3>Pattern: Versioned Transform Governance</h3>
+      <p>OEM payloads evolve. Treat transform mappings as versioned artifacts with tests and release notes. A stable schema with unstable transforms is still unstable in production.</p>
+
+      <h2>Architecture Smells to Watch</h2>
+      <ul>
+        <li>Every downstream service re-implements OEM parsing differently.</li>
+        <li>Validation runs only after dashboards are already updated.</li>
+        <li>Timezone conversion occurs separately in each consumer.</li>
+        <li>Cross-OEM fault analysis depends on ad-hoc mapping spreadsheets.</li>
+      </ul>
+
+      <div class="callout">
+        <strong>Decision test:</strong>
+        If you cannot swap or add a downstream analytics tool without renegotiating ingestion semantics, your standardization boundary is too late. Move ODSE earlier in the flow.
+      </div>
+
+      <h2>Implementation Checklist</h2>
+      <ul>
+        <li>Declare producer sources and expected payload types.</li>
+        <li>Implement source transforms into ODSE records.</li>
+        <li>Gate all transformed output with schema validation.</li>
+        <li>Add semantic checks for capacity and state/value plausibility.</li>
+        <li>Publish ODSE records as the only downstream contract.</li>
+      </ul>
+
+      <p>Architecture clarity is what makes interoperability durable. ODSE gives you that clarity by separating source-specific complexity from consumer-facing data contracts.</p>
+
+      <p><a href="/docs/what-is-odse">What is ODS-E?</a> | <a href="/docs/schemas/overview">Schema Reference</a> | <a href="/docs/transforms/overview">Transforms</a> | <a href="/docs/validation/overview">Validation</a></p>
+      <a class="back-link" href="/blog.html">&larr; Back to Blog</a>
+    </article>
+  </main>
+</body>
+</html>

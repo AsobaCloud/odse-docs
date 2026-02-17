@@ -1,1 +1,139 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>Data Completeness Is a First-Class Signal (Not a Reporting Afterthought) - ODS-E Blog</title><meta name="description" content="Why data completeness should be treated as a core operational signal for energy analytics, compliance, and risk decisions."><link rel="icon" type="image/x-icon" href="../favicon.ico"><link rel="stylesheet" href="../includes/common.css"><style>body{font-family:'DM Sans',Helvetica,Arial,sans-serif;margin:0;line-height:1.7}.header-bar{background:#000;position:fixed;top:0;left:0;width:100%;height:70px;display:flex;align-items:center;justify-content:space-between;padding:0 90px}.branding{display:flex;align-items:center}.branding img{width:50px;height:50px}.site-title,.top-links a{color:#fff}.site-title{margin-left:15px;font-weight:700}.top-links{display:flex;gap:15px}.top-links a{text-decoration:none;font:normal 12px/16px 'DM Sans',Helvetica,Arial,sans-serif}.article-container{max-width:920px;margin:0 auto;padding:120px 40px 80px}.article-header{text-align:center;border-bottom:1px solid #e0e0e0;padding-bottom:24px;margin-bottom:34px}.article-type{display:inline-block;background:#E20419;color:#fff;padding:8px 16px;border-radius:20px;font-size:.8rem;font-weight:600}.article-title{font-size:2.5rem;margin:14px 0}.article-meta{color:#455BF1;font-weight:600}.article-content h2{margin:30px 0 12px}.article-content p{margin-bottom:14px}.back-link{display:inline-block;margin-top:20px;color:#455BF1;text-decoration:none;font-weight:600}</style></head><body><header class="header-bar"><div class="branding"><a href="/docs/"><img src="/assets/images/brand/logo.png" alt="Asoba"></a><span class="site-title">ODS-E Documentation</span></div><div class="top-links"><a href="https://opendataschema.energy/blog.html">Blog</a><a href="https://github.com/AsobaCloud/odse">GitHub</a><a href="https://asoba.co/contact-us">Contact</a></div></header><main class="article-container"><header class="article-header"><span class="article-type">Data Quality</span><h1 class="article-title">Data Completeness Is a First-Class Signal (Not a Reporting Afterthought)</h1><p>Missingness and timestamp integrity are not metadata trivia. They are core determinants of decision quality.</p><div class="article-meta">Target audience: Sustainability / Reporting / Data Teams</div></header><article class="article-content"><p>Teams frequently compute precision metrics on incomplete data and only discover gaps at reporting time. By then, corrective action windows are gone.</p><h2>Completeness as an Operational Metric</h2><p>Track expected vs observed intervals per site and per day. Report confidence bands alongside performance metrics.</p><h2>Why It Changes Outcomes</h2><p>Completeness errors can invert conclusions about efficiency, degradation, or compliance status when gaps are non-random.</p><h2>Recommended Controls</h2><p>Gate critical analytics on minimum completeness thresholds and emit explicit warnings when intervals are imputed or delayed.</p><h2>Pipeline Discipline</h2><p>Run schema and semantic validation before completeness scoring so you are measuring meaningful intervals, not malformed records.</p><p><a href="/docs/validation/overview">Validation Overview</a> | <a href="/docs/schemas/energy-timeseries">Energy Timeseries</a></p><a class="back-link" href="/blog.html">&larr; Back to Blog</a></article></main></body></html>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Data Completeness Is a First-Class Signal (Not a Reporting Afterthought) - ODS-E Blog</title>
+  <meta name="description" content="Why data completeness should be treated as a core operational signal for energy analytics, compliance, and risk decisions.">
+  <link rel="icon" type="image/x-icon" href="../favicon.ico">
+  <link rel="icon" type="image/png" sizes="32x32" href="../Artboard-7.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="../Artboard-7.png">
+  <link rel="stylesheet" href="../includes/common.css">
+  <style>
+    :root { --primary-black:#000; --primary-blue:#455BF1; --text-dark:#333; --text-light:#4D4D4D; --white:#FFF; --border-grey:#E0E0E0; --neutral-grey:#F4F4F4; --accent-red:#E20419; }
+    * { margin:0; padding:0; box-sizing:border-box; }
+    body { font-family:'DM Sans',Helvetica,Arial,sans-serif; background:var(--white); line-height:1.75; color:var(--text-dark); }
+    .header-bar { background:var(--primary-black); position:fixed; top:0; left:0; width:100%; height:70px; z-index:100; display:flex; align-items:center; justify-content:space-between; padding:0 90px; }
+    .branding { display:flex; align-items:center; }
+    .branding img { width:50px; height:50px; object-fit:contain; }
+    .site-title { color:var(--white); font-size:20px; font-weight:700; margin-left:15px; white-space:nowrap; }
+    .top-links { display:flex; gap:15px; }
+    .top-links a { color:var(--white); text-decoration:none; font:normal 12px/16px 'DM Sans',Helvetica,Arial,sans-serif; padding:5px; }
+    .article-container { max-width:920px; margin:0 auto; padding:120px 40px 80px; }
+    .article-header { margin-bottom:48px; text-align:center; border-bottom:1px solid var(--border-grey); padding-bottom:28px; }
+    .article-type { display:inline-block; padding:8px 16px; background:var(--accent-red); color:var(--white); font-size:.8rem; font-weight:600; border-radius:20px; text-transform:uppercase; letter-spacing:.5px; margin-bottom:20px; }
+    .article-title { font-size:2.6rem; font-weight:700; margin-bottom:14px; line-height:1.2; }
+    .article-excerpt { font-size:1.15rem; color:var(--text-light); margin-bottom:16px; line-height:1.5; }
+    .article-meta { font-size:.98rem; color:var(--primary-blue); font-weight:600; }
+    .article-content h2 { font-size:1.8rem; margin:36px 0 14px; line-height:1.3; }
+    .article-content h3 { font-size:1.3rem; margin:24px 0 10px; line-height:1.3; }
+    .article-content p { margin-bottom:16px; }
+    .article-content ul { margin:0 0 16px 22px; }
+    .article-content li { margin-bottom:8px; }
+    pre { background:var(--neutral-grey); border-radius:8px; padding:16px; overflow-x:auto; margin:14px 0 20px; line-height:1.5; }
+    code { font-family:Menlo,Monaco,Consolas,'Courier New',monospace; font-size:.95em; }
+    .callout { border:1px solid var(--border-grey); border-left:4px solid var(--primary-blue); border-radius:8px; padding:16px; margin:22px 0; background:#fafbff; }
+    .back-link { display:inline-block; margin-top:24px; color:var(--primary-blue); font-weight:600; text-decoration:none; }
+    @media (max-width:900px) { .header-bar{padding:0 16px;} .site-title{font-size:18px;} .article-container{padding:110px 20px 56px;} .article-title{font-size:2rem;} }
+  </style>
+</head>
+<body>
+  <header class="header-bar">
+    <div class="branding">
+      <a href="/docs/"><img src="/assets/images/brand/logo.png" alt="Asoba"></a>
+      <span class="site-title">ODS-E Documentation</span>
+    </div>
+    <div class="top-links">
+      <a href="https://opendataschema.energy/blog.html">Blog</a>
+      <a href="https://github.com/AsobaCloud/odse">GitHub</a>
+      <a href="https://asoba.co/contact-us">Contact</a>
+    </div>
+  </header>
+
+  <main class="article-container">
+    <header class="article-header">
+      <span class="article-type">Data Quality</span>
+      <h1 class="article-title">Data Completeness Is a First-Class Signal (Not a Reporting Afterthought)</h1>
+      <p class="article-excerpt">Missingness and timestamp integrity are operational signals that directly change decisions, not cleanup work for month-end reporting.</p>
+      <div class="article-meta">Target audience: Sustainability teams, reporting leads, analytics engineers</div>
+    </header>
+
+    <article class="article-content">
+      <p>Most teams monitor production and faults in real time, then discover data gaps only when preparing reports. By that stage, corrective windows are closed and decision confidence is already compromised.</p>
+      <p>Completeness should be managed as a first-class signal in the same operating layer as transform success and validation health.</p>
+
+      <h2>Completeness Is About Decision Reliability</h2>
+      <p>Two portfolios can show identical energy totals but very different reliability if one has chronic missing intervals. Without explicit completeness metrics, those portfolios look equally trustworthy even when they are not.</p>
+      <ul>
+        <li>Forecast and risk models are sensitive to non-random data gaps.</li>
+        <li>Compliance calculations can be biased by missing peak intervals.</li>
+        <li>Operational benchmarking can invert conclusions when dropouts cluster by site type or period.</li>
+      </ul>
+
+      <h2>Contract-First Precondition</h2>
+      <p>Completeness scoring is only meaningful after transform and validation. If records are malformed or semantically implausible, interval counts alone become misleading.</p>
+      <pre><code>raw payload -> ODSE transform -> schema validation -> semantic validation -> completeness scoring -> analytics</code></pre>
+
+      <h2>What to Measure</h2>
+      <h3>Expected vs Observed Intervals</h3>
+      <p>For each site and day, compute expected interval count from configured cadence, then compare with observed valid records.</p>
+
+      <h3>Gap Window Distribution</h3>
+      <p>Track not only percentage missing but also contiguous gap windows. A single 3-hour outage may carry different risk than scattered 5-minute gaps.</p>
+
+      <h3>Timeliness Lag</h3>
+      <p>Measure delayed arrivals separately from permanent loss. Late data impacts operational decisions even if backfills eventually restore totals.</p>
+
+      <h2>Practical Controls</h2>
+      <ul>
+        <li>Set minimum completeness thresholds for each analytics workflow.</li>
+        <li>Attach confidence labels to outputs when thresholds are not met.</li>
+        <li>Block compliance exports when completeness falls below policy limits.</li>
+        <li>Log imputation use explicitly and keep original missingness evidence.</li>
+      </ul>
+
+      <h2>Suggested Dashboard Panel</h2>
+      <ul>
+        <li>Daily completeness % by site and OEM connector.</li>
+        <li>Count of validation failures vs missing intervals.</li>
+        <li>Top recurring gap windows over rolling 30 days.</li>
+        <li>Sites currently below acceptance thresholds.</li>
+      </ul>
+      <p>This separates source-quality incidents from asset-performance incidents and speeds targeted remediation.</p>
+
+      <h2>Example Gate Logic</h2>
+      <pre><code>if completeness_score &lt; 0.98:
+    mark_output_as_low_confidence()
+
+if completeness_score &lt; 0.95:
+    block_compliance_export()</code></pre>
+
+      <h2>Common Mistakes</h2>
+      <ul>
+        <li>Computing KPIs first and checking completeness later.</li>
+        <li>Treating all missingness as random noise.</li>
+        <li>Backfilling without preserving data-quality lineage.</li>
+        <li>Ignoring timezone-normalization errors when counting intervals.</li>
+      </ul>
+
+      <div class="callout">
+        <strong>Operating rule:</strong>
+        A metric without completeness context is a confidence claim without evidence. Publish both together.
+      </div>
+
+      <h2>Adoption Sequence</h2>
+      <ul>
+        <li>Phase 1: enforce transform plus schema validation for all sources.</li>
+        <li>Phase 2: add semantic validation and standard quality reporting.</li>
+        <li>Phase 3: gate downstream workflows on explicit completeness thresholds.</li>
+        <li>Phase 4: include confidence bands in all stakeholder-facing outputs.</li>
+      </ul>
+
+      <p>Completeness is not a data team hygiene task. It is a core part of operational truth and should be treated with the same rigor as any primary KPI.</p>
+
+      <p><a href="/docs/validation/overview">Validation Overview</a> | <a href="/docs/validation/schema-validation">Schema Validation</a> | <a href="/docs/schemas/energy-timeseries">Energy Timeseries</a></p>
+      <a class="back-link" href="/blog.html">&larr; Back to Blog</a>
+    </article>
+  </main>
+</body>
+</html>

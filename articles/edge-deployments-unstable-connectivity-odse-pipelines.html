@@ -1,1 +1,131 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>Edge Deployments in Unstable Connectivity: Reliable ODSE Pipelines - ODS-E Blog</title><meta name="description" content="A deployment pattern guide for ODSE data pipelines in intermittent or low-quality connectivity environments."><link rel="icon" type="image/x-icon" href="../favicon.ico"><link rel="stylesheet" href="../includes/common.css"><style>body{font-family:'DM Sans',Helvetica,Arial,sans-serif;margin:0;line-height:1.7}.header-bar{background:#000;position:fixed;top:0;left:0;width:100%;height:70px;display:flex;align-items:center;justify-content:space-between;padding:0 90px}.branding{display:flex;align-items:center}.branding img{width:50px;height:50px}.site-title,.top-links a{color:#fff}.site-title{margin-left:15px;font-weight:700}.top-links{display:flex;gap:15px}.top-links a{text-decoration:none;font:normal 12px/16px 'DM Sans',Helvetica,Arial,sans-serif}.article-container{max-width:920px;margin:0 auto;padding:120px 40px 80px}.article-header{text-align:center;border-bottom:1px solid #e0e0e0;padding-bottom:24px;margin-bottom:34px}.article-type{display:inline-block;background:#E20419;color:#fff;padding:8px 16px;border-radius:20px;font-size:.8rem;font-weight:600}.article-title{font-size:2.5rem;margin:14px 0}.article-meta{color:#455BF1;font-weight:600}.article-content h2{margin:30px 0 12px}.article-content p{margin-bottom:14px}pre{background:#f4f4f4;padding:14px;border-radius:8px;overflow:auto}.back-link{display:inline-block;margin-top:20px;color:#455BF1;text-decoration:none;font-weight:600}</style></head><body><header class="header-bar"><div class="branding"><a href="/docs/"><img src="/assets/images/brand/logo.png" alt="Asoba"></a><span class="site-title">ODS-E Documentation</span></div><div class="top-links"><a href="https://opendataschema.energy/blog.html">Blog</a><a href="https://github.com/AsobaCloud/odse">GitHub</a><a href="https://asoba.co/contact-us">Contact</a></div></header><main class="article-container"><header class="article-header"><span class="article-type">Edge Operations</span><h1 class="article-title">Edge Deployments in Unstable Connectivity: Reliable ODSE Pipelines</h1><p>How to keep telemetry trustworthy when networks are intermittent, delayed, or noisy.</p><div class="article-meta">Target audience: Engineering / Operations</div></header><article class="article-content"><p>In frontier network environments, outages and delayed uploads are normal operating conditions. Pipelines that assume low-latency connectivity will silently fail.</p><h2>Reference Pattern</h2><pre><code>collect locally -> persist queue -> transform+validate locally -> batch sync -> reconcile duplicates</code></pre><h2>Key Controls</h2><p>Use idempotent record keys, replay-safe ingestion, and strict timezone normalization at the edge.</p><h2>Validation Strategy</h2><p>Run schema validation at collection time and semantic checks at sync time when capacity/context metadata is available.</p><h2>Operational Benefit</h2><p>Teams separate communications failures from asset-performance failures, reducing false incident escalation.</p><p><a href="/docs/transforms/overview">Transforms</a> | <a href="/docs/validation/schema-validation">Schema Validation</a></p><a class="back-link" href="/blog.html">&larr; Back to Blog</a></article></main></body></html>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Edge Deployments in Unstable Connectivity: Reliable ODSE Pipelines - ODS-E Blog</title>
+  <meta name="description" content="A deployment pattern guide for ODSE data pipelines in intermittent or low-quality connectivity environments.">
+  <link rel="icon" type="image/x-icon" href="../favicon.ico">
+  <link rel="icon" type="image/png" sizes="32x32" href="../Artboard-7.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="../Artboard-7.png">
+  <link rel="stylesheet" href="../includes/common.css">
+  <style>
+    :root { --primary-black:#000; --primary-blue:#455BF1; --text-dark:#333; --text-light:#4D4D4D; --white:#FFF; --border-grey:#E0E0E0; --neutral-grey:#F4F4F4; --accent-red:#E20419; }
+    * { margin:0; padding:0; box-sizing:border-box; }
+    body { font-family:'DM Sans',Helvetica,Arial,sans-serif; background:var(--white); line-height:1.75; color:var(--text-dark); }
+    .header-bar { background:var(--primary-black); position:fixed; top:0; left:0; width:100%; height:70px; z-index:100; display:flex; align-items:center; justify-content:space-between; padding:0 90px; }
+    .branding { display:flex; align-items:center; }
+    .branding img { width:50px; height:50px; object-fit:contain; }
+    .site-title { color:var(--white); font-size:20px; font-weight:700; margin-left:15px; white-space:nowrap; }
+    .top-links { display:flex; gap:15px; }
+    .top-links a { color:var(--white); text-decoration:none; font:normal 12px/16px 'DM Sans',Helvetica,Arial,sans-serif; padding:5px; }
+    .article-container { max-width:920px; margin:0 auto; padding:120px 40px 80px; }
+    .article-header { margin-bottom:48px; text-align:center; border-bottom:1px solid var(--border-grey); padding-bottom:28px; }
+    .article-type { display:inline-block; padding:8px 16px; background:var(--accent-red); color:var(--white); font-size:.8rem; font-weight:600; border-radius:20px; text-transform:uppercase; letter-spacing:.5px; margin-bottom:20px; }
+    .article-title { font-size:2.6rem; font-weight:700; margin-bottom:14px; line-height:1.2; }
+    .article-excerpt { font-size:1.15rem; color:var(--text-light); margin-bottom:16px; line-height:1.5; }
+    .article-meta { font-size:.98rem; color:var(--primary-blue); font-weight:600; }
+    .article-content h2 { font-size:1.8rem; margin:36px 0 14px; line-height:1.3; }
+    .article-content h3 { font-size:1.3rem; margin:24px 0 10px; line-height:1.3; }
+    .article-content p { margin-bottom:16px; }
+    .article-content ul { margin:0 0 16px 22px; }
+    .article-content li { margin-bottom:8px; }
+    pre { background:var(--neutral-grey); border-radius:8px; padding:16px; overflow-x:auto; margin:14px 0 20px; line-height:1.5; }
+    code { font-family:Menlo,Monaco,Consolas,'Courier New',monospace; font-size:.95em; }
+    .callout { border:1px solid var(--border-grey); border-left:4px solid var(--primary-blue); border-radius:8px; padding:16px; margin:22px 0; background:#fafbff; }
+    .back-link { display:inline-block; margin-top:24px; color:var(--primary-blue); font-weight:600; text-decoration:none; }
+    @media (max-width:900px) { .header-bar{padding:0 16px;} .site-title{font-size:18px;} .article-container{padding:110px 20px 56px;} .article-title{font-size:2rem;} }
+  </style>
+</head>
+<body>
+  <header class="header-bar">
+    <div class="branding">
+      <a href="/docs/"><img src="/assets/images/brand/logo.png" alt="Asoba"></a>
+      <span class="site-title">ODS-E Documentation</span>
+    </div>
+    <div class="top-links">
+      <a href="https://opendataschema.energy/blog.html">Blog</a>
+      <a href="https://github.com/AsobaCloud/odse">GitHub</a>
+      <a href="https://asoba.co/contact-us">Contact</a>
+    </div>
+  </header>
+
+  <main class="article-container">
+    <header class="article-header">
+      <span class="article-type">Edge Operations</span>
+      <h1 class="article-title">Edge Deployments in Unstable Connectivity: Reliable ODSE Pipelines</h1>
+      <p class="article-excerpt">Intermittent networks are normal operating conditions in many deployments. The pipeline design must assume delay, replay, and partial availability.</p>
+      <div class="article-meta">Target audience: Edge engineers, SCADA operations teams, platform reliability teams</div>
+    </header>
+
+    <article class="article-content">
+      <p>In many regions, pipeline reliability is constrained by connectivity conditions, not by compute. Upload interruptions, long-latency links, and periodic outages are expected behavior. If the data path assumes continuous connectivity, it will fail silently and distort downstream analytics.</p>
+      <p>ODSE helps by separating source normalization and validation from cloud availability, so data integrity can be enforced at collection time and preserved through delayed sync.</p>
+
+      <h2>Reference Pattern</h2>
+      <pre><code>collect locally -> durable queue -> ODSE transform -> schema validation -> batch sync -> semantic validation -> warehouse</code></pre>
+      <p>This pattern keeps record quality controls close to the source while allowing cloud-side context checks when additional metadata is available.</p>
+
+      <h2>Core Design Controls</h2>
+      <ul>
+        <li>Use durable local persistence for raw payloads and transformed records.</li>
+        <li>Generate idempotent record keys so replay does not create duplicates.</li>
+        <li>Normalize timestamps to timezone-explicit ISO format before sync.</li>
+        <li>Keep raw source context for diagnostics when reconciliation is needed.</li>
+      </ul>
+
+      <h2>Validation Strategy by Stage</h2>
+      <h3>At the Edge</h3>
+      <p>Run transform plus schema validation to reject malformed records immediately. This avoids propagating structural errors into backlogs.</p>
+
+      <h3>At Sync/Cloud</h3>
+      <p>Run semantic validation with broader context such as capacity metadata, expected interval behavior, and recent operating history.</p>
+
+      <h2>Replay and Reconciliation</h2>
+      <p>When connectivity resumes, the system should safely replay queued batches. Reconciliation logic must deduplicate using stable keys and then verify interval continuity by site and day.</p>
+      <pre><code>if seen(record_id):
+    skip()
+else:
+    persist(record)
+
+recompute_completeness(site_id, date)</code></pre>
+
+      <h2>Operational Metrics That Matter</h2>
+      <ul>
+        <li>Queue depth and age at each edge node.</li>
+        <li>Transform and validation success rate by source.</li>
+        <li>Sync lag (event time vs arrival time).</li>
+        <li>Post-reconciliation completeness by site.</li>
+      </ul>
+      <p>These metrics help teams distinguish communications incidents from true asset-performance incidents.</p>
+
+      <h2>Common Failure Modes</h2>
+      <ul>
+        <li>Running normalization only in cloud and dropping edge events during outages.</li>
+        <li>Using non-idempotent sync paths that duplicate records after retries.</li>
+        <li>Treating delayed data as fault states instead of communications conditions.</li>
+        <li>Allowing local timezone drift that corrupts interval alignment.</li>
+      </ul>
+
+      <div class="callout">
+        <strong>Reliability rule:</strong>
+        In unstable connectivity contexts, deterministic replay behavior is as important as transform correctness. Without replay safety, you cannot trust historical reconstruction.
+      </div>
+
+      <h2>Deployment Checklist</h2>
+      <ul>
+        <li>Document source cadence and expected interval rules per site.</li>
+        <li>Implement local transform and schema validation before queueing batches.</li>
+        <li>Enforce idempotent sync semantics and duplicate reconciliation.</li>
+        <li>Run semantic validation on sync where capacity context is available.</li>
+        <li>Publish completeness and sync-lag dashboards for operations review.</li>
+      </ul>
+
+      <p>Edge reliability is not achieved by hoping for better connectivity. It is achieved by designing data contracts and replay behavior for the network conditions you actually have.</p>
+
+      <p><a href="/docs/transforms/overview">Transforms</a> | <a href="/docs/validation/schema-validation">Schema Validation</a> | <a href="/docs/validation/semantic-validation">Semantic Validation</a></p>
+      <a class="back-link" href="/blog.html">&larr; Back to Blog</a>
+    </article>
+  </main>
+</body>
+</html>

@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>From Policy to Settlement: How ODSE Addresses SAETA's Market Plumbing Gap - ODS-E Blog</title>
+  <meta name="description" content="How ODS-E addresses settlement-layer deficiencies identified in SAETA's Policy to Power report, with direct mapping to wheeling, tariff, and market-operation data contracts.">
+  <link rel="icon" type="image/x-icon" href="../favicon.ico">
+  <link rel="icon" type="image/png" sizes="32x32" href="../Artboard-7.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="../Artboard-7.png">
+  <link rel="stylesheet" href="../includes/common.css">
+  <style>
+    :root {
+      --primary-black: #000000;
+      --primary-blue: #455BF1;
+      --text-dark: #333;
+      --text-light: #4D4D4D;
+      --white: #FFFFFF;
+      --border-grey: #E0E0E0;
+      --neutral-grey: #F4F4F4;
+      --accent-red: #E20419;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      font-family: 'DM Sans', Helvetica, Arial, sans-serif;
+      background-color: var(--white);
+      line-height: 1.75;
+      color: var(--text-dark);
+    }
+
+    .header-bar {
+      background-color: var(--primary-black);
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 70px;
+      z-index: 100;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 90px;
+    }
+
+    .branding { display: flex; align-items: center; }
+
+    .site-title {
+      color: var(--white);
+      font-size: 20px;
+      font-weight: 700;
+      margin-left: 15px;
+      white-space: nowrap;
+    }
+
+    .top-links { display: flex; gap: 15px; }
+
+    .top-links a {
+      color: var(--white);
+      text-decoration: none;
+      font: normal 12px / 16px 'DM Sans', Helvetica, Arial, sans-serif;
+      padding: 5px;
+    }
+
+    .article-container {
+      max-width: 920px;
+      margin: 0 auto;
+      padding: 120px 40px 80px;
+    }
+
+    .article-header {
+      margin-bottom: 48px;
+      text-align: center;
+      border-bottom: 1px solid var(--border-grey);
+      padding-bottom: 28px;
+    }
+
+    .article-type {
+      display: inline-block;
+      padding: 8px 16px;
+      background: var(--accent-red);
+      color: var(--white);
+      font-size: 0.8rem;
+      font-weight: 600;
+      border-radius: 20px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      margin-bottom: 20px;
+    }
+
+    .article-title {
+      font-size: 2.4rem;
+      font-weight: 700;
+      margin-bottom: 14px;
+      line-height: 1.2;
+    }
+
+    .article-excerpt {
+      font-size: 1.1rem;
+      color: var(--text-light);
+      margin-bottom: 16px;
+      line-height: 1.5;
+    }
+
+    .article-meta {
+      font-size: 0.95rem;
+      color: var(--primary-blue);
+      font-weight: 600;
+    }
+
+    .article-content h2 { font-size: 1.75rem; margin: 34px 0 14px; line-height: 1.3; }
+    .article-content h3 { font-size: 1.25rem; margin: 24px 0 10px; line-height: 1.3; }
+    .article-content p { margin-bottom: 16px; }
+    .article-content ul { margin: 0 0 16px 22px; }
+    .article-content li { margin-bottom: 8px; }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 14px 0 20px;
+      font-size: 0.96rem;
+    }
+
+    th, td {
+      border: 1px solid var(--border-grey);
+      padding: 10px 12px;
+      text-align: left;
+      vertical-align: top;
+    }
+
+    th {
+      background: var(--neutral-grey);
+      font-weight: 700;
+    }
+
+    .callout {
+      border: 1px solid var(--border-grey);
+      border-left: 4px solid var(--primary-blue);
+      border-radius: 8px;
+      padding: 16px;
+      margin: 22px 0;
+      background: #fafbff;
+    }
+
+    .back-link {
+      display: inline-block;
+      margin-top: 24px;
+      color: var(--primary-blue);
+      font-weight: 600;
+      text-decoration: none;
+    }
+
+    @media (max-width: 900px) {
+      .header-bar { padding: 0 16px; }
+      .site-title { font-size: 18px; }
+      .article-container { padding: 110px 20px 56px; }
+      .article-title { font-size: 2rem; }
+    }
+  </style>
+</head>
+<body>
+  <header class="header-bar">
+    <div class="branding">
+      <span class="site-title">Open Data Schema for Energy</span>
+    </div>
+    <div class="top-links">
+      <a href="https://opendataschema.energy/blog.html">Blog</a>
+      <a href="https://github.com/AsobaCloud/odse">GitHub</a>
+      <a href="https://asoba.co/contact-us">Contact</a>
+    </div>
+  </header>
+
+  <main class="article-container">
+    <header class="article-header">
+      <span class="article-type">Market Reform</span>
+      <h1 class="article-title">From Policy to Settlement: How ODSE Addresses SAETA's Market Plumbing Gap</h1>
+      <p class="article-excerpt">SAETA's Policy to Power report identifies settlement and wheeling execution as a core bottleneck. ODSE is designed to provide the shared data contract that this layer requires.</p>
+      <div class="article-meta">Target audience: traders, municipalities, IPPs, market operators, and energy data platform teams</div>
+    </header>
+
+    <article class="article-content">
+      <p>South Africa's market reform path is no longer blocked by intent alone. It is blocked by execution at the data and settlement layer. SAETA's February 2026 report, <a href="https://www.ee.co.za/wp-content/uploads/Policy-to-power-Ten-actions-to-deliver-green-accessible-and-secure-electricity.pdf">Policy to Power: Ten actions to deliver green, accessible and secure electricity</a>, is clear on this point across Actions 2, 6, 7, 8, and 9.</p>
+
+      <h2>What the SAETA Report Identifies as Deficient</h2>
+      <ul>
+        <li>Pricing reform requires cost-reflective and unbundled tariff treatment (Action 2).</li>
+        <li>Municipal distribution reform requires standardized processes and stronger reconciliation discipline (Action 6).</li>
+        <li>Trading rules need a consistent interface across sellers, buyers, and network operators (Action 7).</li>
+        <li>Wheeling remains fragmented and requires automated reconciliation, billing, and scalable exchange systems (Action 8).</li>
+        <li>SAWEM and bilateral trading must run coherently with explicit deviation and risk-allocation structures (Action 9).</li>
+      </ul>
+
+      <h2>How ODSE Addresses the Settlement Layer</h2>
+      <p>ODSE is not a market operator and not a billing company. It is the shared contract that lets all those actors exchange the same machine-validatable records.</p>
+
+      <table>
+        <thead>
+          <tr>
+            <th>SAETA deficiency area</th>
+            <th>ODSE response surface</th>
+            <th>Implementation artifact</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Inconsistent market-party interfaces</td>
+            <td>Canonical party identity fields</td>
+            <td><code>seller_party_id</code>, <code>buyer_party_id</code>, <code>network_operator_id</code>, <code>wheeling_agent_id</code></td>
+          </tr>
+          <tr>
+            <td>Fragmented wheeling and manual reconciliation</td>
+            <td>Wheeling transaction envelope + status lifecycle</td>
+            <td><code>wheeling_type</code>, <code>injection_point_id</code>, <code>offtake_point_id</code>, <code>wheeling_status</code>, <code>wheeling_path_id</code></td>
+          </tr>
+          <tr>
+            <td>Unbundled tariff and pricing-policy execution gap</td>
+            <td>Tariff context and charge decomposition</td>
+            <td><code>tariff_schedule_id</code>, <code>tariff_period</code>, component charge fields</td>
+          </tr>
+          <tr>
+            <td>SAWEM/Bilateral coexistence with deviation control</td>
+            <td>BRP and imbalance settlement context</td>
+            <td><code>balance_responsible_party_id</code>, <code>forecast_kWh</code>, <code>settlement_type</code>, <code>imbalance_kWh</code></td>
+          </tr>
+          <tr>
+            <td>Municipal billing and DAA reconciliation weakness</td>
+            <td>Municipal reconciliation fields</td>
+            <td><code>billing_period</code>, <code>billed_kWh</code>, <code>billing_status</code>, <code>daa_reference</code></td>
+          </tr>
+        </tbody>
+      </table>
+
+      <h2>Where This Lives in ODSE Today</h2>
+      <ul>
+        <li>Core schema fields: <a href="/docs/schemas/energy-timeseries">energy-timeseries</a> and <a href="/docs/schemas/asset-metadata">asset-metadata</a>.</li>
+        <li>Settlement/tariff/topology foundations: <a href="https://github.com/AsobaCloud/odse/blob/main/spec/market-context.md">market-context.md</a>.</li>
+        <li>SAETA-aligned reform extensions: <a href="https://github.com/AsobaCloud/odse/blob/main/spec/market-reform-extensions.md">market-reform-extensions.md</a>.</li>
+      </ul>
+
+      <h2>What ODSE Intentionally Does Not Do</h2>
+      <p>To keep interoperability neutral and adoptable, ODSE does not replace regulatory institutions or registry operators.</p>
+      <ul>
+        <li>ODSE does not issue licences, run SAWEM, or set tariffs.</li>
+        <li>ODSE does not host the certificate registry lifecycle.</li>
+        <li>ODSE does not impose one central ownership database for all market actors.</li>
+      </ul>
+
+      <div class="callout">
+        <strong>Practical framing:</strong> ODSE provides the common reporting layer. Market participants keep their own systems, but stop exchanging incompatible records.
+      </div>
+
+      <h2>Current Gap to Close Next</h2>
+      <p>The schema surface is now broad enough for SAETA's settlement asks. The remaining execution priority is runtime conformance depth: validator parity, profile-driven adoption, and fixture-backed market workflow checks.</p>
+
+      <h2>Why This Matters Now</h2>
+      <p>SAETA's report effectively says the same thing market operators, traders, and municipalities experience daily: reform stalls when settlement interfaces are discretionary. A shared, open data contract is no longer optional market hygiene. It is core reform infrastructure.</p>
+
+      <p><a href="/docs/trading-integration/overview">Trading Integration</a> | <a href="/docs/llm-integration/overview">LLM Integration</a> | <a href="/docs/schemas/overview">Schema Reference</a></p>
+      <a class="back-link" href="/blog.html">&larr; Back to Blog</a>
+    </article>
+  </main>
+</body>
+</html>

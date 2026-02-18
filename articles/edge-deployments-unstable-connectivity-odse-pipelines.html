@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Edge Deployments in Unstable Connectivity: Reliable ODSE Pipelines - ODS-E Blog</title>
-  <meta name="description" content="A deployment pattern guide for ODSE data pipelines in intermittent or low-quality connectivity environments.">
+  <title>Our Rural Sites Kept Losing Data — Here's How We Fixed the Pipeline - ODS-E Blog</title>
+  <meta name="description" content="How we stopped blaming inverters for data gaps that were actually caused by spotty cellular connectivity — and the pipeline patterns that made our rural sites reliable.">
   <link rel="icon" type="image/x-icon" href="../favicon.ico">
   <link rel="icon" type="image/png" sizes="32x32" href="../Artboard-7.png">
   <link rel="apple-touch-icon" sizes="180x180" href="../Artboard-7.png">
@@ -52,75 +52,69 @@
   <main class="article-container">
     <header class="article-header">
       <span class="article-type">Edge Operations</span>
-      <h1 class="article-title">Edge Deployments in Unstable Connectivity: Reliable ODSE Pipelines</h1>
-      <p class="article-excerpt">Intermittent networks are normal operating conditions in many deployments. The pipeline design must assume delay, replay, and partial availability.</p>
-      <div class="article-meta">Target audience: Edge engineers, SCADA operations teams, platform reliability teams</div>
+      <h1 class="article-title">Our Rural Sites Kept Losing Data — Here's How We Fixed the Pipeline</h1>
+      <p class="article-excerpt">We spent months blaming inverters for data gaps that were actually caused by spotty cellular connectivity. Here's the pipeline redesign that made our rural and peri-urban sites reliable.</p>
     </header>
 
     <article class="article-content">
-      <p>In many regions, pipeline reliability is constrained by connectivity conditions, not by compute. Upload interruptions, long-latency links, and periodic outages are expected behavior. If the data path assumes continuous connectivity, it will fail silently and distort downstream analytics.</p>
-      <p>ODSE helps by separating source normalization and validation from cloud availability, so data integrity can be enforced at collection time and preserved through delayed sync.</p>
+      <p>We manage a portfolio that includes several rural and peri-urban solar sites in the Eastern Cape and Limpopo. Nice installations, solid inverter hardware, decent generation profiles. But for the first six months of operation, the data told a different story. Our completeness dashboard showed regular gaps — some sites dipping to 60-70% on certain days — and the ops team kept opening tickets against the inverters. "Site X underperforming again." "Check the string faults at Site Y."</p>
+      <p>Except there were no string faults. The inverters were generating fine. We were just losing the data between the site and the cloud. Spotty cellular connectivity, gateway reboots, upload timeouts — the pipeline assumed a reliable network, and when it didn't get one, it silently dropped records. Every "performance anomaly" in our analytics was actually a communications gap wearing a disguise.</p>
+      <p>Once we understood the real problem, we rebuilt the pipeline around a simple principle: normalize and validate at the edge, queue durably, and sync when you can. Here's what that looks like.</p>
 
-      <h2>Reference Pattern</h2>
+      <h2>The Pipeline We Ended Up With</h2>
       <pre><code>collect locally -> durable queue -> ODSE transform -> schema validation -> batch sync -> semantic validation -> warehouse</code></pre>
-      <p>This pattern keeps record quality controls close to the source while allowing cloud-side context checks when additional metadata is available.</p>
+      <p>The key insight is that data quality controls live close to the source — on the gateway itself or on a local edge device. You don't wait for the data to reach the cloud before checking if it's well-formed. By the time it gets there (if it gets there on the first try), it should already be structurally valid. Cloud-side, you run the heavier semantic checks that need portfolio context — things like "is this generation value plausible given the site's installed capacity and today's irradiance?"</p>
 
-      <h2>Core Design Controls</h2>
-      <ul>
-        <li>Use durable local persistence for raw payloads and transformed records.</li>
-        <li>Generate idempotent record keys so replay does not create duplicates.</li>
-        <li>Normalize timestamps to timezone-explicit ISO format before sync.</li>
-        <li>Keep raw source context for diagnostics when reconciliation is needed.</li>
-      </ul>
+      <h2>What We Changed at the Edge</h2>
+      <p>The biggest shift was making local persistence durable. Our original setup wrote transformed records to a temporary directory and uploaded them immediately. If the upload failed, the records were gone. Classic fire-and-forget architecture that only works when the network works.</p>
+      <p>We switched to a durable local queue — nothing exotic, just SQLite on the gateway — that holds both the raw payload and the ODSE-transformed record. Every record gets an idempotent key derived from site ID, timestamp, and source hash. That key is what makes replay safe: if the same record arrives twice, the cloud side can deduplicate without worrying about double-counting.</p>
+      <p>We also moved timestamp normalization to the edge. Previously, the cloud pipeline was handling timezone conversion, which meant any upload delay introduced ambiguity about which timezone the data was in. Now everything leaves the gateway as timezone-explicit ISO format. No guesswork downstream.</p>
 
-      <h2>Validation Strategy by Stage</h2>
-      <h3>At the Edge</h3>
-      <p>Run transform plus schema validation to reject malformed records immediately. This avoids propagating structural errors into backlogs.</p>
+      <h2>The Monday Morning Mystery</h2>
+      <p>Here's a concrete example that made us rethink how we monitor these sites. One site in the portfolio was showing 40% completeness every Monday. Tuesdays through Sundays were fine — 95%+ — but Mondays were a disaster. The ops team had it flagged as a recurring inverter fault.</p>
+      <p>We dug in and found that the cellular gateway at that site was rebooting on a weekly cron job — some leftover from the ISP's default configuration. The reboot happened at midnight Sunday, the gateway took about 90 minutes to reconnect, and the upload queue wasn't durable. Every record collected between midnight and ~1:30am was lost. But because the generation during those hours was near zero (it's nighttime), the energy totals looked almost normal. The completeness gap was invisible unless you looked at interval-level data.</p>
+      <p>After we made the queue durable and the sync idempotent, the gateway could reboot whenever it wanted. Records would queue up locally and sync on reconnection. Monday completeness went from 40% to 98%.</p>
 
-      <h3>At Sync/Cloud</h3>
-      <p>Run semantic validation with broader context such as capacity metadata, expected interval behavior, and recent operating history.</p>
+      <h2>Validation in Two Stages</h2>
+      <h3>At the edge</h3>
+      <p>We run the ODSE transform plus schema validation before a record enters the durable queue. If the record is malformed — null energy fields, missing timestamps, impossible values — it gets rejected right there. This sounds obvious, but our old pipeline would happily ship garbage to the cloud and then fail during analytics. By catching structural errors at the edge, we stopped polluting the backlog with records that could never be valid.</p>
 
-      <h2>Replay and Reconciliation</h2>
-      <p>When connectivity resumes, the system should safely replay queued batches. Reconciliation logic must deduplicate using stable keys and then verify interval continuity by site and day.</p>
+      <h3>At sync</h3>
+      <p>When batches arrive cloud-side, we run semantic validation. This is where you check things that require portfolio context: is the reported generation plausible for this site's capacity? Does the interval pattern match what we expect for this source? Have we seen a gap in the sequence that suggests missing data rather than zero generation? Schema validation tells you the record is well-formed. Semantic validation tells you it makes sense.</p>
+
+      <h2>Making Replay Safe</h2>
+      <p>The other thing that burned us early on was duplicate records. When the network is flaky, uploads retry. If your sync path isn't idempotent, retries create duplicates, and duplicates inflate your energy totals. We had one site that appeared to be generating 15% above nameplate capacity for a week. Turned out it was the same afternoon's data uploaded three times.</p>
+      <p>The fix is straightforward: stable record keys and deduplication at the cloud boundary.</p>
       <pre><code>if seen(record_id):
     skip()
 else:
     persist(record)
 
 recompute_completeness(site_id, date)</code></pre>
+      <p>After every sync batch, we recompute completeness for the affected site and date range. This catches both newly filled gaps and any intervals that are still missing.</p>
 
-      <h2>Operational Metrics That Matter</h2>
+      <h2>The Metrics That Actually Matter</h2>
+      <p>We used to track uptime and generation totals. Those are fine, but they don't help you distinguish between "the inverter is down" and "the network is down." Now we track four things:</p>
       <ul>
-        <li>Queue depth and age at each edge node.</li>
-        <li>Transform and validation success rate by source.</li>
-        <li>Sync lag (event time vs arrival time).</li>
-        <li>Post-reconciliation completeness by site.</li>
+        <li><strong>Queue depth and age at each gateway</strong> — if records are piling up, the network is the problem, not the asset.</li>
+        <li><strong>Transform and validation success rate by source</strong> — tells you whether the OEM export format has changed or degraded.</li>
+        <li><strong>Sync lag</strong> (event time vs arrival time) — the gap between when data was generated and when it reached the warehouse.</li>
+        <li><strong>Post-reconciliation completeness by site</strong> — the only metric that tells you the full truth after replays have landed.</li>
       </ul>
-      <p>These metrics help teams distinguish communications incidents from true asset-performance incidents.</p>
+      <p>The combination of sync lag and post-reconciliation completeness is what finally let our ops team stop blaming inverters for network problems. When sync lag spikes but completeness recovers after replay, it's a comms issue. When completeness stays low even after replay, something's actually wrong at the site.</p>
 
-      <h2>Common Failure Modes</h2>
-      <ul>
-        <li>Running normalization only in cloud and dropping edge events during outages.</li>
-        <li>Using non-idempotent sync paths that duplicate records after retries.</li>
-        <li>Treating delayed data as fault states instead of communications conditions.</li>
-        <li>Allowing local timezone drift that corrupts interval alignment.</li>
-      </ul>
+      <h2>Mistakes We Made (So You Don't Have To)</h2>
+      <p>Our original pipeline ran normalization only in the cloud. When the network dropped, raw records were lost before they ever got transformed. Moving the ODSE transform to the edge was the single most impactful change we made.</p>
+      <p>We also spent too long treating delayed data as a fault state. Our alerting system would fire "missing data" alerts for sites that were simply queuing records locally during a connectivity window. We learned to separate "data not yet arrived" from "data will never arrive" — the first is a sync delay, the second is a real incident. The durable queue and replay mechanism made this distinction possible.</p>
+      <p>And timezone drift — don't ignore it. One of our gateways had its system clock drifting by a few minutes each week because NTP wasn't configured. Small drift, but enough to shift intervals across boundaries and break completeness calculations. Pin your timestamps at transform time and validate the clock source.</p>
 
       <div class="callout">
-        <strong>Reliability rule:</strong>
-        In unstable connectivity contexts, deterministic replay behavior is as important as transform correctness. Without replay safety, you cannot trust historical reconstruction.
+        <strong>The lesson we keep coming back to:</strong>
+        In unstable connectivity, deterministic replay behavior is as important as transform correctness. If you can't replay safely, you can't trust any historical reconstruction — and every data gap becomes permanent.
       </div>
 
-      <h2>Deployment Checklist</h2>
-      <ul>
-        <li>Document source cadence and expected interval rules per site.</li>
-        <li>Implement local transform and schema validation before queueing batches.</li>
-        <li>Enforce idempotent sync semantics and duplicate reconciliation.</li>
-        <li>Run semantic validation on sync where capacity context is available.</li>
-        <li>Publish completeness and sync-lag dashboards for operations review.</li>
-      </ul>
-
-      <p>Edge reliability is not achieved by hoping for better connectivity. It is achieved by designing data contracts and replay behavior for the network conditions you actually have.</p>
+      <h2>Where We Are Now</h2>
+      <p>Our rural sites went from being the "problem children" of the portfolio to some of the most reliable data sources we have. Not because the connectivity improved — it didn't — but because the pipeline stopped pretending the connectivity was something it wasn't. We design for the network conditions we actually have, not the ones we wish we had. Durable queues, idempotent sync, edge validation, and honest completeness metrics. That's the entire playbook.</p>
 
       <p><a href="/docs/transforms/overview">Transforms</a> | <a href="/docs/validation/schema-validation">Schema Validation</a> | <a href="/docs/validation/semantic-validation">Semantic Validation</a></p>
       <a class="back-link" href="/blog.html">&larr; Back to Blog</a>

@@ -301,7 +301,7 @@ ODS-E sits between OEM data sources and downstream analytics, forecasting, and d
 
 ## Governance and Sustainability
 
-ODS-E is maintained by Asoba Corporation with an open governance model. The specification evolves through a public proposal process documented in the repository's GOVERNANCE.md. Schema changes require backward compatibility or explicit versioning. Transform contributions are reviewed against the specification and tested via the transform harness before merge.
+ODS-E is maintained by Open Data Schema for Energy with an open governance model. The specification evolves through a public proposal process documented in the repository's GOVERNANCE.md. Schema changes require backward compatibility or explicit versioning. Transform contributions are reviewed against the specification and tested via the transform harness before merge.
 
 The CC-BY-SA licensing on the specification is a deliberate structural choice. It ensures that any organization extending ODS-E — adding new fields, new error types, or new transform specifications — must publish those extensions under the same license. This creates a one-way ratchet toward openness: the specification can grow but cannot be captured.
 
@@ -330,4 +330,4 @@ pip install odse
 
 ---
 
-*ODS-E is an open standard maintained by [Asoba Corporation](https://asoba.co). The specification is licensed under CC-BY-SA 4.0. The reference implementation is licensed under Apache 2.0.*
+*ODS-E is an open standard maintained by [Open Data Schema for Energy](https://asoba.co). The specification is licensed under CC-BY-SA 4.0. The reference implementation is licensed under Apache 2.0.*

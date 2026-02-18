@@ -268,4 +268,4 @@ print(result.is_valid)  # True</code></pre>
   </div>
 </div>
 
-&copy; 2026 Asoba Corporation. All rights reserved. ODS-E specification licensed under CC-BY-SA 4.0.
+&copy; 2026 Open Data Schema for Energy. All rights reserved. ODS-E specification licensed under CC-BY-SA 4.0.

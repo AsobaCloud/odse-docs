@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>We Unified Three Inverter Feeds in a Week — Here's the Day-by-Day - ODS-E Blog</title>
-  <meta name="description" content="How our team normalized Huawei, Enphase, and Solarman telemetry into one ODSE pipeline in a single sprint — what worked, what didn't, and what we'd do differently.">
+  <title>Unifying Three Inverter Feeds in a Week: A Day-by-Day Walkthrough - ODS-E Blog</title>
+  <meta name="description" content="A worked example showing how to normalize Huawei, Enphase, and Solarman telemetry into one ODSE pipeline in a single sprint — what works, what doesn't, and what to do differently.">
   <link rel="icon" type="image/x-icon" href="../favicon.ico">
   <link rel="icon" type="image/png" sizes="32x32" href="../Artboard-7.png">
   <link rel="apple-touch-icon" sizes="180x180" href="../Artboard-7.png">
@@ -193,61 +193,61 @@
   <main class="article-container">
     <header class="article-header">
       <span class="article-type">Implementation Guide</span>
-      <h1 class="article-title">We Unified Three Inverter Feeds in a Week — Here's the Day-by-Day</h1>
-      <p class="article-excerpt">How our team normalized Huawei, Enphase, and Solarman telemetry into one ODSE pipeline in a single sprint — what worked, what didn't, and what we'd do differently.</p>
+      <h1 class="article-title">Unifying Three Inverter Feeds in a Week: A Day-by-Day Walkthrough</h1>
+      <p class="article-excerpt">A worked example showing how to normalize Huawei, Enphase, and Solarman telemetry into one ODSE pipeline in a single sprint — what works, what doesn't, and what to do differently.</p>
     </header>
 
     <article class="article-content">
-      <p>Last quarter we had five sites across three OEMs — Huawei string inverters at two rooftop installations, Enphase microinverters at a commercial carport, and Solarman-connected panels at two ground-mount sites in the Eastern Cape. The portfolio was small enough that everyone assumed the data was fine. Then our quarterly energy report came back with a 12% discrepancy between what the sites were producing and what our analytics showed, and nobody could explain where the gap came from.</p>
-      <p>The root cause turned out to be embarrassingly mundane: Huawei exports used UTC, Enphase used local time with no offset marker, and Solarman included a timezone field that was wrong half the time. We were double-counting some intervals and missing others entirely. So we blocked out a week to fix it properly using ODSE as the normalization layer. Here's how that week actually went.</p>
+      <p>Consider a small portfolio: five sites across three OEMs — Huawei string inverters at two rooftop installations, Enphase microinverters at a commercial carport, and Solarman-connected panels at two ground-mount sites in the Eastern Cape. The portfolio is small enough that everyone assumes the data is fine. Then the quarterly energy report comes back with a 12% discrepancy between what the sites are producing and what the analytics show, and nobody can explain where the gap comes from.</p>
+      <p>The root cause turns out to be embarrassingly mundane: Huawei exports use UTC, Enphase uses local time with no offset marker, and Solarman includes a timezone field that's wrong half the time. The pipeline is double-counting some intervals and missing others entirely. The fix: block out a week, use ODSE as the normalization layer, and get it right. Here's how that week plays out.</p>
 
-      <h2>Day 1: Figure Out What We Actually Had</h2>
-      <p>We started by inventorying every data source we were actually ingesting — not what the vendor docs said was available, but what was landing in our pipeline. This took longer than expected because the Solarman integration had been set up by someone who'd since left, and the export format had drifted from what was documented in our wiki.</p>
-      <p>For each source we wrote down: transport type (SFTP drop vs API pull), reporting interval, timestamp convention, and known gaps. The Huawei feed was the cleanest — 5-minute intervals, proper UTC timestamps, reliable delivery. Enphase was 15-minute intervals via API with local timestamps and no timezone indicator. Solarman was the wildcard: daily CSV dumps with a mix of interval lengths depending on the logger firmware version.</p>
-      <p>The output was a simple source manifest — a shared doc the whole team could reference. Nothing fancy, but we'd never actually had all three sources described in one place before.</p>
+      <h2>Day 1: Figure Out What You Actually Have</h2>
+      <p>Start by inventorying every data source actually being ingested — not what the vendor docs say is available, but what's landing in the pipeline. This takes longer than expected because the Solarman integration was set up by someone who's since left, and the export format has drifted from what's documented in the wiki.</p>
+      <p>For each source, write down: transport type (SFTP drop vs API pull), reporting interval, timestamp convention, and known gaps. The Huawei feed is the cleanest — 5-minute intervals, proper UTC timestamps, reliable delivery. Enphase is 15-minute intervals via API with local timestamps and no timezone indicator. Solarman is the wildcard: daily CSV dumps with a mix of interval lengths depending on the logger firmware version.</p>
+      <p>The output is a simple source manifest — a shared doc the whole team can reference. Nothing fancy, but having all three sources described in one place for the first time is surprisingly clarifying.</p>
 
       <h2>Day 2: Get One OEM Through End-to-End</h2>
-      <p>We picked Huawei first because it was the noisiest in terms of volume and the most business-critical (two of our five sites). The goal was narrow: timestamp normalization, energy field mapping, and error code classification. Nothing else.</p>
+      <p>Pick the noisiest OEM first — in this case, Huawei, which covers two of the five sites and is the most business-critical. The goal is narrow: timestamp normalization, energy field mapping, and error code classification. Nothing else.</p>
       <pre><code>from odse import transform
 
 rows = transform("huawei_export.csv", source="huawei")
 print(rows[0])</code></pre>
-      <p>This went faster than we expected — maybe three hours to get a clean transform running against a week of historical data. The tricky part was the error codes. Huawei uses numeric fault codes that don't map neatly to anything generic, so we had to make some judgment calls about which codes mapped to which ODSE <code>error_type</code> values. We documented the mapping decisions in comments rather than trying to get them perfect on day one.</p>
+      <p>This goes faster than expected — maybe three hours to get a clean transform running against a week of historical data. The tricky part is the error codes. Huawei uses numeric fault codes that don't map neatly to anything generic, so you'll need to make some judgment calls about which codes map to which ODSE <code>error_type</code> values. Document the mapping decisions in comments rather than trying to get them perfect on day one.</p>
 
       <h2>Day 3: Wire In Validation (and Actually Block on It)</h2>
-      <p>This is the day that changed our thinking the most. We'd been running validation as a weekly QA check — someone would eyeball a report on Fridays and flag anything weird. That meant we were routinely making operational decisions on Monday through Thursday using data that hadn't been validated at all.</p>
-      <p>We moved validation to a gate: if records don't pass schema validation, they don't enter the analytics pipeline. Period.</p>
+      <p>This is the step that changes the most about how the pipeline operates. In many setups, validation runs as a weekly QA check — someone eyeballs a report on Fridays and flags anything weird. That means the team is routinely making operational decisions Monday through Thursday on data that hasn't been validated at all.</p>
+      <p>Move validation to a gate: if records don't pass schema validation, they don't enter the analytics pipeline. Period.</p>
       <pre><code>from odse import validate
 
 result = validate("site_a_odse.json")
 print(result.is_valid)
 print(result.errors)</code></pre>
-      <p>The first run against our Huawei transform output flagged about 4% of records — mostly null energy fields during overnight hours that we'd been treating as zero-generation instead of no-data. Small distinction, big impact on completeness calculations. We started tracking validation failures by class and frequency, which immediately became the backlog for the rest of the week.</p>
+      <p>The first run against the Huawei transform output flags about 4% of records — mostly null energy fields during overnight hours that had been treated as zero-generation instead of no-data. Small distinction, big impact on completeness calculations. Start tracking validation failures by class and frequency — this immediately becomes the backlog for the rest of the week.</p>
 
       <h2>Day 4: Bring In Enphase and Solarman</h2>
-      <p>Now for the hard part. We needed the other two OEM feeds producing the same ODSE output, and we had to resist the temptation to build per-site special cases. The whole point is one schema, not three tidy silos that happen to live in the same database.</p>
-      <p>Enphase was straightforward once we sorted out the timestamp issue — we pinned everything to UTC at the transform layer and stored the original local timestamp as diagnostic context. Solarman was painful. The interval lengths varied by firmware version, and two of the CSV columns had been renamed in a firmware update that only one of our two Solarman sites had received. We ended up writing a small pre-processor that normalized the column names before the ODSE transform touched it.</p>
-      <p>By end of day, we could concatenate the output from all three OEMs and query it without schema exceptions. That moment — running one query across the whole portfolio for the first time — was genuinely satisfying.</p>
+      <p>Now for the hard part. The other two OEM feeds need to produce the same ODSE output, and the temptation to build per-site special cases is real. Resist it. The whole point is one schema, not three tidy silos that happen to live in the same database.</p>
+      <p>Enphase is straightforward once the timestamp issue is sorted — pin everything to UTC at the transform layer and store the original local timestamp as diagnostic context. Solarman is painful. The interval lengths vary by firmware version, and two of the CSV columns have been renamed in a firmware update that only one of the two Solarman sites has received. The fix: a small pre-processor that normalizes the column names before the ODSE transform touches them.</p>
+      <p>By end of day, the output from all three OEMs can be concatenated and queried without schema exceptions. That moment — running one query across the whole portfolio for the first time — is genuinely satisfying.</p>
 
       <h2>Day 5: Build the Views Nobody Had Before</h2>
-      <p>With unified data, we built two portfolio-level views that our operations team had been asking about for months: a fault rollup by <code>error_type</code> across all sites, and a completeness report by site and day. The fault rollup immediately surfaced that one of the ground-mount sites had been throwing communication timeout errors every afternoon for weeks — invisible before because the Solarman error codes didn't mean anything to the team reviewing the Huawei-centric dashboard.</p>
-      <p>The completeness report was even more revealing. Two sites that looked fine in isolation were actually missing 8-10% of their daily intervals. The gaps were short enough that the daily energy totals looked plausible, but the interval-level data was full of holes.</p>
+      <p>With unified data, build two portfolio-level views that operations teams typically ask for: a fault rollup by <code>error_type</code> across all sites, and a completeness report by site and day. In this example, the fault rollup immediately surfaces that one of the ground-mount sites has been throwing communication timeout errors every afternoon for weeks — invisible before because the Solarman error codes didn't mean anything to the team reviewing the Huawei-centric dashboard.</p>
+      <p>The completeness report is even more revealing. Two sites that look fine in isolation are actually missing 8-10% of their daily intervals. The gaps are short enough that the daily energy totals look plausible, but the interval-level data is full of holes.</p>
 
       <h2>Day 6: Make It Survive Real Operations</h2>
-      <p>Days 2 through 5 were all happy-path work. Day 6 was about what happens when the Solarman SFTP server is down for six hours, or when the Enphase API returns a 429 at 2am and the retry logic doesn't handle it, or when someone's laptop timezone changes and the local transform runs shift the offset.</p>
-      <p>We added replay-safe ingestion so re-processing a batch wouldn't create duplicates. We set up alerting for transform and validation failure spikes — not email alerts that everyone ignores, but a Slack message to the on-call channel with the failure class and count. And we wrote down the fallback behavior for delayed source data, because "we'll figure it out when it happens" is how you end up debugging at 11pm.</p>
+      <p>Days 2 through 5 are all happy-path work. Day 6 is about what happens when the Solarman SFTP server is down for six hours, or when the Enphase API returns a 429 at 2am and the retry logic doesn't handle it, or when someone's laptop timezone changes and the local transform runs shift the offset.</p>
+      <p>Add replay-safe ingestion so re-processing a batch doesn't create duplicates. Set up alerting for transform and validation failure spikes — not email alerts that everyone ignores, but a Slack message to the on-call channel with the failure class and count. And write down the fallback behavior for delayed source data, because "figure it out when it happens" is how you end up debugging at 11pm.</p>
 
       <h2>Day 7: Freeze It and Write It Down</h2>
-      <p>We locked the ODSE contract version, documented the error-code mappings we'd decided on, and wrote an internal runbook covering three things: who updates transforms when an OEM changes their export format, who triages validation failures when the alert fires, and who approves schema version updates if we need to evolve the contract.</p>
+      <p>Lock the ODSE contract version, document the error-code mappings, and write an internal runbook covering three things: who updates transforms when an OEM changes their export format, who triages validation failures when the alert fires, and who approves schema version updates when the contract needs to evolve.</p>
       <p>That last point matters more than it sounds. Without clear ownership, schemas drift. Someone adds a field for one site, someone else changes a mapping, and six months later you're back where you started.</p>
 
-      <h2>What We Got Wrong Along the Way</h2>
-      <p>We almost made the mistake of treating ODSE as an analytics layer — running forecasting logic inside the transform pipeline instead of keeping it downstream where it belongs. ODSE is a data interchange layer. The moment you start embedding business logic in the normalization step, you've coupled things that should be independent.</p>
-      <p>We also deferred the error taxonomy mapping until day 4, which was too late. If you don't map error codes early, you're just creating three tidy files that still can't be compared. The whole point of a shared schema is shared semantics, not shared syntax.</p>
+      <h2>Common Mistakes Along the Way</h2>
+      <p>A common mistake is treating ODSE as an analytics layer — running forecasting logic inside the transform pipeline instead of keeping it downstream where it belongs. ODSE is a data interchange layer. The moment you start embedding business logic in the normalization step, you've coupled things that should be independent.</p>
+      <p>Another pitfall: deferring the error taxonomy mapping until day 4, which is too late. If you don't map error codes early, you're just creating three tidy files that still can't be compared. The whole point of a shared schema is shared semantics, not shared syntax.</p>
 
-      <h2>What Actually Changed</h2>
-      <p>The honest answer: we didn't solve every data problem in a week. We still have edge cases in the Solarman transform that need attention, and our error taxonomy has some mappings we're not fully confident in. But the quarterly report that kicked this off? We re-ran it against the normalized pipeline and the 12% discrepancy dropped to under 1%. The remaining gap was real — an inverter with degraded output that had been masked by the timestamp confusion.</p>
-      <p>More importantly, we now have one place to look. When something's wrong, we don't have to check three different dashboards with three different conventions. One schema, one validation gate, one completeness view. Everything else we build from here can trust the foundation.</p>
+      <h2>What This Sprint Actually Produces</h2>
+      <p>The honest answer: this sprint won't solve every data problem. There will still be edge cases in the Solarman transform that need attention, and some error taxonomy mappings that aren't fully confident. But the quarterly report that kicked this off? Re-run it against the normalized pipeline and the 12% discrepancy drops to under 1%. The remaining gap is real — an inverter with degraded output that had been masked by the timestamp confusion.</p>
+      <p>More importantly, there's now one place to look. When something's wrong, the team doesn't have to check three different dashboards with three different conventions. One schema, one validation gate, one completeness view. Everything built from here can trust the foundation.</p>
 
       <div class="cta-box">
         <strong>Next steps (OSS):</strong>

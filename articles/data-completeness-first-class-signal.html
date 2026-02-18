@@ -5,15 +5,6 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Data Completeness Is a First-Class Signal (Not a Reporting Afterthought) - ODS-E Blog</title>
   <meta name="description" content="Why data completeness should be treated as a core operational signal for energy analytics, compliance, and risk decisions.">
-  <meta property="og:type" content="website">
-  <meta property="og:site_name" content="Open Data Schema for Energy">
-  <meta property="og:title" content="Data Completeness Is a First-Class Signal (Not a Reporting Afterthought) - ODS-E Blog">
-  <meta property="og:description" content="Why data completeness should be treated as a core operational signal for energy analytics, compliance, and risk decisions.">
-  <meta property="og:image" content="https://opendataschema.energy/assets/images/brand/logo.png">
-  <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="Data Completeness Is a First-Class Signal (Not a Reporting Afterthought) - ODS-E Blog">
-  <meta name="twitter:description" content="Why data completeness should be treated as a core operational signal for energy analytics, compliance, and risk decisions.">
-  <meta name="twitter:image" content="https://opendataschema.energy/assets/images/brand/logo.png">
   <link rel="icon" type="image/x-icon" href="../favicon.ico">
   <link rel="icon" type="image/png" sizes="32x32" href="../Artboard-7.png">
   <link rel="apple-touch-icon" sizes="180x180" href="../Artboard-7.png">
@@ -67,11 +58,11 @@
     </header>
 
     <article class="article-content">
-      <p>Most teams monitor production and faults in real time, then discover data gaps only when preparing reports. By that stage, corrective windows are closed and decision confidence is already compromised.</p>
-      <p>Completeness should be managed as a first-class signal in the same operating layer as transform success and validation health.</p>
+      <p>Suppose you run a quarterly energy report and two sites show identical generation totals. Both look healthy. But one site has 98% interval completeness while the other has chronic gaps that happen to average out. Without explicit completeness metrics, those two sites look equally trustworthy — and any decision built on that assumption is wrong.</p>
+      <p>Completeness should be managed as a first-class signal in the same operating layer as transform success and validation health. Here's how to make that happen.</p>
 
       <h2>Completeness Is About Decision Reliability</h2>
-      <p>Two portfolios can show identical energy totals but very different reliability if one has chronic missing intervals. Without explicit completeness metrics, those portfolios look equally trustworthy even when they are not.</p>
+      <p>Two portfolios can show identical energy totals but very different reliability if one has chronic missing intervals. Without explicit completeness metrics, you're treating those portfolios as equally trustworthy even when they're not.</p>
       <ul>
         <li>Forecast and risk models are sensitive to non-random data gaps.</li>
         <li>Compliance calculations can be biased by missing peak intervals.</li>
@@ -79,24 +70,24 @@
       </ul>
 
       <h2>Contract-First Precondition</h2>
-      <p>Completeness scoring is only meaningful after transform and validation. If records are malformed or semantically implausible, interval counts alone become misleading.</p>
+      <p>Completeness scoring is only meaningful after transform and validation. If records are malformed or semantically implausible, your interval counts alone become misleading.</p>
       <pre><code>raw payload -> ODSE transform -> schema validation -> semantic validation -> completeness scoring -> analytics</code></pre>
 
       <h2>What to Measure</h2>
       <h3>Expected vs Observed Intervals</h3>
-      <p>For each site and day, compute expected interval count from configured cadence, then compare with observed valid records.</p>
+      <p>For each site and day, compute expected interval count from your configured cadence, then compare with observed valid records.</p>
 
       <h3>Gap Window Distribution</h3>
-      <p>Track not only percentage missing but also contiguous gap windows. A single 3-hour outage may carry different risk than scattered 5-minute gaps.</p>
+      <p>Track not only percentage missing but also contiguous gap windows. A single 3-hour outage carries different risk than scattered 5-minute gaps.</p>
 
       <h3>Timeliness Lag</h3>
-      <p>Measure delayed arrivals separately from permanent loss. Late data impacts operational decisions even if backfills eventually restore totals.</p>
+      <p>Measure delayed arrivals separately from permanent loss. Late data impacts your operational decisions even if backfills eventually restore totals.</p>
 
       <h2>Practical Controls</h2>
       <ul>
-        <li>Set minimum completeness thresholds for each analytics workflow.</li>
+        <li>Set minimum completeness thresholds for each of your analytics workflows.</li>
         <li>Attach confidence labels to outputs when thresholds are not met.</li>
-        <li>Block compliance exports when completeness falls below policy limits.</li>
+        <li>Block compliance exports when completeness falls below your policy limits.</li>
         <li>Log imputation use explicitly and keep original missingness evidence.</li>
       </ul>
 
@@ -105,11 +96,12 @@
         <li>Daily completeness % by site and OEM connector.</li>
         <li>Count of validation failures vs missing intervals.</li>
         <li>Top recurring gap windows over rolling 30 days.</li>
-        <li>Sites currently below acceptance thresholds.</li>
+        <li>Sites currently below your acceptance thresholds.</li>
       </ul>
       <p>This separates source-quality incidents from asset-performance incidents and speeds targeted remediation.</p>
 
       <h2>Example Gate Logic</h2>
+      <p>In this example, suppose your compliance threshold is 98% and your export-blocking threshold is 95%:</p>
       <pre><code>if completeness_score &lt; 0.98:
     mark_output_as_low_confidence()
 
@@ -131,13 +123,13 @@ if completeness_score &lt; 0.95:
 
       <h2>Adoption Sequence</h2>
       <ul>
-        <li>Phase 1: enforce transform plus schema validation for all sources.</li>
-        <li>Phase 2: add semantic validation and standard quality reporting.</li>
-        <li>Phase 3: gate downstream workflows on explicit completeness thresholds.</li>
-        <li>Phase 4: include confidence bands in all stakeholder-facing outputs.</li>
+        <li>Phase 1: Enforce transform plus schema validation for all sources.</li>
+        <li>Phase 2: Add semantic validation and standard quality reporting.</li>
+        <li>Phase 3: Gate your downstream workflows on explicit completeness thresholds.</li>
+        <li>Phase 4: Include confidence bands in all stakeholder-facing outputs.</li>
       </ul>
 
-      <p>Completeness is not a data team hygiene task. It is a core part of operational truth and should be treated with the same rigor as any primary KPI.</p>
+      <p>Completeness is not a data team hygiene task. It is a core part of your operational truth and should be treated with the same rigor as any primary KPI.</p>
 
       <p><a href="/docs/validation/overview">Validation Overview</a> | <a href="/docs/validation/schema-validation">Schema Validation</a> | <a href="/docs/schemas/energy-timeseries">Energy Timeseries</a></p>
       <a class="back-link" href="/blog.html">&larr; Back to Blog</a>

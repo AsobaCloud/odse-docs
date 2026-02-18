@@ -5,15 +5,6 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Energy Research with ODSE + Zorora: 7 Repeatable Patterns - ODS-E Blog</title>
   <meta name="description" content="Seven repeatable patterns for running energy research workflows with ODSE as the data contract and Zorora as the orchestration layer.">
-  <meta property="og:type" content="website">
-  <meta property="og:site_name" content="Open Data Schema for Energy">
-  <meta property="og:title" content="Energy Research with ODSE + Zorora: 7 Repeatable Patterns - ODS-E Blog">
-  <meta property="og:description" content="Seven repeatable patterns for running energy research workflows with ODSE as the data contract and Zorora as the orchestration layer.">
-  <meta property="og:image" content="https://opendataschema.energy/assets/images/brand/logo.png">
-  <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="Energy Research with ODSE + Zorora: 7 Repeatable Patterns - ODS-E Blog">
-  <meta name="twitter:description" content="Seven repeatable patterns for running energy research workflows with ODSE as the data contract and Zorora as the orchestration layer.">
-  <meta name="twitter:image" content="https://opendataschema.energy/assets/images/brand/logo.png">
   <link rel="icon" type="image/x-icon" href="../favicon.ico">
   <link rel="icon" type="image/png" sizes="32x32" href="../Artboard-7.png">
   <link rel="apple-touch-icon" sizes="180x180" href="../Artboard-7.png">
@@ -200,7 +191,7 @@
     </header>
 
     <article class="article-content">
-      <p>Most energy research pipelines fail for a predictable reason: they start with questions and end with exceptions. Not because the questions are wrong, but because the input data contract is unstable. Different OEM exports, different timestamp conventions, different fault semantics.</p>
+      <p>Suppose you need to run a comparative degradation study across a mixed-OEM solar portfolio. You pull Huawei exports from two sites, Enphase data from another, and Solarman CSVs from two more. Before you can ask a single research question, you're debugging timestamp mismatches, reconciling fault codes, and writing one-off parsers. The research question hasn't changed — but the data plumbing eats the first three days of every study.</p>
       <p>ODSE solves the contract problem. Zorora solves the workflow problem. Used together, they give you a repeatable way to run research without rewriting data plumbing for every study.</p>
 
       <h2>Operating Model</h2>
@@ -227,8 +218,8 @@ portfolio = site_a + site_b + site_c</code></pre>
 
       <h2>Pattern 2: Validation-Gated Research Ingestion</h2>
       <div class="pattern">
-        <p><strong>Use when:</strong> Research quality depends on hard rejection of malformed or ambiguous records.</p>
-        <p><strong>Input:</strong> ODSE candidate records from transform stage.</p>
+        <p><strong>Use when:</strong> Your research quality depends on hard rejection of malformed or ambiguous records.</p>
+        <p><strong>Input:</strong> ODSE candidate records from the transform stage.</p>
         <p><strong>Output:</strong> Validated corpus + explicit error ledger for auditability.</p>
       </div>
       <pre><code>from odse import validate
@@ -244,7 +235,7 @@ if not result.is_valid:
         <p><strong>Input:</strong> Validated ODSE records by site and interval.</p>
         <p><strong>Output:</strong> Missingness map, gap windows, reliability score by site.</p>
       </div>
-      <p>This pattern is essential for South African and frontier-grid conditions where connectivity interruptions can mimic operational events.</p>
+      <p>This pattern is essential when you're working with South African and frontier-grid conditions where connectivity interruptions can mimic operational events.</p>
 
       <h2>Pattern 4: Cross-OEM Fault Taxonomy Studies</h2>
       <div class="pattern">
@@ -252,7 +243,7 @@ if not result.is_valid:
         <p><strong>Input:</strong> ODSE records with normalized <code>error_type</code> and preserved OEM-native codes.</p>
         <p><strong>Output:</strong> Comparable incident distributions and triage signals across portfolios.</p>
       </div>
-      <p>Without ODSE normalization, “top-3 fault classes” is usually meaningless at portfolio level. With it, fault analytics become comparable and reproducible.</p>
+      <p>Without ODSE normalization, "top-3 fault classes" is usually meaningless at portfolio level. With it, your fault analytics become comparable and reproducible.</p>
 
       <h2>Pattern 5: Benchmarking Against External Research Sets</h2>
       <div class="pattern">
@@ -260,7 +251,7 @@ if not result.is_valid:
         <p><strong>Input:</strong> ODSE records + building/asset metadata mappings.</p>
         <p><strong>Output:</strong> Normalized comparative metrics and context-aware performance bands.</p>
       </div>
-      <p>The key is that ODSE gives the analysis layer a stable interface regardless of upstream OEM diversity.</p>
+      <p>The key is that ODSE gives your analysis layer a stable interface regardless of upstream OEM diversity.</p>
 
       <h2>Pattern 6: Multi-Source Research Synthesis in Zorora</h2>
       <div class="pattern">
@@ -268,7 +259,7 @@ if not result.is_valid:
         <p><strong>Input:</strong> ODSE-derived analysis + Zorora deep research workflow prompts.</p>
         <p><strong>Output:</strong> Structured research brief with citations, assumptions, and decision implications.</p>
       </div>
-      <p>In practice, teams run ODSE-normalized analysis first, then use Zorora to synthesize technical findings with external context into an executive-ready output.</p>
+      <p>In practice, you run ODSE-normalized analysis first, then use Zorora to synthesize your technical findings with external context into an executive-ready output.</p>
 
       <h2>Pattern 7: Reproducible Research Packs for Collaboration</h2>
       <div class="pattern">
@@ -287,7 +278,7 @@ if not result.is_valid:
 6) Publish reproducible research pack</code></pre>
 
       <h2>Where Zorora Fits</h2>
-      <p>Zorora is especially useful once ODSE has stabilized your data contract. At that point, workflow routing and synthesis can focus on actual research questions instead of per-vendor parsing issues. That is the difference between ad-hoc analysis and a repeatable research system.</p>
+      <p>Zorora is especially useful once you've stabilized your data contract with ODSE. At that point, workflow routing and synthesis can focus on actual research questions instead of per-vendor parsing issues. That's the difference between ad-hoc analysis and a repeatable research system.</p>
       <p>For implementation context, teams can align this with local Zorora workflows in <code>~/Workbench/zorora</code> and internal platform integrations at <code>code.asoba.co</code>.</p>
 
       <div class="cta-box">

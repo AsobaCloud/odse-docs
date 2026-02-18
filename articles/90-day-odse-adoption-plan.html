@@ -5,15 +5,6 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>90-Day ODSE Adoption Plan: From First Transform to Production Workflow - ODS-E Blog</title>
   <meta name="description" content="A practical 30/60/90 day plan for adopting ODSE from pilot transform to production-grade portfolio workflow.">
-  <meta property="og:type" content="website">
-  <meta property="og:site_name" content="Open Data Schema for Energy">
-  <meta property="og:title" content="90-Day ODSE Adoption Plan: From First Transform to Production Workflow - ODS-E Blog">
-  <meta property="og:description" content="A practical 30/60/90 day plan for adopting ODSE from pilot transform to production-grade portfolio workflow.">
-  <meta property="og:image" content="https://opendataschema.energy/assets/images/brand/logo.png">
-  <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="90-Day ODSE Adoption Plan: From First Transform to Production Workflow - ODS-E Blog">
-  <meta name="twitter:description" content="A practical 30/60/90 day plan for adopting ODSE from pilot transform to production-grade portfolio workflow.">
-  <meta name="twitter:image" content="https://opendataschema.energy/assets/images/brand/logo.png">
   <link rel="icon" type="image/x-icon" href="../favicon.ico">
   <link rel="icon" type="image/png" sizes="32x32" href="../Artboard-7.png">
   <link rel="apple-touch-icon" sizes="180x180" href="../Artboard-7.png">
@@ -67,8 +58,8 @@
     </header>
 
     <article class="article-content">
-      <p>Most interoperability programs stall because they start broad and abstract. A working 90-day ODSE adoption program should be execution-first: one contract, one validation gate, then controlled expansion.</p>
-      <p>This plan assumes you already have active OEM data sources and need to normalize them into one contract for analytics, compliance, and reliability workflows.</p>
+      <p>Consider a team that just inherited a five-site solar portfolio with three different OEM data feeds — none of them talking to each other. The dashboards work, the monitoring stack is functional, but every cross-site report requires manual reconciliation because each feed uses different timestamp conventions, different fault codes, and different export shapes. The team needs a plan that delivers measurable progress without disrupting what's already running.</p>
+      <p>This 90-day adoption sequence assumes you already have active OEM data sources and need to normalize them into one contract for analytics, compliance, and reliability workflows. The approach is execution-first: one contract, one validation gate, then controlled expansion.</p>
 
       <h2>Days 1-30: Establish the Contract Boundary</h2>
       <h3>Objective</h3>
@@ -76,7 +67,7 @@
 
       <h3>Scope</h3>
       <ul>
-        <li>Inventory active OEM source shape, cadence, and timezone behavior.</li>
+        <li>Inventory your active OEM source shapes, cadences, and timezone behavior.</li>
         <li>Implement one transform into ODSE required fields (<code>timestamp</code>, <code>kWh</code>, <code>error_type</code>).</li>
         <li>Run schema validation immediately post-transform.</li>
         <li>Publish transformed outputs to a staging destination used by at least one downstream consumer.</li>
@@ -84,9 +75,9 @@
 
       <h3>Success Criteria by Day 30</h3>
       <ul>
-        <li>One source can run end-to-end without manual correction.</li>
+        <li>You can run one source end-to-end without manual correction.</li>
         <li>Validation failures are visible and triaged.</li>
-        <li>A canonical sample dataset is available for internal reference.</li>
+        <li>You have a canonical sample dataset available for internal reference.</li>
       </ul>
 
       <h2>Days 31-60: Expand Coverage and Comparability</h2>
@@ -95,17 +86,17 @@
 
       <h3>Scope</h3>
       <ul>
-        <li>Add transforms for remaining priority OEM feeds.</li>
-        <li>Map source states/codes to ODSE <code>error_type</code> while preserving <code>error_code_original</code>.</li>
-        <li>Add completeness reporting by site/day.</li>
-        <li>Introduce semantic validation where capacity context exists.</li>
+        <li>Add transforms for your remaining priority OEM feeds.</li>
+        <li>Map source states and codes to ODSE <code>error_type</code> while preserving <code>error_code_original</code>.</li>
+        <li>Add completeness reporting by site and day.</li>
+        <li>Introduce semantic validation where you have capacity context.</li>
       </ul>
 
       <h3>Success Criteria by Day 60</h3>
       <ul>
         <li>Multiple OEMs emit the same ODSE contract with no schema exceptions.</li>
-        <li>Cross-OEM fault rollups can be queried without vendor-specific branches.</li>
-        <li>Completeness and validation metrics are part of operating review.</li>
+        <li>You can run cross-OEM fault rollups without vendor-specific query branches.</li>
+        <li>Completeness and validation metrics are part of your operating review.</li>
       </ul>
 
       <h2>Days 61-90: Production Hardening and Governance</h2>
@@ -115,16 +106,16 @@
       <h3>Scope</h3>
       <ul>
         <li>Implement replay-safe ingestion and idempotent processing.</li>
-        <li>Add regression tests for transform mapping behavior.</li>
+        <li>Add regression tests for your transform mapping behavior.</li>
         <li>Define transform versioning and release controls.</li>
         <li>Document ownership for mapping changes, validation incidents, and schema updates.</li>
       </ul>
 
       <h3>Success Criteria by Day 90</h3>
       <ul>
-        <li>Runbook exists for failures, backfills, and source changes.</li>
+        <li>You have a runbook covering failures, backfills, and source changes.</li>
         <li>Operational metrics are monitored and reviewed on cadence.</li>
-        <li>Downstream teams consume ODSE outputs as primary contract.</li>
+        <li>Downstream teams consume ODSE outputs as their primary contract.</li>
       </ul>
 
       <h2>Operating Metrics to Track Throughout</h2>
@@ -138,10 +129,10 @@
 
       <h2>Governance Model (Lightweight but Explicit)</h2>
       <ul>
-        <li>Engineering owns transform logic and test coverage.</li>
-        <li>Operations owns incident response for data pipeline failures.</li>
-        <li>Reporting/compliance owns acceptance thresholds for quality gates.</li>
-        <li>Architecture owner approves contract changes affecting consumers.</li>
+        <li>Your engineering team owns transform logic and test coverage.</li>
+        <li>Your operations team owns incident response for data pipeline failures.</li>
+        <li>Reporting and compliance owns acceptance thresholds for quality gates.</li>
+        <li>An architecture owner approves contract changes affecting consumers.</li>
       </ul>
 
       <div class="callout">
@@ -151,13 +142,13 @@
 
       <h2>Common Reasons Programs Miss Day 90</h2>
       <ul>
-        <li>Treating validation as reporting instead of ingestion gate.</li>
+        <li>Treating validation as reporting instead of an ingestion gate.</li>
         <li>Allowing one-off per-source exceptions in downstream consumers.</li>
         <li>Skipping transform version control during OEM payload changes.</li>
         <li>Deferring ownership decisions until after incidents occur.</li>
       </ul>
 
-      <p>A successful 90-day ODSE adoption is not about shipping a large platform. It is about establishing one durable contract boundary and proving that teams can operate it predictably.</p>
+      <p>A successful 90-day ODSE adoption is not about shipping a large platform. It is about establishing one durable contract boundary and proving that your team can operate it predictably.</p>
 
       <p><a href="/docs/get-started">Get Started</a> | <a href="/docs/transforms/supported-oems">Supported OEMs</a> | <a href="/docs/validation/overview">Validation</a></p>
       <a class="back-link" href="/blog.html">&larr; Back to Blog</a>

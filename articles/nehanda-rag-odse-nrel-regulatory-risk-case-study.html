@@ -5,15 +5,6 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Nehanda + RAG + ODSE - NREL Regulatory Risk Workflow for Commercial Portfolios - ODS-E Blog</title>
   <meta name="description" content="A practical and theoretical guide to using Nehanda with RAG, ODSE-normalized data, and NREL-aligned benchmarks to assess regulatory risk in commercial building portfolios.">
-  <meta property="og:type" content="website">
-  <meta property="og:site_name" content="Open Data Schema for Energy">
-  <meta property="og:title" content="Nehanda + RAG + ODSE - NREL Regulatory Risk Workflow for Commercial Portfolios - ODS-E Blog">
-  <meta property="og:description" content="A practical and theoretical guide to using Nehanda with RAG, ODSE-normalized data, and NREL-aligned benchmarks to assess regulatory risk in commercial building portfolios.">
-  <meta property="og:image" content="https://opendataschema.energy/assets/images/brand/logo.png">
-  <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="Nehanda + RAG + ODSE - NREL Regulatory Risk Workflow for Commercial Portfolios - ODS-E Blog">
-  <meta name="twitter:description" content="A practical and theoretical guide to using Nehanda with RAG, ODSE-normalized data, and NREL-aligned benchmarks to assess regulatory risk in commercial building portfolios.">
-  <meta name="twitter:image" content="https://opendataschema.energy/assets/images/brand/logo.png">
   <link rel="icon" type="image/x-icon" href="../favicon.ico">
   <link rel="icon" type="image/png" sizes="32x32" href="../Artboard-7.png">
   <link rel="apple-touch-icon" sizes="180x180" href="../Artboard-7.png">
@@ -199,17 +190,17 @@
     </header>
 
     <article class="article-content">
-      <p>You have a commercial building portfolio with live energy data and emissions reporting obligations. Your risk is not just technical underperformance. It is policy exposure under changing carbon regimes, tariff rules, and disclosure standards.</p>
-      <p>Most teams cannot answer a basic question with confidence: which sites are most exposed if current regulatory interpretation tightens over the next reporting cycle? ODSE, NREL-aligned benchmarking, and Nehanda RAG can be combined into a repeatable workflow that answers that question with traceable evidence.</p>
+      <p>Suppose you have a commercial building portfolio with live energy data and emissions reporting obligations. Your risk is not just technical underperformance. It is policy exposure under changing carbon regimes, tariff rules, and disclosure standards.</p>
+      <p>You likely can't answer a basic question with confidence: which sites are most exposed if current regulatory interpretation tightens over the next reporting cycle? ODSE, NREL-aligned benchmarking, and Nehanda RAG can be combined into a repeatable workflow that answers that question with traceable evidence.</p>
 
       <h2>The Problem: Regulatory Risk Is a Data + Interpretation Problem</h2>
-      <p>Portfolio-level compliance risk usually gets buried in siloed workflows:</p>
+      <p>Your portfolio-level compliance risk usually gets buried in siloed workflows:</p>
       <ul>
         <li>Site telemetry in incompatible OEM formats</li>
         <li>Benchmark files in separate analytics systems</li>
         <li>Regulatory documents interpreted manually, case by case</li>
       </ul>
-      <p>The result is delay and inconsistency. Teams spend cycles assembling inputs instead of analyzing risk.</p>
+      <p>The result is delay and inconsistency. You spend cycles assembling inputs instead of analyzing risk.</p>
 
       <h2>Architecture: Why This Stack Works</h2>
       <div class="pattern">
@@ -228,7 +219,7 @@
 
       <h2>How-To Workflow (Practical)</h2>
       <h3>Step 1: Normalize the Portfolio with ODSE</h3>
-      <p>Convert source telemetry into ODSE records so every downstream risk calculation uses one contract.</p>
+      <p>Convert your source telemetry into ODSE records so every downstream risk calculation uses one contract.</p>
       <pre><code>from odse import transform, validate
 
 rows = transform("site_a_huawei.csv", source="huawei")
@@ -236,10 +227,10 @@ result = validate(rows)
 assert result.is_valid, result.errors</code></pre>
 
       <h3>Step 2: Build Emissions-Relevant Features</h3>
-      <p>Aggregate ODSE records into monthly/quarterly features used in risk screening: consumption profiles, net export behavior, abnormal fault intervals, and completeness scores.</p>
+      <p>Aggregate your ODSE records into monthly/quarterly features used in risk screening: consumption profiles, net export behavior, abnormal fault intervals, and completeness scores.</p>
 
       <h3>Step 3: Join NREL-Aligned Building Context</h3>
-      <p>Map ODSE site/building metadata to benchmark cohorts (for example by building type, floor area bands, climate zone proxies, and end-use intensity patterns). The goal is not perfect parity. The goal is comparable context for outlier detection.</p>
+      <p>Map your ODSE site/building metadata to benchmark cohorts (for example by building type, floor area bands, climate zone proxies, and end-use intensity patterns). The goal is not perfect parity. The goal is comparable context for outlier detection.</p>
 
       <h3>Step 4: Initialize Nehanda RAG for Policy Grounding</h3>
       <p>Use the Nehanda RAG stack in <code>~/Workbench/nehanda/RAG</code> with your policy/regulatory corpus and known jurisdiction filters. The Nehanda model is available at <code>asoba/nehanda-v1-7b</code>.</p>
@@ -257,11 +248,11 @@ query = "Given this building's emissions profile and tariff structure, what comp
         <li>Risk category (low/medium/high)</li>
         <li>Primary trigger conditions</li>
         <li>Supporting regulatory citations</li>
-        <li>Operational mitigations for next reporting window</li>
+        <li>Operational mitigations for the next reporting window</li>
       </ul>
 
       <h3>Step 6: Portfolio Prioritization</h3>
-      <p>Roll site results into a portfolio view ranked by exposure and intervention urgency. This is where compliance planning becomes capital allocation logic.</p>
+      <p>Roll your site results into a portfolio view ranked by exposure and intervention urgency. This is where compliance planning becomes capital allocation logic.</p>
 
       <h2>Theoretical Case Study: Three-Building Portfolio</h2>
       <p>Consider a commercial portfolio with Office A, Retail B, and Mixed-Use C:</p>
@@ -284,10 +275,10 @@ query = "Given this building's emissions profile and tariff structure, what comp
       <h3>2) Data quality gating</h3>
       <p>No regulatory interpretation should run on unvalidated ODSE data or unknown completeness thresholds.</p>
       <h3>3) Scenario framing</h3>
-      <p>Separate “current rule interpretation” from “potential tightening scenario” to avoid policy overclaim.</p>
+      <p>Separate "current rule interpretation" from "potential tightening scenario" to avoid policy overclaim.</p>
 
       <h2>What This Enables</h2>
-      <p>When this stack is in place, compliance analysis moves from reactive reporting to proactive risk management. ODSE standardizes input. NREL context calibrates expectations. Nehanda RAG converts policy text into portfolio-actionable intelligence.</p>
+      <p>When this stack is in place, your compliance analysis moves from reactive reporting to proactive risk management. ODSE standardizes input. NREL context calibrates expectations. Nehanda RAG converts policy text into portfolio-actionable intelligence.</p>
       <p>That is the difference between checking compliance boxes and managing regulatory risk as an operating discipline.</p>
 
       <div class="cta-box">

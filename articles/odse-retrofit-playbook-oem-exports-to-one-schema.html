@@ -5,15 +5,6 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>From OEM Exports to One Schema in a Week: ODSE Retrofit Playbook - ODS-E Blog</title>
   <meta name="description" content="A practical retrofit playbook for inserting ODSE into existing pipelines without replacing your monitoring stack.">
-  <meta property="og:type" content="website">
-  <meta property="og:site_name" content="Open Data Schema for Energy">
-  <meta property="og:title" content="From OEM Exports to One Schema in a Week: ODSE Retrofit Playbook - ODS-E Blog">
-  <meta property="og:description" content="A practical retrofit playbook for inserting ODSE into existing pipelines without replacing your monitoring stack.">
-  <meta property="og:image" content="https://opendataschema.energy/assets/images/brand/logo.png">
-  <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="From OEM Exports to One Schema in a Week: ODSE Retrofit Playbook - ODS-E Blog">
-  <meta name="twitter:description" content="A practical retrofit playbook for inserting ODSE into existing pipelines without replacing your monitoring stack.">
-  <meta name="twitter:image" content="https://opendataschema.energy/assets/images/brand/logo.png">
   <link rel="icon" type="image/x-icon" href="../favicon.ico">
   <link rel="icon" type="image/png" sizes="32x32" href="../Artboard-7.png">
   <link rel="apple-touch-icon" sizes="180x180" href="../Artboard-7.png">
@@ -25,16 +16,17 @@
   <main class="article-container">
     <header class="article-header"><span class="article-type">Pipeline Retrofit</span><h1 class="article-title">From OEM Exports to One Schema in a Week: ODSE Retrofit Playbook</h1><p>How to insert ODSE into existing ETL without ripping out your current monitoring stack.</p><div class="article-meta">Target audience: Data/SCADA Engineers</div></header>
     <article class="article-content">
-      <p>Most retrofit projects fail when teams treat schema standardization as a platform migration. ODSE is not a platform migration. It is an insertion layer between raw OEM telemetry and downstream analytics.</p>
+      <p>Suppose you have three OEM data feeds — Huawei, Enphase, and Solarman — landing in separate database tables with different column names, different timestamp formats, and different error representations. Your dashboards work, your alerts fire, but every cross-site comparison requires manual translation. You don't need a platform migration. You need an insertion layer.</p>
+      <p>ODSE is not a platform migration. It is an insertion layer between raw OEM telemetry and your downstream analytics. Keep your current data lake, dashboards, and alerting tools intact.</p>
       <h2>Where to Insert ODSE</h2>
-      <p>Insert ODSE after ingestion and before aggregation/modeling. Keep your current data lake, dashboards, and alerting tools intact.</p>
+      <p>Insert ODSE after ingestion and before aggregation or modeling. Everything upstream stays the same; everything downstream gets a consistent contract.</p>
       <pre><code>raw ingest -> parse -> ODSE transform -> ODSE validate -> existing warehouse/models</code></pre>
       <h2>Week Plan</h2>
-      <p><strong>Day 1-2:</strong> map one OEM export. <strong>Day 3:</strong> gate with schema validation. <strong>Day 4-5:</strong> add two OEMs. <strong>Day 6-7:</strong> produce a single portfolio rollup and regression checks.</p>
+      <p><strong>Day 1-2:</strong> Pick your noisiest OEM source and map it end-to-end into ODSE. Focus on timestamp normalization, energy field mapping, and error code classification. <strong>Day 3:</strong> Gate the output with schema validation — if records don't pass, they don't enter the analytics pipeline. <strong>Day 4-5:</strong> Bring in the remaining two OEMs, resisting the temptation to build per-source special cases. <strong>Day 6-7:</strong> Run a single portfolio rollup query across all three sources and set up regression checks to catch future transform drift.</p>
       <h2>Acceptance Criteria</h2>
-      <p>You are done when three conditions are true: one output contract, one validation report, one cross-OEM query path for faults and energy totals.</p>
+      <p>You're done when three conditions are true: one output contract, one validation report, and one cross-OEM query path for faults and energy totals.</p>
       <h2>Common Failure Modes</h2>
-      <p>Per-OEM “temporary exceptions,” unvalidated backfills, and timezone drift are the three most frequent causes of false conclusions after retrofit.</p>
+      <p>The three most frequent causes of false conclusions after retrofit: per-OEM "temporary exceptions" that become permanent, unvalidated backfills that introduce duplicates, and timezone drift that shifts intervals across boundaries.</p>
       <p><a href="/docs/get-started">Get Started</a> | <a href="/docs/transforms/overview">Transforms</a> | <a href="/docs/validation/overview">Validation</a></p>
       <a class="back-link" href="/blog.html">&larr; Back to Blog</a>
     </article>

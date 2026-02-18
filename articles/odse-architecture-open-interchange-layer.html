@@ -5,15 +5,6 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>ODSE Architecture: Open Interchange Layer, Not Another Platform - ODS-E Blog</title>
   <meta name="description" content="A technical architecture guide showing ODSE as the data contract layer between OEM systems and downstream consumers.">
-  <meta property="og:type" content="website">
-  <meta property="og:site_name" content="Open Data Schema for Energy">
-  <meta property="og:title" content="ODSE Architecture: Open Interchange Layer, Not Another Platform - ODS-E Blog">
-  <meta property="og:description" content="A technical architecture guide showing ODSE as the data contract layer between OEM systems and downstream consumers.">
-  <meta property="og:image" content="https://opendataschema.energy/assets/images/brand/logo.png">
-  <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="ODSE Architecture: Open Interchange Layer, Not Another Platform - ODS-E Blog">
-  <meta name="twitter:description" content="A technical architecture guide showing ODSE as the data contract layer between OEM systems and downstream consumers.">
-  <meta name="twitter:image" content="https://opendataschema.energy/assets/images/brand/logo.png">
   <link rel="icon" type="image/x-icon" href="../favicon.ico">
   <link rel="icon" type="image/png" sizes="32x32" href="../Artboard-7.png">
   <link rel="apple-touch-icon" sizes="180x180" href="../Artboard-7.png">
@@ -185,12 +176,12 @@
     </header>
 
     <article class="article-content">
-      <p>Teams usually hit interoperability limits long before they hit compute limits. The root cause is not weak dashboards or slow models. It is unstable input shape: vendor-specific fields, mixed timestamp behavior, and unaligned state/error semantics.</p>
+      <p>Consider a team running five analytics dashboards, a forecasting model, and a compliance reporting pipeline — all consuming data from three different OEM sources. Each downstream system re-implements its own parsing logic. Each handles timestamps differently. When one OEM changes their export format, three different teams scramble to update three different parsers.</p>
       <p>ODSE is designed to solve exactly that boundary problem. It is not a replacement for your monitoring stack, warehouse, BI tools, or forecasting layer. It is the contract that lets those systems consume consistent records.</p>
 
       <h2>The Boundary in One Diagram</h2>
       <pre><code>OEM/API exports -> transform(source=...) -> validate() -> ODS-E records -> analytics, forecasting, reporting</code></pre>
-      <p>The key architectural decision is where standardization happens. If transform and validation happen late, every downstream consumer still inherits OEM complexity. If transform and validation happen early, downstream teams can build against one predictable interface.</p>
+      <p>The key architectural decision is where standardization happens. If you run transform and validation late, every downstream consumer still inherits OEM complexity. If you run them early, your downstream teams can build against one predictable interface.</p>
 
       <h2>What ODSE Should Own</h2>
       <ul>
@@ -207,10 +198,10 @@
         <li>Dispatch policy and operations playbooks.</li>
         <li>Vendor-specific UI workflows for field teams.</li>
       </ul>
-      <p>Keeping ODSE narrow avoids platform lock-in and keeps ownership boundaries clear between data contract, analytics implementation, and operational decisions.</p>
+      <p>Keeping ODSE narrow avoids platform lock-in and keeps your ownership boundaries clear between data contract, analytics implementation, and operational decisions.</p>
 
       <h2>Validation Is Part of the Architecture, Not a QA Add-On</h2>
-      <p>The architecture only works if invalid records are blocked before persistence and analysis. ODSE's pattern is schema validation first, then semantic validation where context is available (for example capacity-aware plausibility checks).</p>
+      <p>The architecture only works if you block invalid records before persistence and analysis. ODSE's pattern is schema validation first, then semantic validation where you have context available (for example capacity-aware plausibility checks).</p>
       <pre><code>result = validate(rows)
 if not result.is_valid:
     stop_pipeline()</code></pre>
@@ -220,19 +211,19 @@ if not result.is_valid:
       <h3>Pattern: Contract Insertion</h3>
       <p>Insert ODSE immediately after ingestion parsing, then feed your existing lake/warehouse and reporting flows from ODSE-compliant outputs.</p>
       <ul>
-        <li>No migration of BI layer required.</li>
-        <li>No rewrite of all downstream consumers required.</li>
-        <li>Progressively add OEM transforms without changing downstream interfaces.</li>
+        <li>No migration of your BI layer required.</li>
+        <li>No rewrite of your downstream consumers required.</li>
+        <li>You can progressively add OEM transforms without changing downstream interfaces.</li>
       </ul>
 
       <h3>Pattern: Versioned Transform Governance</h3>
-      <p>OEM payloads evolve. Treat transform mappings as versioned artifacts with tests and release notes. A stable schema with unstable transforms is still unstable in production.</p>
+      <p>OEM payloads evolve. Treat your transform mappings as versioned artifacts with tests and release notes. A stable schema with unstable transforms is still unstable in production.</p>
 
       <h2>Architecture Smells to Watch</h2>
       <ul>
         <li>Every downstream service re-implements OEM parsing differently.</li>
-        <li>Validation runs only after dashboards are already updated.</li>
-        <li>Timezone conversion occurs separately in each consumer.</li>
+        <li>You run validation only after dashboards are already updated.</li>
+        <li>Timezone conversion occurs separately in each of your consumers.</li>
         <li>Cross-OEM fault analysis depends on ad-hoc mapping spreadsheets.</li>
       </ul>
 
@@ -243,7 +234,7 @@ if not result.is_valid:
 
       <h2>Implementation Checklist</h2>
       <ul>
-        <li>Declare producer sources and expected payload types.</li>
+        <li>Declare your producer sources and expected payload types.</li>
         <li>Implement source transforms into ODSE records.</li>
         <li>Gate all transformed output with schema validation.</li>
         <li>Add semantic checks for capacity and state/value plausibility.</li>

@@ -5,15 +5,6 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Error Taxonomy as Shared Infrastructure: Cross-OEM Fault Intelligence - ODS-E Blog</title>
   <meta name="description" content="How ODSE error normalization enables comparable, portfolio-wide fault intelligence across OEM ecosystems.">
-  <meta property="og:type" content="website">
-  <meta property="og:site_name" content="Open Data Schema for Energy">
-  <meta property="og:title" content="Error Taxonomy as Shared Infrastructure: Cross-OEM Fault Intelligence - ODS-E Blog">
-  <meta property="og:description" content="How ODSE error normalization enables comparable, portfolio-wide fault intelligence across OEM ecosystems.">
-  <meta property="og:image" content="https://opendataschema.energy/assets/images/brand/logo.png">
-  <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="Error Taxonomy as Shared Infrastructure: Cross-OEM Fault Intelligence - ODS-E Blog">
-  <meta name="twitter:description" content="How ODSE error normalization enables comparable, portfolio-wide fault intelligence across OEM ecosystems.">
-  <meta name="twitter:image" content="https://opendataschema.energy/assets/images/brand/logo.png">
   <link rel="icon" type="image/x-icon" href="../favicon.ico">
   <link rel="icon" type="image/png" sizes="32x32" href="../Artboard-7.png">
   <link rel="apple-touch-icon" sizes="180x180" href="../Artboard-7.png">
@@ -67,27 +58,27 @@
     </header>
 
     <article class="article-content">
-      <p>When each OEM describes faults in its own vocabulary, portfolio analytics become noisy by design. One vendor might encode communication loss as a numeric state, another as a text alarm, and another as a missing data interval. Without normalization, your alerting and triage logic compares unlike events.</p>
-      <p>ODSE addresses this by requiring a shared <code>error_type</code> contract while preserving source diagnostics in <code>error_code_original</code>. This gives operations teams a common language for decision-making without losing root-cause traceability.</p>
+      <p>Consider a portfolio running Huawei string inverters at three sites, Enphase microinverters at two, and Solarman-connected loggers at another. Each OEM describes faults in its own vocabulary. One encodes communication loss as a numeric state, another as a text alarm, and another as a missing data interval. Without normalization, your alerting and triage logic is comparing unlike events — and every cross-site fault analysis requires vendor-specific branching.</p>
+      <p>ODSE addresses this by requiring a shared <code>error_type</code> contract while preserving source diagnostics in <code>error_code_original</code>. This gives you a common language for decision-making without losing root-cause traceability.</p>
 
       <h2>Why a Shared Taxonomy Changes Outcomes</h2>
       <ul>
-        <li>Alert thresholds can be reused across OEM cohorts.</li>
-        <li>Incident rollups are comparable across sites and vendors.</li>
-        <li>False dispatch analysis is measurable fleet-wide.</li>
+        <li>You can reuse alert thresholds across OEM cohorts.</li>
+        <li>Your incident rollups become comparable across sites and vendors.</li>
+        <li>False dispatch analysis becomes measurable fleet-wide.</li>
         <li>Triage ownership can be based on severity classes, not vendor expertise alone.</li>
       </ul>
 
       <h2>Contract Mechanics in ODSE</h2>
-      <p>ODSE defines supported <code>error_type</code> values and expects transform logic to map OEM-native signals into that shared enum set. At the same time, raw source code remains available for diagnostic drill-down.</p>
+      <p>ODSE defines supported <code>error_type</code> values and expects your transform logic to map OEM-native signals into that shared enum set. At the same time, the raw source code remains available for diagnostic drill-down.</p>
       <pre><code>OEM state/code -> transform mapping -> error_type + error_code_original -> validate() -> downstream fault analytics</code></pre>
 
       <h2>Implementation Pattern</h2>
       <h3>Step 1: Build Source Mapping Tables</h3>
-      <p>For each OEM connector, define explicit mappings from vendor status/error payloads into ODSE <code>error_type</code>. Keep this mapping versioned and reviewed whenever OEM payloads change.</p>
+      <p>For each OEM connector, define explicit mappings from vendor status/error payloads into ODSE <code>error_type</code>. Keep this mapping versioned and review it whenever OEM payloads change.</p>
 
       <h3>Step 2: Preserve Diagnostic Evidence</h3>
-      <p>Never discard source-level signals. Store the original code or state string in <code>error_code_original</code> so field teams can still investigate vendor-specific root causes.</p>
+      <p>Never discard source-level signals. Store the original code or state string in <code>error_code_original</code> so your field teams can still investigate vendor-specific root causes.</p>
 
       <h3>Step 3: Validate for Contract Integrity</h3>
       <p>Run schema validation to enforce enum correctness, then semantic validation to catch suspicious state/value combinations. This prevents contract drift and bad cross-site comparisons.</p>
@@ -106,15 +97,15 @@ if not result.is_valid:
       <h2>Operational Dashboard Design</h2>
       <p>Once fault events are normalized, your first dashboard should answer three questions:</p>
       <ul>
-        <li>Which <code>error_type</code> classes drive most downtime by site cohort?</li>
-        <li>Which fault classes create most false dispatch events?</li>
+        <li>Which <code>error_type</code> classes drive the most downtime by site cohort?</li>
+        <li>Which fault classes create the most false dispatch events?</li>
         <li>Where do fault frequencies shift after firmware or maintenance changes?</li>
       </ul>
       <p>These questions are impossible to answer reliably when each OEM remains in its own taxonomy island.</p>
 
       <h2>Common Failure Modes</h2>
       <ul>
-        <li>Directly passing OEM codes to analytics without ODSE mapping.</li>
+        <li>Directly passing OEM codes to analytics without mapping them through ODSE.</li>
         <li>Allowing unsupported enum values to enter storage.</li>
         <li>Dropping original source codes and losing diagnostic context.</li>
         <li>Treating missing telemetry as equivalent to explicit fault states.</li>
@@ -130,7 +121,7 @@ if not result.is_valid:
         <li>All active OEM feeds emit only valid ODSE <code>error_type</code> enums.</li>
         <li>Every mapped fault keeps source traceability via <code>error_code_original</code>.</li>
         <li>Cross-OEM incident rollups run without vendor-specific exceptions.</li>
-        <li>Validation errors and warning trends are visible in operations reporting.</li>
+        <li>Validation errors and warning trends are visible in your operations reporting.</li>
       </ul>
 
       <p>Shared error semantics are not optional polish. They are the minimum infrastructure required for trustworthy, portfolio-scale reliability intelligence.</p>

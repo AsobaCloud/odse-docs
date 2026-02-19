@@ -41,6 +41,11 @@ Aligned with the SAETA "Policy to Power" report (February 2026), ODS-E adds opti
 
 All extensions are additive and optional. Existing valid payloads remain valid.
 
+## Runtime Helpers
+
+- [Post-Transform Enrichment](/docs/trading-integration/enrichment) -- inject settlement, tariff, and topology context into transformed rows
+- [Conformance Profile Validation](/docs/validation/conformance-profiles) -- enforce required-field sets per trading context (bilateral, wheeling, SAWEM, municipal)
+
 ## Why It Matters
 
 With a common data contract:

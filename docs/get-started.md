@@ -14,6 +14,7 @@ By the end of this guide, you will have:
 2. Transformed raw OEM data into ODS-E records
 3. Validated a generation record
 4. Validated a consumption record with end-use tagging
+5. Enriched records with market context and validated against a conformance profile
 
 ## Step 1: Install
 
@@ -157,7 +158,35 @@ The `end_use` field supports 16 categories aligned with NREL ComStock/ResStock:
 
 `cooling`, `heating`, `fans`, `pumps`, `water_systems`, `interior_lighting`, `exterior_lighting`, `interior_equipment`, `refrigeration`, `cooking`, `laundry`, `ev_charging`, `pv_generation`, `battery_storage`, `whole_building`, `other`
 
-## Step 5: Run the Test Suite
+## Step 5: Enrich with Market Context
+
+Transformers emit bare telemetry. Use `enrich()` to inject settlement, tariff, or topology metadata before validation:
+
+```python
+from odse import transform, enrich, validate
+
+rows = transform(csv_data, source="huawei")
+
+enriched = enrich(rows, {
+    "seller_party_id": "nersa:gen:SOLARPK-001",
+    "buyer_party_id": "nersa:offtaker:MUN042",
+    "settlement_period_start": "2026-02-18T14:00:00+02:00",
+    "settlement_period_end": "2026-02-18T14:30:00+02:00",
+    "contract_reference": "PPA-001",
+    "settlement_type": "bilateral",
+})
+
+# Validate against a conformance profile
+for record in enriched:
+    result = validate(record, profile="bilateral")
+    print(result.is_valid)  # True
+```
+
+By default, existing fields from the transformer are preserved (source wins). Pass `override=True` to let context values take precedence.
+
+See [Post-Transform Enrichment](/docs/trading-integration/enrichment) and [Conformance Profile Validation](/docs/validation/conformance-profiles) for details.
+
+## Step 6: Run the Test Suite
 
 Verify everything works:
 
@@ -170,10 +199,12 @@ You should see all tests pass, including the new consumption and net metering va
 
 ## Next Steps
 
-You now know how to transform, validate, and work with both generation and consumption data. Explore further:
+You now know how to transform, enrich, validate, and work with both generation and consumption data. Explore further:
 
 - **[Schema Reference](/docs/schemas/overview)** — Full field definitions for energy-timeseries and asset-metadata
 - **[Transforms](/docs/transforms/supported-oems)** — Support matrix for all 10 OEMs
+- **[Post-Transform Enrichment](/docs/trading-integration/enrichment)** — Inject settlement, tariff, and topology context
+- **[Conformance Profiles](/docs/validation/conformance-profiles)** — Enforce required fields per trading context
 - **[Building Integration](/docs/building-integration/comstock-resstock)** — Join ODS-E data to NREL benchmarks for EUI analysis
 - **[Validation](/docs/validation/overview)** — Schema and semantic validation details
 - **[Contributing](https://github.com/AsobaCloud/odse/blob/main/CONTRIBUTING.md)** — Add OEM transforms and improve the spec

@@ -1,6 +1,8 @@
 ---
 title: "Architecture & Core Concepts"
 layout: default
+parent: "Learn"
+nav_order: 3
 ---
 
 # Architecture & Core Concepts

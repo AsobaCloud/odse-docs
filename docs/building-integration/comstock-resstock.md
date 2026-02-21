@@ -1,6 +1,8 @@
 ---
 title: "ComStock/ResStock Guide"
 layout: default
+parent: "Building Integration"
+nav_order: 1
 ---
 
 # ComStock/ResStock Guide

@@ -1,6 +1,8 @@
 ---
-title: "Conformance Profile Validation"
+title: "Conformance Profiles"
 layout: default
+parent: "Reference"
+nav_order: 9
 ---
 
 # Conformance Profile Validation

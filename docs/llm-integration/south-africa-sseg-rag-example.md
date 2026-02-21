@@ -1,6 +1,8 @@
 ---
 title: "South Africa SSEG RAG Example"
 layout: default
+parent: "LLM Integration"
+nav_order: 1
 ---
 
 # South Africa SSEG RAG Example

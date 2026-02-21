@@ -1,6 +1,8 @@
 ---
 title: "Multi-OEM Transform Tutorial"
 layout: default
+parent: "Build"
+nav_order: 2
 ---
 
 # Multi-OEM Transform Tutorial

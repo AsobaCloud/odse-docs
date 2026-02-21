@@ -1,6 +1,8 @@
 ---
-title: "Tariff Component Granularity"
+title: "Tariff Unbundling"
 layout: default
+parent: "Trading Integration"
+nav_order: 3
 ---
 
 # Tariff Component Granularity

@@ -1,6 +1,8 @@
 ---
 title: "Semantic Validation"
 layout: default
+parent: "Reference"
+nav_order: 8
 ---
 
 # Semantic Validation

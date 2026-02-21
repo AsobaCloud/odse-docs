@@ -1,6 +1,8 @@
 ---
 title: "Inverter API Access"
 layout: default
+parent: "Reference"
+nav_order: 5
 ---
 
 # Inverter API Access

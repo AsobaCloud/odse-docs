@@ -1,6 +1,8 @@
 ---
 title: "Transforms Overview"
 layout: default
+parent: "Build"
+nav_order: 6
 ---
 
 # Transforms Overview

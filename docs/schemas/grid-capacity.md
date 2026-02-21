@@ -1,6 +1,8 @@
 ---
-title: "Grid Capacity / Connection Status"
+title: "Grid Capacity"
 layout: default
+parent: "Reference"
+nav_order: 4
 ---
 
 # Grid Capacity / Connection Status

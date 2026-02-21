@@ -1,6 +1,8 @@
 ---
 title: "CLI Walkthrough"
 layout: default
+parent: "Build"
+nav_order: 5
 ---
 
 # CLI Walkthrough

@@ -20,7 +20,7 @@ layout: default
 
 <!-- B. Quick Start CTA -->
 <div class="quick-start-section">
-  <a href="/docs/get-started" class="quick-start-button">
+  <a href="/docs/build/quickstart" class="quick-start-button">
     Get Started in 5 Minutes
   </a>
   <p class="quick-start-subtext">
@@ -32,7 +32,7 @@ layout: default
 <div class="sdk-links-section">
   <h2>Install</h2>
   <div class="sdk-links-grid">
-    <a href="/docs/get-started" class="sdk-link-card">
+    <a href="/docs/build/quickstart" class="sdk-link-card">
       <div class="sdk-icon">&#x1F40D;</div>
       <h3>Python</h3>
       <code class="sdk-install">pip install odse</code>
@@ -59,40 +59,40 @@ layout: default
 <div class="quick-links-section">
   <h2>Quick Links</h2>
   <div class="quick-links-grid">
-    <a href="/docs/get-started" class="quick-link-card">
+    <a href="/docs/build/quickstart" class="quick-link-card">
       <div class="quick-link-icon">&#x1F680;</div>
-      <h4>Get Started</h4>
+      <h4>Quickstart</h4>
       <p>Install, transform, validate</p>
+    </a>
+
+    <a href="/docs/what-is-odse" class="quick-link-card">
+      <div class="quick-link-icon">&#x1F4D6;</div>
+      <h4>Learn</h4>
+      <p>What ODS-E is and why it exists</p>
+    </a>
+
+    <a href="/docs/patterns/basic-transform-validate" class="quick-link-card">
+      <div class="quick-link-icon">&#x1F9E9;</div>
+      <h4>Patterns</h4>
+      <p>Copy-paste pipeline recipes</p>
     </a>
 
     <a href="/docs/schemas/overview" class="quick-link-card">
       <div class="quick-link-icon">&#x1F4CB;</div>
-      <h4>Schema Reference</h4>
-      <p>Energy timeseries &amp; asset metadata</p>
+      <h4>Reference</h4>
+      <p>Schemas, SDK, validation specs</p>
     </a>
 
-    <a href="/docs/transforms/overview" class="quick-link-card">
-      <div class="quick-link-icon">&#x1F504;</div>
-      <h4>Transforms</h4>
-      <p>10 OEM mappings</p>
-    </a>
-
-    <a href="/docs/validation/overview" class="quick-link-card">
-      <div class="quick-link-icon">&#x2705;</div>
-      <h4>Validation</h4>
-      <p>Schema &amp; semantic checks</p>
-    </a>
-
-    <a href="/docs/building-integration/overview" class="quick-link-card">
-      <div class="quick-link-icon">&#x1F3D7;</div>
-      <h4>Building Integration</h4>
-      <p>ComStock/ResStock mapping</p>
-    </a>
-
-    <a href="/docs/trading-integration/overview" class="quick-link-card">
+    <a href="/docs/trading-integration/enrichment" class="quick-link-card">
       <div class="quick-link-icon">&#x26A1;</div>
       <h4>Trading Integration</h4>
       <p>Settlement, wheeling &amp; tariffs</p>
+    </a>
+
+    <a href="/docs/building-integration/comstock-resstock" class="quick-link-card">
+      <div class="quick-link-icon">&#x1F3D7;</div>
+      <h4>Building Integration</h4>
+      <p>ComStock/ResStock mapping</p>
     </a>
 
     <a href="https://github.com/AsobaCloud/odse" class="quick-link-card">
@@ -201,39 +201,39 @@ print(result.is_valid)  # True</code></pre>
   <h2>Documentation Sections</h2>
   <div class="section-cards">
     <div class="section-card">
-      <h3>Getting Started</h3>
-      <p>Install the library, transform OEM data, and validate records in 5 minutes</p>
-      <a href="/docs/get-started" class="section-link">Get Started &rarr;</a>
+      <h3>Learn</h3>
+      <p>Understand what ODS-E is, why it exists, and how the architecture works</p>
+      <a href="/docs/what-is-odse" class="section-link">Start Learning &rarr;</a>
     </div>
 
     <div class="section-card">
-      <h3>Schema Reference</h3>
-      <p>Energy timeseries and asset metadata field definitions and enums</p>
-      <a href="/docs/schemas/overview" class="section-link">View Schemas &rarr;</a>
+      <h3>Build</h3>
+      <p>Quickstart, tutorials, CLI walkthrough, and integration guides</p>
+      <a href="/docs/build/quickstart" class="section-link">Get Started &rarr;</a>
     </div>
 
     <div class="section-card">
-      <h3>Transforms</h3>
-      <p>OEM-to-ODS-E mapping specs and runtime transform functions</p>
-      <a href="/docs/transforms/overview" class="section-link">View Transforms &rarr;</a>
+      <h3>Patterns</h3>
+      <p>Copy-paste pipeline recipes for common workflows</p>
+      <a href="/docs/patterns/basic-transform-validate" class="section-link">View Patterns &rarr;</a>
     </div>
 
     <div class="section-card">
-      <h3>Validation</h3>
-      <p>Schema validation, semantic checks, and physical bounds verification</p>
-      <a href="/docs/validation/overview" class="section-link">View Validation &rarr;</a>
-    </div>
-
-    <div class="section-card">
-      <h3>Building Integration</h3>
-      <p>Join ODS-E data to NREL ComStock/ResStock benchmarks for EUI analysis</p>
-      <a href="/docs/building-integration/overview" class="section-link">View Guide &rarr;</a>
+      <h3>Reference</h3>
+      <p>Schema specs, Python SDK, and validation rule details</p>
+      <a href="/docs/schemas/overview" class="section-link">View Reference &rarr;</a>
     </div>
 
     <div class="section-card">
       <h3>Trading Integration</h3>
       <p>Settlement, wheeling, tariffs, curtailment, BRP, and municipal reconciliation</p>
-      <a href="/docs/trading-integration/overview" class="section-link">View Guide &rarr;</a>
+      <a href="/docs/trading-integration/enrichment" class="section-link">View Guide &rarr;</a>
+    </div>
+
+    <div class="section-card">
+      <h3>Building Integration</h3>
+      <p>Join ODS-E data to NREL ComStock/ResStock benchmarks for EUI analysis</p>
+      <a href="/docs/building-integration/comstock-resstock" class="section-link">View Guide &rarr;</a>
     </div>
 
     <div class="section-card">

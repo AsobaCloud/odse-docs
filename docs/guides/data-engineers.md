@@ -1,6 +1,8 @@
 ---
 title: "Data Engineer Integration Guide"
 layout: default
+parent: "Build"
+nav_order: 4
 ---
 
 # Data Engineer Integration Guide

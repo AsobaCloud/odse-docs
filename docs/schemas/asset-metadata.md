@@ -1,6 +1,8 @@
 ---
-title: "Asset Metadata Schema"
+title: "Asset Metadata"
 layout: default
+parent: "Reference"
+nav_order: 3
 ---
 
 # Asset Metadata Schema

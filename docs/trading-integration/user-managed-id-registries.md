@@ -1,6 +1,8 @@
 ---
 title: "User-Managed ID Registries"
 layout: default
+parent: "Trading Integration"
+nav_order: 8
 ---
 
 # User-Managed ID Registries

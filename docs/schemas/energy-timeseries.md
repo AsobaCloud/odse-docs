@@ -1,6 +1,8 @@
 ---
-title: "Energy Timeseries Schema"
+title: "Energy Timeseries"
 layout: default
+parent: "Reference"
+nav_order: 2
 ---
 
 # Energy Timeseries Schema

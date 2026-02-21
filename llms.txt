@@ -1,0 +1,51 @@
+# ODS-E Documentation
+> Open Data Schema for Energy — a minimal, interoperable contract for energy asset data exchange across OEMs, markets, and analytics platforms.
+
+## Learn
+- [What is ODS-E?](https://opendataschema.energy/docs/what-is-odse): Overview of ODS-E, its goals, and what problems it solves.
+- [Why ODS-E?](https://opendataschema.energy/docs/why-odse): Motivation and comparison to alternatives.
+- [Architecture & Core Concepts](https://opendataschema.energy/docs/concepts/architecture): Data flow diagram and how transforms, validation, and enrichment compose.
+
+## Build
+- [Quickstart](https://opendataschema.energy/docs/build/quickstart): Install, transform one CSV, validate the output — 3 steps.
+- [Multi-OEM Transform Tutorial](https://opendataschema.energy/docs/tutorials/multi-oem-transform): Transform data from 3 OEMs side-by-side and compare output.
+- [Bring Your Own Data](https://opendataschema.energy/docs/tutorials/bring-your-own-data): Use the generic CSV mapper with your own files.
+- [Data Engineer Integration Guide](https://opendataschema.energy/docs/guides/data-engineers): Pipeline patterns for ETL teams — SCADA to Parquet.
+- [CLI Walkthrough](https://opendataschema.energy/docs/guides/cli-walkthrough): Every odse CLI command with real examples.
+- [Transforms Overview](https://opendataschema.energy/docs/transforms/overview): How transforms normalize OEM data into ODS-E records.
+- [Supported OEMs](https://opendataschema.energy/docs/transforms/supported-oems): Support matrix for all 10 OEM connectors.
+- [Validation Overview](https://opendataschema.energy/docs/validation/overview): Schema, semantic, and profile validation.
+
+## Patterns
+- [Basic: Transform + Validate](https://opendataschema.energy/docs/patterns/basic-transform-validate): Transform OEM CSV, validate, write to JSON — complete working code.
+- [Trading Settlement Pipeline](https://opendataschema.energy/docs/patterns/trading-settlement-pipeline): Transform, enrich with market context, validate against a conformance profile.
+- [Building Energy Benchmarking](https://opendataschema.energy/docs/patterns/building-energy-benchmarking): Join ODS-E timeseries to ComStock benchmarks for EUI ratio analysis.
+- [LLM RAG with ODS-E Metadata](https://opendataschema.energy/docs/patterns/llm-rag-with-odse-metadata): Use ODS-E metadata for structured RAG filtering in energy LLM apps.
+
+## Reference
+- [Schema Overview](https://opendataschema.energy/docs/schemas/overview): How the energy-timeseries and asset-metadata schemas relate.
+- [Energy Timeseries](https://opendataschema.energy/docs/schemas/energy-timeseries): Required and optional fields for interval energy records.
+- [Asset Metadata](https://opendataschema.energy/docs/schemas/asset-metadata): Fields for asset context — location, capacity, asset type, grid connection.
+- [Grid Capacity](https://opendataschema.energy/docs/schemas/grid-capacity): Grid connection lifecycle, allocated capacity, and GCAR milestones.
+- [Inverter API Access](https://opendataschema.energy/docs/schemas/inverter-api-access): API onboarding requirements for inverter OEMs used by transforms.
+- [Python SDK Reference](https://opendataschema.energy/docs/reference/python-sdk): Full API documentation for all public functions.
+- [Schema Validation](https://opendataschema.energy/docs/validation/schema-validation): Structural correctness rules for ODS-E records.
+- [Semantic Validation](https://opendataschema.energy/docs/validation/semantic-validation): Physical plausibility checks — capacity bounds, state consistency.
+- [Conformance Profiles](https://opendataschema.energy/docs/validation/conformance-profiles): Required-field sets for specific SA trading contexts.
+
+## Trading Integration
+- [Enrichment](https://opendataschema.energy/docs/trading-integration/enrichment): Inject settlement, tariff, and topology context post-transform.
+- [Wheeling Extensions](https://opendataschema.energy/docs/trading-integration/wheeling-extensions): Standard envelope for traditional, virtual, and portfolio wheeling.
+- [Tariff Unbundling](https://opendataschema.energy/docs/trading-integration/tariff-unbundling): Granular unbundled tariff component fields at the interval level.
+- [Curtailment Tracking](https://opendataschema.energy/docs/trading-integration/curtailment-tracking): Track curtailment events, causes, and estimated lost generation.
+- [BRP / Imbalance Settlement](https://opendataschema.energy/docs/trading-integration/brp-imbalance-settlement): BRP context, forecasts, and imbalance calculations.
+- [Municipal Reconciliation](https://opendataschema.energy/docs/trading-integration/municipal-reconciliation): Billing cycles, metered vs billed quantities, DAA references.
+- [Green Attributes](https://opendataschema.energy/docs/trading-integration/green-attributes): Renewable energy certificate references and carbon intensity.
+- [User-Managed ID Registries](https://opendataschema.energy/docs/trading-integration/user-managed-id-registries): Canonical ID formats and deterministic namespace rules.
+- [Cape Town Market Use Case](https://opendataschema.energy/docs/trading-integration/cape-town-market-use-case): How a Cape Town trading ecosystem uses ODS-E for settlement.
+
+## Building Integration
+- [ComStock/ResStock Guide](https://opendataschema.energy/docs/building-integration/comstock-resstock): Field mapping and example queries for NREL building benchmarks.
+
+## LLM Integration
+- [South Africa SSEG RAG Example](https://opendataschema.energy/docs/llm-integration/south-africa-sseg-rag-example): Municipality-aware RAG assistant for SSEG application support.

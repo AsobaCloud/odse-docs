@@ -1,6 +1,8 @@
 ---
 title: "Validation Overview"
 layout: default
+parent: "Build"
+nav_order: 8
 ---
 
 # Validation Overview

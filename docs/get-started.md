@@ -1,6 +1,7 @@
 ---
 title: "Get Started with ODS-E"
 layout: default
+nav_exclude: true
 ---
 
 # Get Started with ODS-E

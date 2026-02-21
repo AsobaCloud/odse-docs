@@ -1,7 +1,7 @@
 ---
 layout: default
 title: "Why ODS-E?"
-parent: "Ona Protocol (ODS-E)"
+parent: "Learn"
 nav_order: 2
 ---
 

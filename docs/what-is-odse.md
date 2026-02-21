@@ -1,6 +1,8 @@
 ---
 title: "What is ODS-E?"
 layout: default
+parent: "Learn"
+nav_order: 1
 ---
 
 # What is ODS-E?

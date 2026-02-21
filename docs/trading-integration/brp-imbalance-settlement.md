@@ -1,6 +1,8 @@
 ---
 title: "BRP / Imbalance Settlement"
 layout: default
+parent: "Trading Integration"
+nav_order: 5
 ---
 
 # BRP / Imbalance Settlement

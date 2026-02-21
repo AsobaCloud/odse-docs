@@ -1,6 +1,8 @@
 ---
-title: "Green Attribute / Certificate Tracking"
+title: "Green Attributes"
 layout: default
+parent: "Trading Integration"
+nav_order: 7
 ---
 
 # Green Attribute / Certificate Tracking

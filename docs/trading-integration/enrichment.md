@@ -1,6 +1,8 @@
 ---
-title: "Post-Transform Enrichment"
+title: "Enrichment"
 layout: default
+parent: "Trading Integration"
+nav_order: 1
 ---
 
 # Post-Transform Enrichment

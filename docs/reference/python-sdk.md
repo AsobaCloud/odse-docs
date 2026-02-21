@@ -1,6 +1,8 @@
 ---
 title: "Python SDK Reference"
 layout: default
+parent: "Reference"
+nav_order: 6
 ---
 
 # Python SDK Reference

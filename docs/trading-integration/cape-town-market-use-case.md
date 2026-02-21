@@ -1,6 +1,8 @@
 ---
 title: "Cape Town Market Use Case"
 layout: default
+parent: "Trading Integration"
+nav_order: 9
 ---
 
 # Cape Town Market Use Case

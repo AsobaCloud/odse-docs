@@ -1,6 +1,8 @@
 ---
-title: "Curtailment Event Tracking"
+title: "Curtailment Tracking"
 layout: default
+parent: "Trading Integration"
+nav_order: 4
 ---
 
 # Curtailment Event Tracking

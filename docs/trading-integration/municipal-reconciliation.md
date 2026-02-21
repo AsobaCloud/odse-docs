@@ -1,6 +1,8 @@
 ---
 title: "Municipal Reconciliation"
 layout: default
+parent: "Trading Integration"
+nav_order: 6
 ---
 
 # Municipal Reconciliation

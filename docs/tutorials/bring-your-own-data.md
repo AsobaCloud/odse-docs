@@ -1,6 +1,8 @@
 ---
 title: "Bring Your Own Data"
 layout: default
+parent: "Build"
+nav_order: 3
 ---
 
 # Bring Your Own Data

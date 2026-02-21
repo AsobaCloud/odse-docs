@@ -1,6 +1,8 @@
 ---
 title: "Schema Validation"
 layout: default
+parent: "Reference"
+nav_order: 7
 ---
 
 # Schema Validation

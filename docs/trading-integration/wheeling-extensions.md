@@ -1,6 +1,8 @@
 ---
-title: "Wheeling Transaction Envelope"
+title: "Wheeling Extensions"
 layout: default
+parent: "Trading Integration"
+nav_order: 2
 ---
 
 # Wheeling Transaction Envelope

@@ -1,6 +1,8 @@
 ---
-title: "Schema Reference Overview"
+title: "Schema Overview"
 layout: default
+parent: "Reference"
+nav_order: 1
 ---
 
 # Schema Reference Overview

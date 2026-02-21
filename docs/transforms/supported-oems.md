@@ -1,6 +1,8 @@
 ---
 title: "Supported OEMs"
 layout: default
+parent: "Build"
+nav_order: 7
 ---
 
 # Supported OEMs

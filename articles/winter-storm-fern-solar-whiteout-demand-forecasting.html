@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>When Solar Goes Dark: Predicting Neighborhood Demand Swings During Winter Storms - ODS-E Blog</title>
+  <meta name="description" content="Winter Storm Fern proved the Texas grid can hold. The next question is where demand spikes hit hardest when rooftop solar drops to zero — and how free public data lets any utility analyst answer it.">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="Open Data Schema for Energy">
+  <meta property="og:title" content="When Solar Goes Dark: Predicting Neighborhood Demand Swings During Winter Storms - ODS-E Blog">
+  <meta property="og:description" content="Winter Storm Fern proved the Texas grid can hold. The next question is where demand spikes hit hardest when rooftop solar drops to zero — and how free public data lets any utility analyst answer it.">
+  <meta property="og:image" content="https://opendataschema.energy/assets/images/brand/logo.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="When Solar Goes Dark: Predicting Neighborhood Demand Swings During Winter Storms - ODS-E Blog">
+  <meta name="twitter:description" content="Winter Storm Fern proved the Texas grid can hold. The next question is where demand spikes hit hardest when rooftop solar drops to zero — and how free public data lets any utility analyst answer it.">
+  <meta name="twitter:image" content="https://opendataschema.energy/assets/images/brand/logo.png">
+  <link rel="icon" type="image/x-icon" href="../favicon.ico">
+  <link rel="icon" type="image/png" sizes="32x32" href="../Artboard-7.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="../Artboard-7.png">
+  <link rel="stylesheet" href="../includes/common.css">
+  <style>
+    :root { --primary-black:#000; --primary-blue:#455BF1; --text-dark:#333; --text-light:#4D4D4D; --white:#FFF; --border-grey:#E0E0E0; --neutral-grey:#F4F4F4; --accent-red:#E20419; }
+    * { margin:0; padding:0; box-sizing:border-box; }
+    body { font-family:'DM Sans',Helvetica,Arial,sans-serif; background:var(--white); line-height:1.75; color:var(--text-dark); }
+    .header-bar { background:var(--primary-black); position:fixed; top:0; left:0; width:100%; height:70px; z-index:100; display:flex; align-items:center; justify-content:space-between; padding:0 90px; }
+    .branding { display:flex; align-items:center; }
+    .branding img { width:50px; height:50px; object-fit:contain; }
+    .site-title { color:var(--white); font-size:20px; font-weight:700; margin-left:15px; white-space:nowrap; }
+    .top-links { display:flex; gap:15px; }
+    .top-links a { color:var(--white); text-decoration:none; font:normal 12px/16px 'DM Sans',Helvetica,Arial,sans-serif; padding:5px; }
+    .article-container { max-width:920px; margin:0 auto; padding:120px 40px 80px; }
+    .article-header { margin-bottom:48px; text-align:center; border-bottom:1px solid var(--border-grey); padding-bottom:28px; }
+    .article-type { display:inline-block; padding:8px 16px; background:var(--accent-red); color:var(--white); font-size:.8rem; font-weight:600; border-radius:20px; text-transform:uppercase; letter-spacing:.5px; margin-bottom:20px; }
+    .article-title { font-size:2.6rem; font-weight:700; margin-bottom:14px; line-height:1.2; }
+    .article-excerpt { font-size:1.15rem; color:var(--text-light); margin-bottom:16px; line-height:1.5; }
+    .article-meta { font-size:.98rem; color:var(--primary-blue); font-weight:600; }
+    .article-content h2 { font-size:1.8rem; margin:36px 0 14px; line-height:1.3; }
+    .article-content h3 { font-size:1.3rem; margin:24px 0 10px; line-height:1.3; }
+    .article-content p { margin-bottom:16px; }
+    .article-content ul { margin:0 0 16px 22px; }
+    .article-content li { margin-bottom:8px; }
+    pre { background:var(--neutral-grey); border-radius:8px; padding:16px; overflow-x:auto; margin:14px 0 20px; line-height:1.5; }
+    code { font-family:Menlo,Monaco,Consolas,'Courier New',monospace; font-size:.95em; }
+    .callout { border:1px solid var(--border-grey); border-left:4px solid var(--primary-blue); border-radius:8px; padding:16px; margin:22px 0; background:#fafbff; }
+    .chart-container { margin:24px 0 28px; text-align:center; }
+    .chart-container img { max-width:100%; height:auto; border:1px solid var(--border-grey); border-radius:8px; }
+    .chart-caption { font-size:.9rem; color:var(--text-light); margin-top:8px; font-style:italic; }
+    .cta-box { border:2px solid var(--primary-blue); border-radius:12px; padding:24px; margin:32px 0; background:linear-gradient(135deg, #fafbff, #f0f1ff); }
+    .cta-box h3 { color:var(--primary-blue); margin-top:0; }
+    .back-link { display:inline-block; margin-top:24px; color:var(--primary-blue); font-weight:600; text-decoration:none; }
+    table { width:100%; border-collapse:collapse; margin:14px 0 20px; font-size:.95rem; }
+    th, td { padding:10px 14px; text-align:left; border-bottom:1px solid var(--border-grey); }
+    th { background:var(--neutral-grey); font-weight:600; }
+    @media (max-width:900px) { .header-bar{padding:0 16px;} .site-title{font-size:18px;} .article-container{padding:110px 20px 56px;} .article-title{font-size:2rem;} }
+  </style>
+</head>
+<body>
+  <header class="header-bar">
+    <div class="branding">
+      <span class="site-title">Open Data Schema for Energy</span>
+    </div>
+    <div class="top-links">
+      <a href="/docs/">Docs</a>
+      <a href="https://opendataschema.energy/blog.html">Blog</a>
+      <a href="https://github.com/AsobaCloud/odse">GitHub</a>
+      <a href="https://asoba.co/contact-us">Contact</a>
+    </div>
+  </header>
+
+  <main class="article-container">
+    <header class="article-header">
+      <span class="article-type">Grid Analytics</span>
+      <h1 class="article-title">When Solar Goes Dark: Predicting Neighborhood Demand Swings During Winter Storms</h1>
+      <p class="article-excerpt">Winter Storm Fern proved the Texas grid can hold. The next question is where demand spikes hit hardest when rooftop solar drops to zero &mdash; and how free public data lets any utility analyst answer it.</p>
+    </header>
+
+    <article class="article-content">
+
+      <h2>The Storm That Wasn't Uri</h2>
+      <p>Winter Storm Fern hit Texas on January 24&ndash;27, 2026 &mdash; almost exactly five years after Uri knocked out power for 4.5 million homes and became shorthand for grid failure. The "renewables failed" headline returned immediately. Solar was generating 0 MW at 6 AM during peak morning stress. Over 14,000 MW of wind and solar capacity went offline. The takes wrote themselves.</p>
+      <p>But the grid held. About 50,000 homes lost power briefly, compared to 4.5 million during Uri. The difference? Battery storage delivered 7,000 MW at peak morning demand &mdash; 9.5% of ERCOT's total load &mdash; from infrastructure that barely existed in 2021. The Department of Energy issued an emergency order under Section 202(c) of the Federal Power Act, but as a precaution, not a bailout. Wholesale prices spiked but didn't spiral. The structural investments since Uri &mdash; weatherization mandates, battery buildout, grid hardening &mdash; worked.</p>
+      <p>The more interesting question isn't whether the grid survived. It's what happens next, as rooftop solar penetration keeps climbing. And the answer requires a kind of analysis that most utilities aren't set up to do yet &mdash; but that any analyst with Python and a free dataset can start doing today.</p>
+
+      <h2>The Hidden Problem: Solar Whiteout Demand Swing</h2>
+      <p>Here's the scenario that keeps grid planners up at night.</p>
+      <p>On a normal sunny day in Houston, a neighborhood with 20% rooftop solar penetration looks like it's drawing 80% of its actual building load from the grid. The other 20% is offset by local generation. The utility's demand forecast sees 80%, plans for 80%, dispatches for 80%.</p>
+      <p>Then a winter storm rolls in. Snow covers panels. Clouds cut irradiance to near zero. Solar output drops from 20% to 0%. The grid suddenly sees the full 100% of building load &mdash; a 25% jump in apparent demand from that neighborhood, with no warning in the forecast.</p>
+      <p>Scale this across a metro area with uneven solar adoption, and you get demand spikes that are invisible to any utility that doesn't track solar penetration at the neighborhood level. The swing is proportional to solar penetration: a neighborhood at 40% solar sees a potential 67% demand swing. At 10%, it's 11%. The math is simple. The problem is that most utilities don't have the neighborhood-level data to do the math.</p>
+      <p>This is the "solar whiteout demand swing" &mdash; and it gets worse every year as rooftop solar adoption accelerates.</p>
+
+      <h2>What You Need: Two Free Datasets</h2>
+      <p>You don't need proprietary grid data to start quantifying this risk. Two public datasets give you most of what you need:</p>
+      <ul>
+        <li><strong>NREL ResStock</strong>: Physics-based simulation of every residential building type in the US, at county and PUMA (Public Use Microdata Area) resolution. Includes energy consumption by end use, building vintage, heating system type, and &mdash; critically &mdash; rooftop PV status. Free from the <a href="https://data.openei.org/submissions/4520">Open Energy Data Initiative</a>.</li>
+        <li><strong>ODS-E energy-timeseries records</strong>: If you have actual rooftop solar production data from your service territory, <a href="/docs/schemas/overview">ODS-E</a> gives you a standard schema to normalize it &mdash; making it joinable with ResStock for calibration.</li>
+      </ul>
+      <p>Everything in this article uses the ResStock 2024 Release 2 baseline for Texas, downloaded from the public OEDI S3 bucket. No credentials required, no approval process, no cost. Full download instructions are in the <a href="/docs/building-integration/accessing-the-data">Accessing the Data</a> guide.</p>
+
+      <h2>Step 0: Download the Data</h2>
+      <p>You need the AWS CLI (any version) and about 130 MB of disk space:</p>
+      <pre><code>aws s3 cp --no-sign-request \
+  "s3://oedi-data-lake/nrel-pds-building-stock/end-use-load-profiles-for-us-building-stock/2024/resstock_tmy3_release_2/metadata_and_annual_results/by_state/state=TX/csv/TX_baseline_metadata_and_annual_results.csv" \
+  ./texas_resstock_baseline.csv</code></pre>
+      <p>This gives you 43,089 building models across all of Texas, with 289 columns covering building characteristics (<code>in.*</code> columns), simulated energy consumption by end use (<code>out.*</code> columns), and a <code>weight</code> column that tells you how many real buildings each model represents.</p>
+
+      <h2>Step 1: Profile Your County's Building Stock</h2>
+      <p>Load the data and filter to Harris County (Houston metro):</p>
+      <pre><code>import pandas as pd
+
+df = pd.read_csv("texas_resstock_baseline.csv", low_memory=False)
+
+# Harris County, TX — GISJOIN code G4802010
+harris = df[df["in.county"] == "G4802010"].copy()
+print(f"Harris County: {len(harris):,} models")
+print(f"Representing: {harris['weight'].sum():,.0f} dwellings")</code></pre>
+      <p>Result: <strong>6,967 building models</strong> representing <strong>1,757,786 dwellings</strong>. Each model is a statistically representative sample &mdash; the <code>weight</code> column scales it to the real building count.</p>
+
+      <p>Now look at heating demand by building vintage. During a winter storm, heating is the dominant load &mdash; and older buildings use dramatically more:</p>
+      <pre><code>heating_col = "out.electricity.heating.energy_consumption.kwh"
+
+vintage_heating = (
+    harris.groupby("in.vintage")
+    .apply(lambda g: (g[heating_col] * g["weight"]).sum() / g["weight"].sum(),
+           include_groups=False)
+    .sort_index()
+)
+
+print("Heating electricity by construction era (kWh/dwelling/year):")
+for vintage, kwh in vintage_heating.items():
+    print(f"  {vintage:<20} {kwh:>8,.0f}")</code></pre>
+
+      <div class="chart-container">
+        <img src="/assets/images/blog/fern-heating-demand-heatmap.svg" alt="Bar chart showing heating electricity demand by building vintage in Harris County. Pre-1940 homes use 2,309 kWh per year versus 674 kWh for 2010s construction — a 3.4x difference.">
+        <p class="chart-caption">Harris County heating electricity by construction era. Pre-1940 homes draw 3.4&times; more heating power than 2010s construction. Source: ResStock 2024 R2 baseline.</p>
+      </div>
+
+      <p>The insight: during a freeze, neighborhoods with older housing stock draw dramatically more heating power. A pre-1940 home uses <strong>2,309 kWh</strong> of electric heating annually versus <strong>674 kWh</strong> for a 2010s home &mdash; a 3.4&times; difference. When you're trying to predict where storm demand will spike, building age is one of the strongest signals in the data.</p>
+
+      <h2>Step 2: Map Solar Penetration by Neighborhood</h2>
+      <p>ResStock includes PV status for every building model. Check what Harris County looks like today:</p>
+      <pre><code>pv_col = "out.electricity.pv.energy_consumption.kwh"
+
+# Current PV penetration
+pv_homes = harris[harris["in.has_pv"] == "Yes"]
+pv_dwellings = pv_homes["weight"].sum()
+total_dwellings = harris["weight"].sum()
+pv_pct = pv_dwellings / total_dwellings * 100
+
+print(f"PV homes: {pv_dwellings:,.0f} of {total_dwellings:,.0f} ({pv_pct:.1f}%)")
+
+# Average generation per PV home (values are negative = generation)
+avg_gen = abs((pv_homes[pv_col] * pv_homes["weight"]).sum() / pv_homes["weight"].sum())
+print(f"Avg generation per PV home: {avg_gen:,.0f} kWh/year")</code></pre>
+      <p>Current penetration is just <strong>0.3%</strong> &mdash; about 5,300 homes with PV out of 1.76 million total. That's low. But Texas installed solar capacity has grown roughly 13&times; since 2021, from about 4.5 GW to over 58 GW. Residential rooftop is following the same trajectory. The demand swing problem that barely registers at 0.3% becomes a serious planning challenge at 5%, 10%, or 20%.</p>
+
+      <div class="chart-container">
+        <img src="/assets/images/blog/fern-solar-penetration-zones.svg" alt="Dual-axis chart showing Texas installed solar capacity growth from 4.5 GW in 2021 to 58 GW in 2026, with projected residential PV penetration reaching 5-20% by 2030.">
+        <p class="chart-caption">Texas solar capacity (blue, left axis) and projected residential PV penetration (red, right axis). Current Harris County penetration from ResStock: 0.3%. At current growth trajectory, the demand swing problem scales rapidly.</p>
+      </div>
+
+      <h2>Step 3: Calculate the Demand Swing</h2>
+      <p>The demand swing calculation is straightforward. For each neighborhood (PUMA), estimate how much grid demand increases when solar drops to zero:</p>
+      <pre><code>energy_col = "out.site_energy.total.energy_consumption.kwh"
+
+# Per-PUMA total energy consumption
+puma_stats = harris.groupby("in.puma").agg(
+    total_energy=pd.NamedAgg(
+        column=energy_col,
+        aggfunc=lambda x: (x * harris.loc[x.index, "weight"]).sum()
+    ),
+    total_dwellings=pd.NamedAgg(column="weight", aggfunc="sum")
+).sort_values("total_energy", ascending=False)
+
+# Average PV generation per home: 7,149 kWh/year (from actual ResStock data)
+avg_pv_gen = 7_149  # kWh/year
+
+# Calculate swing at projected penetration levels
+for pct in [5, 10, 20]:
+    puma_stats[f"swing_{pct}pct_gwh"] = (
+        puma_stats["total_dwellings"] * (pct / 100) * avg_pv_gen / 1_000_000
+    )
+    print(f"\nAt {pct}% PV penetration:")
+    print(f"  Total annual demand swing: "
+          f"{puma_stats[f'swing_{pct}pct_gwh'].sum():,.1f} GWh")
+    print(f"  Top PUMA swing: "
+          f"{puma_stats[f'swing_{pct}pct_gwh'].max():,.1f} GWh")</code></pre>
+
+      <div class="chart-container">
+        <img src="/assets/images/blog/fern-demand-swing-comparison.svg" alt="Grouped bar chart showing predicted demand swing by PUMA at 5%, 10%, and 20% solar penetration. The highest-consumption PUMAs show swings exceeding 40 GWh annually at 20% penetration.">
+        <p class="chart-caption">Predicted annual demand swing by PUMA when solar drops to zero, at three projected penetration levels. Higher bars = bigger demand surprise during a storm. Source: ResStock 2024 R2 baseline, Harris County.</p>
+      </div>
+
+      <p>At 20% solar penetration, the top PUMAs in Harris County face annual demand swing potential exceeding 40 GWh. During a multi-day winter storm when solar output collapses to zero, this load materializes all at once. Utilities that forecast at the county level see an aggregate bump. Utilities that forecast at the neighborhood level can see exactly <em>which</em> substations will get hit hardest.</p>
+
+      <h2>Step 4: Build a Storm Vulnerability Map</h2>
+      <p>The real power of this analysis comes from combining multiple risk factors per neighborhood. Not all demand swing is equal &mdash; a neighborhood that's high-solar <em>and</em> old housing stock <em>and</em> electric heating is a qualitatively different risk than a neighborhood that's high-solar but all new construction with heat pumps.</p>
+      <p>Combine four signals from the ResStock data into a composite vulnerability score:</p>
+      <pre><code>import numpy as np
+
+heating_col = "out.electricity.heating.energy_consumption.kwh"
+
+# Build per-PUMA risk factors
+puma_risk = harris.groupby("in.puma").apply(
+    lambda g: pd.Series({
+        "heating_intensity": (
+            (g[heating_col] * g["weight"]).sum() / g["weight"].sum()
+        ),
+        "dwelling_density": g["weight"].sum() / 1000,
+        "pre_1980_pct": (
+            g[g["in.vintage"].isin([
+                v for v in g["in.vintage"].unique()
+                if any(era in str(v) for era in
+                       ["&lt;1940", "1940s", "1950s", "1960s", "1970s"])
+            ])]["weight"].sum() / g["weight"].sum() * 100
+        ),
+        "electric_heat_pct": (
+            g[g["in.hvac_heating_type_and_fuel"].str.contains(
+                "Electric", na=False
+            )]["weight"].sum() / g["weight"].sum() * 100
+        ),
+    }),
+    include_groups=False
+)
+
+# Normalize to 0-1
+for col in puma_risk.columns:
+    lo, hi = puma_risk[col].min(), puma_risk[col].max()
+    puma_risk[col] = (puma_risk[col] - lo) / (hi - lo) if hi > lo else 0.5
+
+# Composite score (weighted)
+puma_risk["vulnerability"] = (
+    puma_risk["heating_intensity"] * 0.30 +
+    puma_risk["dwelling_density"] * 0.25 +
+    puma_risk["pre_1980_pct"] * 0.25 +
+    puma_risk["electric_heat_pct"] * 0.20
+)
+
+# Top 5 most vulnerable
+top5 = puma_risk.sort_values("vulnerability", ascending=False).head()
+print("Top 5 most storm-vulnerable PUMAs:")
+for puma, row in top5.iterrows():
+    print(f"  PUMA {puma}: vulnerability={row['vulnerability']:.2f}")</code></pre>
+
+      <div class="chart-container">
+        <img src="/assets/images/blog/fern-storm-forecast-heatmap.svg" alt="Heatmap showing storm demand vulnerability by PUMA in Harris County, with columns for heating intensity, dwelling density, pre-1980 housing stock percentage, electric heating percentage, and composite vulnerability score.">
+        <p class="chart-caption">Storm demand vulnerability by Harris County PUMA. Composite score weights: heating intensity (30%), dwelling density (25%), pre-1980 stock (25%), electric heating share (20%). Source: ResStock 2024 R2 baseline.</p>
+      </div>
+
+      <p>The heatmap reveals which neighborhoods combine the worst risk factors. A PUMA that scores high on heating intensity <em>and</em> dwelling density <em>and</em> older housing stock is where a utility should pre-position resources during a storm watch &mdash; and where demand will swing hardest when solar penetration grows.</p>
+
+      <h2>What Fern Actually Showed Us</h2>
+      <p>Winter Storm Fern wasn't a failure. It was a proof point for $14 billion in grid investment since Uri. Battery storage alone delivered 7,000 MW at peak &mdash; capacity that didn't exist five years ago. Weatherization mandates reduced residential demand during the cold snap. The emergency order was precautionary.</p>
+      <p>But Fern also previewed the next planning challenge. Solar at 0 MW during a pre-dawn winter peak isn't a failure of solar &mdash; it's a structural fact about solar physics. The planning question is what happens when 10% or 20% of a metro area's building load is normally offset by rooftop generation, and then that offset disappears in a storm. The swing is predictable, locatable, and quantifiable. It just requires neighborhood-level data that most utilities don't have in their demand forecasting systems.</p>
+      <p>The analysis in this article takes about an hour with free public data. The data is real (ResStock 2024 R2, modeled from actual building stock surveys and NOAA weather). The code is reproducible &mdash; download the same CSV, run the same steps, get the same numbers. No proprietary platform required.</p>
+      <p>That's the "citizen data scientist" version of storm readiness: one analyst, one dataset, one afternoon, and a forecast that most utilities don't have.</p>
+
+      <div class="cta-box">
+        <h3>Try It Yourself</h3>
+        <ul>
+          <li><a href="/docs/building-integration/accessing-the-data">Accessing the Data</a> &mdash; Step-by-step download instructions for ResStock and ComStock</li>
+          <li><a href="/docs/patterns/municipal-emissions-attribution">Municipal Emissions Attribution</a> &mdash; Disaggregate CO&#8322; by building sector, vintage, and end use</li>
+          <li><a href="/docs/patterns/cross-city-benchmarking">Cross-City Benchmarking</a> &mdash; Compare multiple cities using the same methodology</li>
+          <li><a href="/docs/building-integration/comstock-resstock">ComStock &amp; ResStock Guide</a> &mdash; What the datasets are and how they connect to ODS-E</li>
+          <li><a href="https://github.com/AsobaCloud/odse">ODS-E on GitHub</a> &mdash; Schema definitions, transforms, and validation tools</li>
+        </ul>
+      </div>
+
+      <a class="back-link" href="/blog.html">&larr; Back to Blog</a>
+    </article>
+  </main>
+</body>
+</html>

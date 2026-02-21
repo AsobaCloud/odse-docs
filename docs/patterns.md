@@ -13,3 +13,4 @@ Copy-paste-ready pipeline recipes for common ODS-E workflows. Each pattern inclu
 - [Trading Settlement Pipeline](/docs/patterns/trading-settlement-pipeline) — Transform, enrich with market context, validate against a conformance profile
 - [Building Energy Benchmarking](/docs/patterns/building-energy-benchmarking) — Join ODS-E data to NREL ComStock/ResStock for EUI analysis
 - [LLM RAG with ODS-E Metadata](/docs/patterns/llm-rag-with-odse-metadata) — Structured retrieval for municipality-aware energy assistants
+- [Production Case Study: Multi-OEM Forecasting Pipeline](/docs/patterns/forecasting-pipeline-case-study) — How the Ona Intelligence Layer uses ODS-E transforms in production

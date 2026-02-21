@@ -201,6 +201,12 @@ You should see all tests pass, including the new consumption and net metering va
 
 You now know how to transform, enrich, validate, and work with both generation and consumption data. Explore further:
 
+- **[Architecture & Core Concepts](/docs/concepts/architecture)** — Data flow diagram and how the pieces fit together
+- **[Python SDK Reference](/docs/reference/python-sdk)** — Full API documentation for all 12 public functions
+- **[CLI Walkthrough](/docs/guides/cli-walkthrough)** — Every `odse` CLI command with real examples
+- **[Multi-OEM Transform Tutorial](/docs/tutorials/multi-oem-transform)** — Transform 3 OEMs side-by-side and compare output
+- **[Bring Your Own Data](/docs/tutorials/bring-your-own-data)** — Use the generic CSV mapper with your own files
+- **[Data Engineer Integration Guide](/docs/guides/data-engineers)** — Pipeline patterns for ETL teams
 - **[Schema Reference](/docs/schemas/overview)** — Full field definitions for energy-timeseries and asset-metadata
 - **[Transforms](/docs/transforms/supported-oems)** — Support matrix for all 10 OEMs
 - **[Post-Transform Enrichment](/docs/trading-integration/enrichment)** — Inject settlement, tariff, and topology context

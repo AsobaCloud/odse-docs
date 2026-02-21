@@ -61,101 +61,105 @@ layout: default
         <!-- Getting Started -->
         <li class="nav-item">
           <div class="nav-header">
-            <a href="{{ site.baseurl }}/docs/get-started">Getting Started</a>
-          </div>
-        </li>
-
-        <!-- What is ODS-E? -->
-        <li class="nav-item">
-          <div class="nav-header">
-            <a href="{{ site.baseurl }}/docs/what-is-odse">What is ODS-E?</a>
-          </div>
-        </li>
-
-        <!-- Why ODS-E? -->
-        <li class="nav-item">
-          <div class="nav-header">
-            <a href="{{ site.baseurl }}/docs/why-odse">Why ODS-E?</a>
-          </div>
-        </li>
-
-        <!-- Schema Reference -->
-        <li class="nav-item">
-          <div class="nav-header">
-            <a href="{{ site.baseurl }}/docs/schemas/overview">Schema Reference</a>
+            <a href="{{ site.baseurl }}/docs/learn">Learn</a>
             <span class="toggle-icon">+</span>
           </div>
           <ul class="sub-menu">
-            <li><a href="{{ site.baseurl }}/docs/schemas/overview">Overview</a></li>
+            <li><a href="{{ site.baseurl }}/docs/what-is-odse">What is ODS-E?</a></li>
+            <li><a href="{{ site.baseurl }}/docs/why-odse">Why ODS-E?</a></li>
+            <li><a href="{{ site.baseurl }}/docs/concepts/architecture">Architecture & Core Concepts</a></li>
+          </ul>
+        </li>
+
+        <!-- Build -->
+        <li class="nav-item">
+          <div class="nav-header">
+            <a href="{{ site.baseurl }}/docs/build">Build</a>
+            <span class="toggle-icon">+</span>
+          </div>
+          <ul class="sub-menu">
+            <li><a href="{{ site.baseurl }}/docs/build/quickstart">Quickstart</a></li>
+            <li><a href="{{ site.baseurl }}/docs/tutorials/multi-oem-transform">Multi-OEM Transform Tutorial</a></li>
+            <li><a href="{{ site.baseurl }}/docs/tutorials/bring-your-own-data">Bring Your Own Data</a></li>
+            <li><a href="{{ site.baseurl }}/docs/guides/data-engineers">Data Engineer Integration Guide</a></li>
+            <li><a href="{{ site.baseurl }}/docs/guides/cli-walkthrough">CLI Walkthrough</a></li>
+            <li><a href="{{ site.baseurl }}/docs/transforms/overview">Transforms Overview</a></li>
+            <li><a href="{{ site.baseurl }}/docs/transforms/supported-oems">Supported OEMs</a></li>
+            <li><a href="{{ site.baseurl }}/docs/validation/overview">Validation Overview</a></li>
+          </ul>
+        </li>
+
+        <!-- Patterns -->
+        <li class="nav-item">
+          <div class="nav-header">
+            <a href="{{ site.baseurl }}/docs/patterns">Patterns</a>
+            <span class="toggle-icon">+</span>
+          </div>
+          <ul class="sub-menu">
+            <li><a href="{{ site.baseurl }}/docs/patterns/basic-transform-validate">Basic: Transform + Validate</a></li>
+            <li><a href="{{ site.baseurl }}/docs/patterns/trading-settlement-pipeline">Trading Settlement Pipeline</a></li>
+            <li><a href="{{ site.baseurl }}/docs/patterns/building-energy-benchmarking">Building Energy Benchmarking</a></li>
+            <li><a href="{{ site.baseurl }}/docs/patterns/llm-rag-with-odse-metadata">LLM RAG with ODS-E Metadata</a></li>
+          </ul>
+        </li>
+
+        <!-- Reference -->
+        <li class="nav-item">
+          <div class="nav-header">
+            <a href="{{ site.baseurl }}/docs/reference">Reference</a>
+            <span class="toggle-icon">+</span>
+          </div>
+          <ul class="sub-menu">
+            <li><a href="{{ site.baseurl }}/docs/schemas/overview">Schema Overview</a></li>
             <li><a href="{{ site.baseurl }}/docs/schemas/energy-timeseries">Energy Timeseries</a></li>
             <li><a href="{{ site.baseurl }}/docs/schemas/asset-metadata">Asset Metadata</a></li>
+            <li><a href="{{ site.baseurl }}/docs/schemas/grid-capacity">Grid Capacity</a></li>
             <li><a href="{{ site.baseurl }}/docs/schemas/inverter-api-access">Inverter API Access</a></li>
-          </ul>
-        </li>
-
-        <!-- Transforms -->
-        <li class="nav-item">
-          <div class="nav-header">
-            <a href="{{ site.baseurl }}/docs/transforms/overview">Transforms</a>
-            <span class="toggle-icon">+</span>
-          </div>
-          <ul class="sub-menu">
-            <li><a href="{{ site.baseurl }}/docs/transforms/overview">Overview</a></li>
-            <li><a href="{{ site.baseurl }}/docs/transforms/supported-oems">Supported OEMs</a></li>
-          </ul>
-        </li>
-
-        <!-- Validation -->
-        <li class="nav-item">
-          <div class="nav-header">
-            <a href="{{ site.baseurl }}/docs/validation/overview">Validation</a>
-            <span class="toggle-icon">+</span>
-          </div>
-          <ul class="sub-menu">
-            <li><a href="{{ site.baseurl }}/docs/validation/overview">Overview</a></li>
+            <li><a href="{{ site.baseurl }}/docs/reference/python-sdk">Python SDK Reference</a></li>
             <li><a href="{{ site.baseurl }}/docs/validation/schema-validation">Schema Validation</a></li>
             <li><a href="{{ site.baseurl }}/docs/validation/semantic-validation">Semantic Validation</a></li>
+            <li><a href="{{ site.baseurl }}/docs/validation/conformance-profiles">Conformance Profiles</a></li>
           </ul>
         </li>
 
-        <!-- Use Cases -->
+        <!-- Trading Integration -->
         <li class="nav-item">
           <div class="nav-header">
-            <a href="{{ site.baseurl }}/docs/building-integration/overview">Use Cases</a>
+            <a href="{{ site.baseurl }}/docs/trading-integration">Trading Integration</a>
             <span class="toggle-icon">+</span>
           </div>
           <ul class="sub-menu">
-            <li class="nav-subsection">
-              <div class="sub-nav-header">
-                <a href="{{ site.baseurl }}/docs/building-integration/overview">Building Integration</a>
-                <span class="sub-toggle-icon">+</span>
-              </div>
-              <ul class="sub-sub-menu">
-                <li><a href="{{ site.baseurl }}/docs/building-integration/overview">Overview</a></li>
-                <li><a href="{{ site.baseurl }}/docs/building-integration/comstock-resstock">ComStock/ResStock Guide</a></li>
-              </ul>
-            </li>
-            <li class="nav-subsection">
-              <div class="sub-nav-header">
-                <a href="{{ site.baseurl }}/docs/llm-integration/overview">LLM Integration</a>
-                <span class="sub-toggle-icon">+</span>
-              </div>
-              <ul class="sub-sub-menu">
-                <li><a href="{{ site.baseurl }}/docs/llm-integration/overview">Overview</a></li>
-                <li><a href="{{ site.baseurl }}/docs/llm-integration/south-africa-sseg-rag-example">South Africa SSEG Example</a></li>
-              </ul>
-            </li>
-            <li class="nav-subsection">
-              <div class="sub-nav-header">
-                <a href="{{ site.baseurl }}/docs/trading-integration/overview">Trading Integration</a>
-                <span class="sub-toggle-icon">+</span>
-              </div>
-              <ul class="sub-sub-menu">
-                <li><a href="{{ site.baseurl }}/docs/trading-integration/overview">Overview</a></li>
-                <li><a href="{{ site.baseurl }}/docs/trading-integration/cape-town-market-use-case">Cape Town Market Use Case</a></li>
-                <li><a href="{{ site.baseurl }}/docs/trading-integration/user-managed-id-registries">User-Managed ID Registries</a></li>
-              </ul>
-            </li>
+            <li><a href="{{ site.baseurl }}/docs/trading-integration/enrichment">Enrichment</a></li>
+            <li><a href="{{ site.baseurl }}/docs/trading-integration/wheeling-extensions">Wheeling Extensions</a></li>
+            <li><a href="{{ site.baseurl }}/docs/trading-integration/tariff-unbundling">Tariff Unbundling</a></li>
+            <li><a href="{{ site.baseurl }}/docs/trading-integration/curtailment-tracking">Curtailment Tracking</a></li>
+            <li><a href="{{ site.baseurl }}/docs/trading-integration/brp-imbalance-settlement">BRP / Imbalance Settlement</a></li>
+            <li><a href="{{ site.baseurl }}/docs/trading-integration/municipal-reconciliation">Municipal Reconciliation</a></li>
+            <li><a href="{{ site.baseurl }}/docs/trading-integration/green-attributes">Green Attributes</a></li>
+            <li><a href="{{ site.baseurl }}/docs/trading-integration/user-managed-id-registries">User-Managed ID Registries</a></li>
+            <li><a href="{{ site.baseurl }}/docs/trading-integration/cape-town-market-use-case">Cape Town Market Use Case</a></li>
+          </ul>
+        </li>
+
+        <!-- Building Integration -->
+        <li class="nav-item">
+          <div class="nav-header">
+            <a href="{{ site.baseurl }}/docs/building-integration">Building Integration</a>
+            <span class="toggle-icon">+</span>
+          </div>
+          <ul class="sub-menu">
+            <li><a href="{{ site.baseurl }}/docs/building-integration/comstock-resstock">ComStock/ResStock Guide</a></li>
+          </ul>
+        </li>
+
+        <!-- LLM Integration -->
+        <li class="nav-item">
+          <div class="nav-header">
+            <a href="{{ site.baseurl }}/docs/llm-integration">LLM Integration</a>
+            <span class="toggle-icon">+</span>
+          </div>
+          <ul class="sub-menu">
+            <li><a href="{{ site.baseurl }}/docs/llm-integration/south-africa-sseg-rag-example">South Africa SSEG RAG Example</a></li>
           </ul>
         </li>
 

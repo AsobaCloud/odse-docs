@@ -8,10 +8,10 @@ layout: default
   <h1>ODS-E: Open Data Schema for Energy</h1>
   <div class="version-badge">
     <span class="version-label">Schema</span>
-    <span class="version-value">v0.3.0</span>
+    <span class="version-value">v0.4.0</span>
     <span class="version-separator">|</span>
     <span class="version-label">Python</span>
-    <span class="version-value">v0.2.0</span>
+    <span class="version-value">v0.4.0</span>
     <span class="version-separator">|</span>
     <span class="version-label">License</span>
     <span class="version-value">CC-BY-SA 4.0 / Apache 2.0</span>
@@ -36,7 +36,7 @@ layout: default
       <div class="sdk-icon">&#x1F40D;</div>
       <h3>Python</h3>
       <code class="sdk-install">pip install odse</code>
-      <p>v0.2.0 &bull; Transform + Validate</p>
+      <p>v0.4.0 &bull; Transform + Validate</p>
     </a>
 
     <a href="https://github.com/AsobaCloud/odse" class="sdk-link-card">
@@ -184,13 +184,13 @@ print(result.is_valid)  # True</code></pre>
   </div>
 
   <div class="whats-new">
-    <h3>What's New in v0.3.0</h3>
+    <h3>What's New in v0.4.0</h3>
     <ul class="whats-new-list">
-      <li>Direction-aware energy timeseries (generation / consumption / net)</li>
-      <li>End-use tagging aligned with ComStock/ResStock</li>
-      <li>Building metadata and asset type taxonomy</li>
-      <li>10 OEM runtime transforms with test harness</li>
-      <li>Market reform extensions: wheeling, tariff unbundling, curtailment, BRP/imbalance, municipal reconciliation, grid capacity, green attributes</li>
+      <li>Market context extension fields for settlement parties, tariff context, and municipal/grid topology</li>
+      <li>Runtime enrichment helper (`odse.enrich`) for post-transform context injection</li>
+      <li>SA market reform extension coverage: wheeling, tariff components, curtailment, BRP/imbalance, municipal reconciliation, certificates, and grid capacity lifecycle</li>
+      <li>Conformance profile validation support for trading and settlement workflows</li>
+      <li>Municipal emissions modeling guide and implementation workflows</li>
     </ul>
     <a href="https://github.com/AsobaCloud/odse/blob/main/CHANGELOG.md" class="whats-new-link">Read Changelog &rarr;</a>
   </div>

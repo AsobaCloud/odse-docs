@@ -36,6 +36,7 @@ Translate interval energy records into building-context insights without breakin
 
 ## Related Docs
 
-- [ComStock/ResStock Guide](/docs/building-integration/comstock-resstock)
+- [ComStock & ResStock Guide](/docs/building-integration/comstock-resstock) — What the datasets are and why they matter
+- [Accessing the Data](/docs/building-integration/accessing-the-data) — Step-by-step download and exploration guide
 - [Schema Reference Overview](/docs/schemas/overview)
 - [Validation Overview](/docs/validation/overview)

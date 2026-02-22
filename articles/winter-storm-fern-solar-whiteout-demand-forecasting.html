@@ -4,15 +4,15 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>When Solar Goes Dark: Predicting Neighborhood Demand Swings During Winter Storms - ODS-E Blog</title>
-  <meta name="description" content="Winter Storm Fern proved the Texas grid can hold. The next question is where demand spikes hit hardest when rooftop solar drops to zero — and how free public data lets any utility analyst answer it.">
+  <meta name="description" content="Winter Storm Fern proved the Texas grid can hold. The next question is where demand spikes hit hardest when solar drops to zero — and how free public data lets any utility analyst answer it.">
   <meta property="og:type" content="website">
   <meta property="og:site_name" content="Open Data Schema for Energy">
   <meta property="og:title" content="When Solar Goes Dark: Predicting Neighborhood Demand Swings During Winter Storms - ODS-E Blog">
-  <meta property="og:description" content="Winter Storm Fern proved the Texas grid can hold. The next question is where demand spikes hit hardest when rooftop solar drops to zero — and how free public data lets any utility analyst answer it.">
+  <meta property="og:description" content="Winter Storm Fern proved the Texas grid can hold. The next question is where demand spikes hit hardest when solar drops to zero — and how free public data lets any utility analyst answer it.">
   <meta property="og:image" content="https://opendataschema.energy/assets/images/brand/logo.png">
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content="When Solar Goes Dark: Predicting Neighborhood Demand Swings During Winter Storms - ODS-E Blog">
-  <meta name="twitter:description" content="Winter Storm Fern proved the Texas grid can hold. The next question is where demand spikes hit hardest when rooftop solar drops to zero — and how free public data lets any utility analyst answer it.">
+  <meta name="twitter:description" content="Winter Storm Fern proved the Texas grid can hold. The next question is where demand spikes hit hardest when solar drops to zero — and how free public data lets any utility analyst answer it.">
   <meta name="twitter:image" content="https://opendataschema.energy/assets/images/brand/logo.png">
   <link rel="icon" type="image/x-icon" href="../favicon.ico">
   <link rel="icon" type="image/png" sizes="32x32" href="../Artboard-7.png">
@@ -71,7 +71,7 @@
     <header class="article-header">
       <span class="article-type">Grid Analytics</span>
       <h1 class="article-title">When Solar Goes Dark: Predicting Neighborhood Demand Swings During Winter Storms</h1>
-      <p class="article-excerpt">Winter Storm Fern proved the Texas grid can hold. The next question is where demand spikes hit hardest when rooftop solar drops to zero &mdash; and how free public data lets any utility analyst answer it.</p>
+      <p class="article-excerpt">Winter Storm Fern proved the Texas grid can hold. The next question is where demand spikes hit hardest when solar drops to zero &mdash; and how free public data lets any utility analyst answer it.</p>
     </header>
 
     <article class="article-content">
@@ -88,13 +88,13 @@
       <p>Scale this across a metro area with uneven solar adoption, and you get demand spikes that are invisible to any utility that doesn't track solar penetration at the neighborhood level. The swing is proportional to solar penetration: a neighborhood at 40% solar sees a potential 67% demand swing. At 10%, it's 11%. The math is simple. The problem is that most utilities don't have the neighborhood-level data to do the math.</p>
       <p>This is the "solar whiteout demand swing" &mdash; and it gets worse every year as rooftop solar adoption accelerates.</p>
 
-      <h2>What You Need: Two Free Datasets</h2>
-      <p>You don't need proprietary grid data to start quantifying this risk. Two public datasets give you most of what you need:</p>
+      <h2>What You Need: Two Data Sources</h2>
+      <p>To quantify this risk for a specific metro area, you need two things:</p>
       <ul>
-        <li><strong>NREL ResStock</strong>: Physics-based simulation of every residential building type in the US, at county and PUMA (Public Use Microdata Area) resolution. Includes energy consumption by end use, building vintage, heating system type, and &mdash; critically &mdash; rooftop PV status. Free from the <a href="https://data.openei.org/submissions/4520">Open Energy Data Initiative</a>.</li>
-        <li><strong>ODS-E energy-timeseries records</strong>: If you have actual rooftop solar production data from your service territory, <a href="/docs/schemas/overview">ODS-E</a> gives you a standard schema to normalize it &mdash; making it joinable with ResStock for calibration.</li>
+        <li><strong>Building consumption data</strong> &mdash; <a href="https://data.openei.org/submissions/4520">NREL ResStock</a> gives you physics-based energy consumption by end use for every residential building type in the US, at county and PUMA (Public Use Microdata Area) resolution. Free, public, no credentials required.</li>
+        <li><strong>Solar production data</strong> &mdash; the actual generation output from solar farms or rooftop systems in your service territory. This comes from inverter monitoring platforms (SMA Sunny Portal, Enphase Enlighten, SolarEdge, etc.) in whatever format the OEM exports. <a href="/docs/schemas/overview">ODS-E</a> normalizes these heterogeneous feeds into a common schema so they can be joined with building data for analysis.</li>
       </ul>
-      <p>Everything in this article uses the ResStock 2024 Release 2 baseline for Texas, downloaded from the public OEDI S3 bucket. No credentials required, no approval process, no cost. Full download instructions are in the <a href="/docs/building-integration/accessing-the-data">Accessing the Data</a> guide.</p>
+      <p>This article uses the ResStock 2024 Release 2 baseline for Texas (free, from the <a href="/docs/building-integration/accessing-the-data">OEDI S3 bucket</a>) plus production data from a fictional 5 MW solar farm &mdash; generated synthetically but structured exactly like real inverter output, then normalized through ODS-E.</p>
 
       <h2>Step 0: Download the Data</h2>
       <p>You need the AWS CLI (any version) and about 130 MB of disk space:</p>
@@ -136,76 +136,150 @@ for vintage, kwh in vintage_heating.items():
 
       <p>The insight: during a freeze, neighborhoods with older housing stock draw dramatically more heating power. A pre-1940 home uses <strong>2,309 kWh</strong> of electric heating annually versus <strong>674 kWh</strong> for a 2010s home &mdash; a 3.4&times; difference. When you're trying to predict where storm demand will spike, building age is one of the strongest signals in the data.</p>
 
-      <h2>Step 2: Map Solar Penetration by Neighborhood</h2>
-      <p>ResStock includes PV status for every building model. Check what Harris County looks like today:</p>
-      <pre><code>pv_col = "out.electricity.pv.energy_consumption.kwh"
+      <h2>Step 2: Your Solar Farm's Data</h2>
+      <p>You're a utility analyst. Your grid planning team just got a data export from Bayou Solar Farm &mdash; a 5 MW ground-mounted installation in eastern Harris County that feeds into several neighborhoods via the local distribution grid. The data is a raw CSV from the farm's <strong>SMA Sunny Portal</strong>.</p>
+      <p>Here's what it looks like:</p>
+      <pre><code>Timestamp,Total Power (kW),Grid Frequency (Hz),Status,Daily Yield (kWh)
+2026-01-20 07:00:00,142.3,60.01,Ok,0.0
+2026-01-20 07:05:00,287.6,60.00,Ok,23.9
+2026-01-20 12:00:00,3487.2,59.98,Ok,10241.5
+2026-01-20 18:30:00,12.1,60.02,Ok,19847.3
+...
+2026-01-25 12:00:00,203.4,59.97,Warning,892.1
+2026-01-25 12:05:00,0.0,59.96,Disturbance,892.1
+2026-01-25 12:10:00,87.2,60.01,Warning,899.4</code></pre>
+      <p>On normal January days, the farm peaks around 3,500 kW at midday and produces roughly 19&ndash;21 MWh per day. Then Fern arrives. On January 25 &mdash; the worst day &mdash; ice coats the trackers, clouds cut irradiance to near zero, and the inverters cycle between <code>Warning</code> and <code>Disturbance</code> states. Daily production drops to 1.2 MWh. The farm effectively goes dark.</p>
 
-# Current PV penetration
-pv_homes = harris[harris["in.has_pv"] == "Yes"]
-pv_dwellings = pv_homes["weight"].sum()
-total_dwellings = harris["weight"].sum()
-pv_pct = pv_dwellings / total_dwellings * 100
+      <h3>Normalize with ODS-E</h3>
+      <p>Raw SMA exports can't be directly joined with ResStock building data &mdash; the column names, timestamp formats, energy semantics, and status codes are all SMA-specific. This is where <a href="/docs/schemas/energy-timeseries">ODS-E</a> comes in. Transform the raw CSV into standardized energy-timeseries records:</p>
+      <pre><code>from odse import transform
 
-print(f"PV homes: {pv_dwellings:,.0f} of {total_dwellings:,.0f} ({pv_pct:.1f}%)")
+# Transform raw SMA Sunny Portal export to ODS-E
+records = transform(
+    "bayou_solar_farm_export.csv",
+    source="csv",
+    asset_id="BAYOU-SOLAR-001",
+    mapping={
+        "timestamp": "Timestamp",
+        "power_kw": "Total Power (kW)",
+        "error_type": "Status",
+    },
+    error_code_mapping={
+        "normal": ["Ok"],
+        "warning": ["Warning"],
+        "critical": ["Disturbance", "Off"],
+    },
+    interval_minutes=5,
+)
 
-# Average generation per PV home (values are negative = generation)
-avg_gen = abs((pv_homes[pv_col] * pv_homes["weight"]).sum() / pv_homes["weight"].sum())
-print(f"Avg generation per PV home: {avg_gen:,.0f} kWh/year")</code></pre>
-      <p>Current penetration is just <strong>0.3%</strong> &mdash; about 5,300 homes with PV out of 1.76 million total. That's low. But Texas installed solar capacity has grown roughly 13&times; since 2021, from about 4.5 GW to over 58 GW. Residential rooftop is following the same trajectory. The demand swing problem that barely registers at 0.3% becomes a serious planning challenge at 5%, 10%, or 20%.</p>
+print(f"Transformed {len(records)} records")</code></pre>
+      <p>Each record now looks like this &mdash; regardless of whether the original data came from SMA, Enphase, SolarEdge, or any other OEM:</p>
+      <pre><code>// Normal production — clear day
+{
+  "timestamp": "2026-01-20T12:00:00-06:00",
+  "kWh": 29.1,
+  "error_type": "normal",
+  "direction": "generation"
+}
+
+// Storm day — inverter struggling
+{
+  "timestamp": "2026-01-25T12:00:00-06:00",
+  "kWh": 1.7,
+  "error_type": "warning",
+  "direction": "generation"
+}</code></pre>
+      <p>And the asset metadata record for the farm:</p>
+      <pre><code>{
+  "asset_id": "BAYOU-SOLAR-001",
+  "asset_type": "solar_pv",
+  "capacity_kw": 5000,
+  "site_id": "bayou-solar-farm",
+  "oem": "SMA",
+  "location": {
+    "latitude": 29.78,
+    "longitude": -95.18,
+    "timezone": "America/Chicago",
+    "county": "Harris County",
+    "state": "TX"
+  }
+}</code></pre>
+      <p>Now aggregate the ODS-E records to daily production:</p>
+      <pre><code>import pandas as pd
+
+production = pd.DataFrame(records)
+production["date"] = pd.to_datetime(production["timestamp"]).dt.date
+daily = production.groupby("date")["kWh"].sum() / 1000  # MWh
+
+for date, mwh in daily.items():
+    marker = " &lt;&lt; STORM" if date.day in [24, 25, 26, 27] else ""
+    print(f"  {date}: {mwh:>6.1f} MWh{marker}")</code></pre>
 
       <div class="chart-container">
-        <img src="/assets/images/blog/fern-solar-penetration-zones.svg" alt="Dual-axis chart showing Texas installed solar capacity growth from 4.5 GW in 2021 to 58 GW in 2026, with projected residential PV penetration reaching 5-20% by 2030.">
-        <p class="chart-caption">Texas solar capacity (blue, left axis) and projected residential PV penetration (red, right axis). Current Harris County penetration from ResStock: 0.3%. At current growth trajectory, the demand swing problem scales rapidly.</p>
+        <img src="/assets/images/blog/fern-solar-farm-production.svg" alt="Bar chart showing Bayou Solar Farm daily production. Normal days produce 19-21 MWh. During Winter Storm Fern (Jan 24-27), production collapses to 1-5 MWh per day — an 85% drop.">
+        <p class="chart-caption">Bayou Solar Farm daily production during Winter Storm Fern. Normal January output: ~20 MWh/day. Storm days (red): production collapses 85%, bottoming at 1.2 MWh on Jan 25.</p>
       </div>
+
+      <p>The chart tells the story: 20 MWh/day of solar generation that neighborhoods were counting on &mdash; suddenly gone. For four days, the grid has to supply that load directly. The question is which neighborhoods feel it most.</p>
 
       <h2>Step 3: Calculate the Demand Swing</h2>
-      <p>The demand swing calculation is straightforward. For each neighborhood (PUMA), estimate how much grid demand increases when solar drops to zero:</p>
+      <p>Now join the two datasets: ODS-E solar production (what the farm normally generates) with ResStock building consumption (what the neighborhoods actually need). The difference on a storm day is the demand swing.</p>
       <pre><code>energy_col = "out.site_energy.total.energy_consumption.kwh"
 
-# Per-PUMA total energy consumption
-puma_stats = harris.groupby("in.puma").agg(
-    total_energy=pd.NamedAgg(
+# Per-PUMA total building consumption from ResStock
+puma_consumption = harris.groupby("in.puma").agg(
+    total_energy_gwh=pd.NamedAgg(
         column=energy_col,
-        aggfunc=lambda x: (x * harris.loc[x.index, "weight"]).sum()
+        aggfunc=lambda x: (x * harris.loc[x.index, "weight"]).sum() / 1_000_000
     ),
     total_dwellings=pd.NamedAgg(column="weight", aggfunc="sum")
-).sort_values("total_energy", ascending=False)
+).sort_values("total_energy_gwh", ascending=False)
 
-# Average PV generation per home: 7,149 kWh/year (from actual ResStock data)
-avg_pv_gen = 7_149  # kWh/year
+# From ODS-E records: Bayou Solar Farm normal daily production
+normal_daily_mwh = 19.8   # from our aggregated ODS-E data
+storm_daily_mwh = 2.4     # average during Fern (Jan 24-27)
 
-# Calculate swing at projected penetration levels
-for pct in [5, 10, 20]:
-    puma_stats[f"swing_{pct}pct_gwh"] = (
-        puma_stats["total_dwellings"] * (pct / 100) * avg_pv_gen / 1_000_000
-    )
-    print(f"\nAt {pct}% PV penetration:")
-    print(f"  Total annual demand swing: "
-          f"{puma_stats[f'swing_{pct}pct_gwh'].sum():,.1f} GWh")
-    print(f"  Top PUMA swing: "
-          f"{puma_stats[f'swing_{pct}pct_gwh'].max():,.1f} GWh")</code></pre>
+# The farm serves ~12,000 homes across several PUMAs
+# On a normal day: 19.8 MWh offsets grid demand
+# On a storm day: only 2.4 MWh — grid must supply the missing 17.4 MWh
+demand_swing_mwh = normal_daily_mwh - storm_daily_mwh
+
+print(f"Normal daily farm output:  {normal_daily_mwh:.1f} MWh")
+print(f"Storm daily farm output:   {storm_daily_mwh:.1f} MWh")
+print(f"Daily demand swing:        {demand_swing_mwh:.1f} MWh")
+print(f"4-day storm total swing:   {demand_swing_mwh * 4:.1f} MWh")</code></pre>
+      <p>That's <strong>17.4 MWh per day</strong> of extra grid demand during the storm &mdash; and that's just one 5 MW farm. Harris County has multiple solar installations. Scale this across the county's total solar capacity at projected future penetration levels:</p>
+      <pre><code># Scale to projected county-wide solar capacity
+# Current: ~30 MW installed. Projected: 150 MW (5x), 500 MW (16x)
+for capacity_mw, label in [(30, "Current ~30 MW"), (150, "Near-term 150 MW"),
+                            (500, "Projected 500 MW")]:
+    scale = capacity_mw / 5  # relative to our 5 MW farm
+    swing = demand_swing_mwh * scale
+    print(f"  {label:&lt;22} Daily storm swing: {swing:>7.0f} MWh  "
+          f"({swing/1000:.1f} GWh over 4 days)")</code></pre>
 
       <div class="chart-container">
-        <img src="/assets/images/blog/fern-demand-swing-comparison.svg" alt="Grouped bar chart showing predicted demand swing by PUMA at 5%, 10%, and 20% solar penetration. The highest-consumption PUMAs show swings exceeding 40 GWh annually at 20% penetration.">
-        <p class="chart-caption">Predicted annual demand swing by PUMA when solar drops to zero, at three projected penetration levels. Higher bars = bigger demand surprise during a storm. Source: ResStock 2024 R2 baseline, Harris County.</p>
+        <img src="/assets/images/blog/fern-demand-swing-comparison.svg" alt="Grouped bar chart showing predicted demand swing by PUMA at projected solar penetration levels. The highest-consumption PUMAs show the biggest absolute swing when solar goes dark.">
+        <p class="chart-caption">Predicted demand swing by PUMA when solar drops to zero, at three projected penetration levels. Higher bars = bigger demand surprise during a storm. Source: ResStock 2024 R2 baseline + ODS-E production data, Harris County.</p>
       </div>
 
-      <p>At 20% solar penetration, the top PUMAs in Harris County face annual demand swing potential exceeding 40 GWh. During a multi-day winter storm when solar output collapses to zero, this load materializes all at once. Utilities that forecast at the county level see an aggregate bump. Utilities that forecast at the neighborhood level can see exactly <em>which</em> substations will get hit hardest.</p>
+      <p>At projected 500 MW county-wide solar capacity, a Fern-like storm creates a <strong>1,740 MWh daily demand swing</strong> &mdash; nearly 7 GWh over a four-day event. The critical question for grid planners isn't the aggregate number. It's <em>which neighborhoods</em> absorb that swing, and whether those neighborhoods also happen to have the highest heating demand.</p>
 
-      <h2>Step 4: Build a Storm Vulnerability Map</h2>
-      <p>The real power of this analysis comes from combining multiple risk factors per neighborhood. Not all demand swing is equal &mdash; a neighborhood that's high-solar <em>and</em> old housing stock <em>and</em> electric heating is a qualitatively different risk than a neighborhood that's high-solar but all new construction with heat pumps.</p>
-      <p>Combine four signals from the ResStock data into a composite vulnerability score:</p>
+      <h2>Step 4: Map Storm Vulnerability by Neighborhood</h2>
+      <p>The real power of this analysis comes from putting it on a map. Not all demand swing is equal &mdash; a neighborhood that has high solar dependency <em>and</em> older housing stock <em>and</em> electric heating is a qualitatively different risk than one with new construction and heat pumps.</p>
+      <p>Combine four signals from the ResStock data into a composite vulnerability score, then map it onto actual Harris County PUMA boundaries using Census TIGER shapefiles:</p>
       <pre><code>import numpy as np
+import geopandas as gpd
 
 heating_col = "out.electricity.heating.energy_consumption.kwh"
 
-# Build per-PUMA risk factors
+# Build per-PUMA risk factors from ResStock
 puma_risk = harris.groupby("in.puma").apply(
     lambda g: pd.Series({
         "heating_intensity": (
             (g[heating_col] * g["weight"]).sum() / g["weight"].sum()
         ),
-        "dwelling_density": g["weight"].sum() / 1000,
+        "dwelling_count": g["weight"].sum(),
         "pre_1980_pct": (
             g[g["in.vintage"].isin([
                 v for v in g["in.vintage"].unique()
@@ -222,37 +296,52 @@ puma_risk = harris.groupby("in.puma").apply(
     include_groups=False
 )
 
-# Normalize to 0-1
+# Normalize each factor to 0-1
 for col in puma_risk.columns:
     lo, hi = puma_risk[col].min(), puma_risk[col].max()
     puma_risk[col] = (puma_risk[col] - lo) / (hi - lo) if hi > lo else 0.5
 
-# Composite score (weighted)
+# Composite vulnerability score
 puma_risk["vulnerability"] = (
     puma_risk["heating_intensity"] * 0.30 +
-    puma_risk["dwelling_density"] * 0.25 +
+    puma_risk["dwelling_count"] * 0.25 +
     puma_risk["pre_1980_pct"] * 0.25 +
     puma_risk["electric_heat_pct"] * 0.20
-)
+)</code></pre>
+      <p>Now load the Census TIGER 2020 PUMA boundaries (the same boundaries ResStock uses) and join the scores:</p>
+      <pre><code># Download PUMA shapefile for Texas:
+# https://www2.census.gov/geo/tiger/TIGER2022/PUMA/tl_2022_48_puma20.zip
 
-# Top 5 most vulnerable
-top5 = puma_risk.sort_values("vulnerability", ascending=False).head()
-print("Top 5 most storm-vulnerable PUMAs:")
-for puma, row in top5.iterrows():
-    print(f"  PUMA {puma}: vulnerability={row['vulnerability']:.2f}")</code></pre>
+gdf = gpd.read_file("tl_2022_48_puma20/tl_2022_48_puma20.shp")
+
+# Map ResStock PUMA codes to Census: G48004601 → 04601
+puma_risk["PUMACE20"] = puma_risk.index.str.replace("G480", "")
+
+# Filter to Harris County and join
+harris_gdf = gdf[gdf["PUMACE20"].isin(puma_risk["PUMACE20"])].copy()
+harris_gdf = harris_gdf.merge(puma_risk[["PUMACE20", "vulnerability"]],
+                               on="PUMACE20")
+
+# Plot choropleth
+harris_gdf.plot(column="vulnerability", cmap="YlOrRd",
+                legend=True, edgecolor="white", linewidth=0.8)
+plt.title("Storm Demand Vulnerability — Harris County PUMAs")
+plt.axis("off")
+plt.savefig("harris_county_vulnerability.svg")</code></pre>
 
       <div class="chart-container">
-        <img src="/assets/images/blog/fern-storm-forecast-heatmap.svg" alt="Heatmap showing storm demand vulnerability by PUMA in Harris County, with columns for heating intensity, dwelling density, pre-1980 housing stock percentage, electric heating percentage, and composite vulnerability score.">
-        <p class="chart-caption">Storm demand vulnerability by Harris County PUMA. Composite score weights: heating intensity (30%), dwelling density (25%), pre-1980 stock (25%), electric heating share (20%). Source: ResStock 2024 R2 baseline.</p>
+        <img src="/assets/images/blog/fern-storm-forecast-heatmap.svg" alt="Geographic choropleth map of Harris County, Texas showing storm demand vulnerability by PUMA. Darker red areas indicate neighborhoods with higher composite risk from heating intensity, dwelling density, older housing stock, and electric heating dependency.">
+        <p class="chart-caption">Storm demand vulnerability by Harris County neighborhood (PUMA). Composite score: heating intensity (30%), dwelling density (25%), pre-1980 stock (25%), electric heating (20%). Darker = higher risk. Source: ResStock 2024 R2 + Census TIGER 2020 PUMA boundaries.</p>
       </div>
 
-      <p>The heatmap reveals which neighborhoods combine the worst risk factors. A PUMA that scores high on heating intensity <em>and</em> dwelling density <em>and</em> older housing stock is where a utility should pre-position resources during a storm watch &mdash; and where demand will swing hardest when solar penetration grows.</p>
+      <p>The map reveals the geography of risk. The most vulnerable PUMAs cluster in Houston's inner core &mdash; East Central Houston, North Houston inside the Beltway, and North Central Houston inside Loop I-610. These neighborhoods combine the worst risk factors: dense older housing stock with high heating demand and significant electric heating dependency. During a storm like Fern, these are the areas where demand spikes hardest &mdash; and where solar production loss is felt most acutely on the distribution grid.</p>
 
       <h2>What Fern Actually Showed Us</h2>
       <p>Winter Storm Fern wasn't a failure. It was a proof point for $14 billion in grid investment since Uri. Battery storage alone delivered 7,000 MW at peak &mdash; capacity that didn't exist five years ago. Weatherization mandates reduced residential demand during the cold snap. The emergency order was precautionary.</p>
-      <p>But Fern also previewed the next planning challenge. Solar at 0 MW during a pre-dawn winter peak isn't a failure of solar &mdash; it's a structural fact about solar physics. The planning question is what happens when 10% or 20% of a metro area's building load is normally offset by rooftop generation, and then that offset disappears in a storm. The swing is predictable, locatable, and quantifiable. It just requires neighborhood-level data that most utilities don't have in their demand forecasting systems.</p>
-      <p>The analysis in this article takes about an hour with free public data. The data is real (ResStock 2024 R2, modeled from actual building stock surveys and NOAA weather). The code is reproducible &mdash; download the same CSV, run the same steps, get the same numbers. No proprietary platform required.</p>
-      <p>That's the "citizen data scientist" version of storm readiness: one analyst, one dataset, one afternoon, and a forecast that most utilities don't have.</p>
+      <p>But Fern also previewed the next planning challenge. Solar at 0 MW during a pre-dawn winter peak isn't a failure of solar &mdash; it's a structural fact about solar physics. The planning question is what happens when a growing share of a metro area's load is normally offset by solar generation, and then that generation disappears in a storm. The swing is predictable, locatable, and quantifiable. It just requires two things most utilities don't combine today: normalized solar production data and neighborhood-level building consumption profiles.</p>
+      <p>That's exactly what this analysis demonstrates. ODS-E normalizes the solar farm's inverter data into a standard schema &mdash; regardless of whether it comes from SMA, Enphase, SolarEdge, or any other OEM. ResStock provides the building-level consumption baseline. Joining them gives you a neighborhood-by-neighborhood storm vulnerability map that no single data source can produce alone.</p>
+      <p>The analysis takes about an hour. The building data is free (ResStock 2024 R2, modeled from actual building stock surveys and NOAA weather). The ODS-E transform is open source. The code is reproducible &mdash; download the same CSV, run the same steps, get the same results. No proprietary platform required.</p>
+      <p>That's the "citizen data scientist" version of storm readiness: one analyst, two datasets, one afternoon, and a forecast that most utilities don't have.</p>
 
       <div class="cta-box">
         <h3>Try It Yourself</h3>

@@ -17,3 +17,4 @@ Copy-paste-ready pipeline recipes for common ODS-E workflows. Each pattern inclu
 - [Municipal Emissions Attribution](/docs/patterns/municipal-emissions-attribution) — Disaggregate citywide CO₂ by building sector, vintage, and end use
 - [Upgrade Scenario Modeling](/docs/patterns/upgrade-scenario-modeling) — Model what-if retrofit impacts on energy and emissions
 - [Cross-City Benchmarking](/docs/patterns/cross-city-benchmarking) — Compare cities side-by-side with consistent methodology
+- [Maintenance Event Triage](/docs/patterns/maintenance-event-triage) — Respond to SCADA alarms using ERP enrichment data for dispatch decisions

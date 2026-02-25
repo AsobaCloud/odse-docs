@@ -9,10 +9,11 @@ nav_order: 1
 
 ODS-E defines a minimal, interoperable contract for energy asset data exchange.
 
-The schema is split into two complementary surfaces:
+The schema is split into three complementary surfaces:
 
 - `energy-timeseries`: operational records for generation, consumption, and net flows
 - `asset-metadata`: context for assets, sites, and building characteristics
+- `erp-enrichment`: maintenance history, spare parts inventory, procurement context, failure taxonomy, and alarm frequency analytics sourced from ERP/EAM and SCADA systems
 
 ## Design Principles
 
@@ -26,7 +27,8 @@ The schema is split into two complementary surfaces:
 2. Add [Asset Metadata](/docs/schemas/asset-metadata) for benchmarking, segmentation, and integration use cases.
 3. See [Grid Capacity / Connection Status](/docs/schemas/grid-capacity) for GCAR and grid access lifecycle fields.
 4. Use [Inverter API Access](/docs/schemas/inverter-api-access) to operationalize OEM onboarding and transform verification.
-5. Run [Schema Validation](/docs/validation/schema-validation) before using records in analytics.
+5. Add [ERP Enrichment Schemas](/docs/schemas/erp-enrichment) for maintenance, inventory, procurement, and alarm frequency analytics.
+6. Run [Schema Validation](/docs/validation/schema-validation) before using records in analytics.
 
 ## Core Record Example
 
@@ -44,3 +46,4 @@ The schema is split into two complementary surfaces:
 - [Validation Overview](/docs/validation/overview)
 - [Transforms Overview](/docs/transforms/overview)
 - [Inverter API Access](/docs/schemas/inverter-api-access)
+- [ERP Enrichment Schemas](/docs/schemas/erp-enrichment)

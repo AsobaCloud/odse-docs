@@ -1,7 +1,7 @@
 ---
 title: "ERP Enrichment Schemas"
 layout: default
-parent: "Reference"
+parent: "ERP Integration"
 nav_order: 6
 ---
 

@@ -1,7 +1,7 @@
 ---
 title: "Maintenance Event Triage"
 layout: default
-parent: "Patterns"
+parent: "ERP Integration"
 nav_order: 9
 ---
 

@@ -21,6 +21,7 @@ ODS-E currently ships transform support for the following OEM ecosystems.
 | FIMER Aurora Vision | API export | Legacy/modern payload variants may differ |
 | SolisCloud | API export | Cloud telemetry with OEM-specific status mappings |
 | SolaX Cloud | API export | Requires vendor-specific field mapping |
+| Higeco | JSON API export | Cloud SCADA platform (docAPI), normalized contract input |
 
 ## Compatibility Notes
 

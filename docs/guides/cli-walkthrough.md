@@ -90,7 +90,7 @@ Requires `pip install odse[parquet]`.
 
 ### Generic CSV with Column Mapping
 
-For data sources that aren't one of the 10 supported OEMs, use `--source generic_csv` with `--column-map`:
+For data sources that aren't one of the 11 supported OEMs, use `--source generic_csv` with `--column-map`:
 
 ```bash
 odse transform --source generic_csv \

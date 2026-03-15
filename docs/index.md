@@ -50,7 +50,7 @@ layout: default
       <div class="sdk-icon">&#x1F527;</div>
       <h3>Transform Specs</h3>
       <code class="sdk-install">transforms/*.yaml</code>
-      <p>10 OEM mappings</p>
+      <p>11 OEM mappings</p>
     </a>
   </div>
 </div>
@@ -145,7 +145,7 @@ print(result.is_valid)  # True</code></pre>
   <div class="product-categories-grid">
     <a href="/docs/schemas/energy-timeseries" class="product-category-card">
       <h4>Generation</h4>
-      <p>Solar, wind, CHP &mdash; 10 OEM transforms included</p>
+      <p>Solar, wind, CHP &mdash; 11 OEM transforms included</p>
     </a>
 
     <a href="/docs/schemas/energy-timeseries" class="product-category-card">
@@ -179,7 +179,7 @@ print(result.is_valid)  # True</code></pre>
 <div class="version-updates-section">
   <div class="version-info">
     <h3>Supported OEMs</h3>
-    <p>Huawei, Enphase, Solarman, SolarEdge, Fronius, Switch, SMA, FIMER, Solis, SolaX</p>
+    <p>Huawei, Enphase, Solarman, SolarEdge, Fronius, Switch, SMA, FIMER, Solis, SolaX, Higeco</p>
     <a href="/docs/transforms/supported-oems" class="changelog-link">View Support Matrix &rarr;</a>
   </div>
 

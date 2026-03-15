@@ -22,6 +22,7 @@ Last reviewed: 2026-02-09
 - FIMER: `transforms/fimer-auroravision-api.yaml`
 - Solis: `transforms/soliscloud-api.yaml`
 - SolaX: `transforms/solaxcloud-api-v2.yaml`
+- Higeco: `transforms/higeco-api.yaml`
 
 ## Runtime Support (Python `odse.transform`)
 
@@ -37,6 +38,7 @@ Last reviewed: 2026-02-09
 | `fronius` | Implemented |
 | `sma` | Implemented (normalized contract input) |
 | `solis`, `soliscloud` | Implemented (normalized contract input) |
+| `higeco` | Implemented (normalized contract input) |
 
 ## Runtime Verification Harness
 
@@ -105,6 +107,7 @@ Troubleshooting:
 | FIMER Aurora Vision | Included (Spec) | Cloud API | Aurora Vision account with required role; request API enablement via FIMER support | Vendor-issued credentials per Aurora Vision API docs |
 | SolisCloud | Included (Spec) | Cloud API | Complete Solis cooperation/application process and receive API activation materials | OAuth2 with AppKey/AppSecret |
 | SolaX Cloud | Included (Spec) | Cloud API | Generate API token in Solax Cloud third-party ecosystem settings | API token |
+| Higeco | Included (Spec) | Cloud API (docAPI) | Obtain API credentials from Higeco for target instance | Bearer token (POST /authenticate) |
 
 ## Setup Instructions by OEM
 
@@ -196,11 +199,21 @@ Official references:
 - https://global.solaxcloud.com/blue/4/user_api/2024/SolaXCloud_User_API_V2.pdf
 - https://doc.solaxcloud.com/en/inst-w/service/
 
+### Higeco
+
+1. Obtain API credentials (username/password or apiToken) from the Higeco instance administrator.
+2. Authenticate via POST `https://{instance}.higeco.com/docapi/authenticate` to receive a bearer token.
+3. Use the bearer token in subsequent requests to list plants, devices, and retrieve log data.
+4. Note the 100,000-sample cap on `log_data` queries; use pagination or narrower time ranges for larger datasets.
+
+Official references:
+- Higeco docAPI endpoint hierarchy is instance-specific; consult your Higeco account representative for documentation access.
+
 ## Implementation Notes for ODS-E
 
 - Treat cloud APIs as rate-limited and implement retries with backoff.
 - Store API credentials in a secret manager; do not commit secrets into repository files.
-- Transform specs for SMA, FIMER Aurora Vision, SolisCloud, and SolaX Cloud are present in `transforms/`.
+- Transform specs for SMA, FIMER Aurora Vision, SolisCloud, SolaX Cloud, and Higeco are present in `transforms/`.
 - Runtime ingestion connectors should bind to vendor docs/OpenAPI and validate with sample payload captures before production use.
 
 ## Related Docs

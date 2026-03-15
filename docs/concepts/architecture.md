@@ -63,7 +63,7 @@ rows = transform("scada_export.csv", source="csv", mapping={
 })
 ```
 
-ODS-E ships with transforms for 10 OEMs (Huawei, Enphase, Solarman, SolarEdge, Fronius, SMA, Solis, SolaX, Fimer, Switch) plus a generic CSV mapper for arbitrary sources.
+ODS-E ships with transforms for 11 OEMs (Huawei, Enphase, Solarman, SolarEdge, Fronius, SMA, Solis, SolaX, Fimer, Switch, Higeco) plus a generic CSV mapper for arbitrary sources.
 
 See [Supported OEMs](/docs/transforms/supported-oems) for the full matrix.
 

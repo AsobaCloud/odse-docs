@@ -5,6 +5,7 @@ layout: default
 
 <!-- A. Compact Title + Version Indicator -->
 <div class="page-header">
+  <img src="/assets/images/brand/odse-logo.svg" alt="ODS-E logo" class="page-header-logo">
   <h1>ODS-E: Open Data Schema for Energy</h1>
   <div class="version-badge">
     <span class="version-label">Schema</span>

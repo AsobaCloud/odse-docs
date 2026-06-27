@@ -2399,6 +2399,13 @@ p, ul, ol, div, blockquote, table, h1, h2, h3, h4, h5, h6 {
   margin-bottom: 12px;
 }
 
+.page-header-logo {
+  width: 72px;
+  height: 72px;
+  margin: 0 auto 16px;
+  display: block;
+}
+
 .version-badge {
   display: inline-flex;
   align-items: center;

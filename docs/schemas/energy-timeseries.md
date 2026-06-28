@@ -29,6 +29,51 @@ The energy-timeseries schema represents interval energy records in a standardize
 | `PF` | number | Power factor |
 | `error_code` | string | OEM-native error code for diagnostics |
 
+## Operational Fields
+
+These fields capture real-time electrical measurements from inverters, BESS, wind turbines, and SCADA historians.
+
+| Field | Type | Notes |
+|---|---|---|
+| `kW` | number | Active power in kW |
+| `kVAr` | number | Reactive power in kVAr |
+| `kVA` | number | Apparent power in kVA |
+| `voltage_ac` | number | AC voltage in volts |
+| `voltage_dc` | number | DC voltage in volts |
+| `current_ac` | number | AC current in amps |
+| `current_dc` | number | DC current in amps |
+| `temperature` | number | Device temperature in °C |
+| `frequency` | number | Grid frequency in Hz |
+| `soc` | number | State of charge (0–100, for BESS) |
+| `soh` | number | State of health (0–100, for BESS) |
+| `capacity_kwh` | number | Nameplate capacity in kWh |
+
+## BESS Fields
+
+Battery energy storage specific fields (SEP-026). All optional; use the `bess_dispatch` conformance profile to require `dispatch_mode` and `soc`.
+
+| Field | Type | Notes |
+|---|---|---|
+| `charge_kWh` | number >= 0 | Energy charged during the interval |
+| `discharge_kWh` | number >= 0 | Energy discharged during the interval |
+| `cycle_count` | number | Cumulative cycle count |
+| `cell_temp_min_c` | number | Minimum cell temperature in °C |
+| `cell_temp_max_c` | number | Maximum cell temperature in °C |
+| `cell_voltage_min_v` | number | Minimum cell voltage in volts |
+| `cell_voltage_max_v` | number | Maximum cell voltage in volts |
+| `dispatch_mode` | enum | `charging`, `discharging`, `standby`, `balancing` |
+
+## Wind Fields
+
+Wind turbine specific fields (SEP-025). All optional; use the `wind_scada` conformance profile to require `wind_speed_ms`.
+
+| Field | Type | Notes |
+|---|---|---|
+| `wind_speed_ms` | number >= 0 | Wind speed in meters per second |
+| `rotor_rpm` | number >= 0 | Rotor revolutions per minute |
+| `blade_pitch_deg` | number | Blade pitch angle in degrees |
+| `nacelle_direction_deg` | number (0–360) | Nacelle orientation in degrees (compass bearing) |
+
 ## Settlement Context Fields
 
 | Field | Type | Notes |

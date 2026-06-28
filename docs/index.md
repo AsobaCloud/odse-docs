@@ -9,10 +9,10 @@ layout: default
   <h1>ODS-E: Open Data Schema for Energy</h1>
   <div class="version-badge">
     <span class="version-label">Schema</span>
-    <span class="version-value">v0.4.0</span>
+    <span class="version-value">v0.8.2</span>
     <span class="version-separator">|</span>
     <span class="version-label">Python</span>
-    <span class="version-value">v0.4.0</span>
+    <span class="version-value">v0.8.2</span>
     <span class="version-separator">|</span>
     <span class="version-label">License</span>
     <span class="version-value">CC-BY-SA 4.0 / Apache 2.0</span>
@@ -37,7 +37,7 @@ layout: default
       <div class="sdk-icon">&#x1F40D;</div>
       <h3>Python</h3>
       <code class="sdk-install">pip install odse</code>
-      <p>v0.4.0 &bull; Transform + Validate</p>
+      <p>v0.8.2 &bull; Transform + Validate</p>
     </a>
 
     <a href="https://github.com/AsobaCloud/odse" class="sdk-link-card">
@@ -51,7 +51,7 @@ layout: default
       <div class="sdk-icon">&#x1F527;</div>
       <h3>Transform Specs</h3>
       <code class="sdk-install">transforms/*.yaml</code>
-      <p>11 OEM mappings</p>
+      <p>16 OEM mappings</p>
     </a>
   </div>
 </div>
@@ -146,7 +146,7 @@ print(result.is_valid)  # True</code></pre>
   <div class="product-categories-grid">
     <a href="/docs/schemas/energy-timeseries" class="product-category-card">
       <h4>Generation</h4>
-      <p>Solar, wind, CHP &mdash; 11 OEM transforms included</p>
+      <p>Solar, wind, BESS, SCADA &mdash; 16 OEM transforms included</p>
     </a>
 
     <a href="/docs/schemas/energy-timeseries" class="product-category-card">
@@ -180,18 +180,17 @@ print(result.is_valid)  # True</code></pre>
 <div class="version-updates-section">
   <div class="version-info">
     <h3>Supported OEMs</h3>
-    <p>Huawei, Enphase, Solarman, SolarEdge, Fronius, Switch, SMA, FIMER, Solis, SolaX, Higeco</p>
+    <p>Huawei, Enphase, Solarman, SolarEdge, Fronius, Switch, SMA, FIMER, Solis, SolaX, Higeco, Sungrow BESS, BYD, Vestas, Siemens Gamesa, Nordex, Terraco</p>
     <a href="/docs/transforms/supported-oems" class="changelog-link">View Support Matrix &rarr;</a>
   </div>
 
   <div class="whats-new">
-    <h3>What's New in v0.4.0</h3>
+    <h3>What's New in v0.8.2</h3>
     <ul class="whats-new-list">
-      <li>Market context extension fields for settlement parties, tariff context, and municipal/grid topology</li>
-      <li>Runtime enrichment helper (`odse.enrich`) for post-transform context injection</li>
-      <li>SA market reform extension coverage: wheeling, tariff components, curtailment, BRP/imbalance, municipal reconciliation, certificates, and grid capacity lifecycle</li>
-      <li>Conformance profile validation support for trading and settlement workflows</li>
-      <li>Municipal emissions modeling guide and implementation workflows</li>
+      <li>Wind turbine SCADA transforms for Vestas, Siemens Gamesa, and Nordex (SEP-025) with wind-specific schema fields and <code>wind_scada</code> conformance profile</li>
+      <li>BESS transforms for Sungrow PowerTitan and BYD (SEP-026) with battery-specific schema fields and <code>bess_dispatch</code> conformance profile</li>
+      <li>Terraco SCADA historian transform (SEP-021) with dual JSON/CSV input support and auto-detection</li>
+      <li>16 OEM transforms total: 11 solar/meter + 2 BESS + 3 wind + 1 SCADA historian</li>
     </ul>
     <a href="https://github.com/AsobaCloud/odse/blob/main/CHANGELOG.md" class="whats-new-link">Read Changelog &rarr;</a>
   </div>

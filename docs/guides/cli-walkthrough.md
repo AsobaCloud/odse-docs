@@ -157,10 +157,10 @@ Available profiles: `bilateral`, `wheeling`, `sawem_brp`, `municipal_recon`.
 
 ```bash
 odse version
-# 0.4.0
+# 0.8.2
 
 odse --version
-# odse 0.4.0
+# odse 0.8.2
 ```
 
 ---

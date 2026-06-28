@@ -33,7 +33,7 @@ pip install -e src/python
 
 ## Step 2: Transform OEM Data
 
-ODS-E includes transform functions for 10 OEMs. Each takes raw data (CSV or JSON) and returns standardized ODS-E records.
+ODS-E includes transform functions for 16 OEMs across solar, BESS, wind, and SCADA historian sources. Each takes raw data (CSV or JSON) and returns standardized ODS-E records.
 
 ### Huawei CSV Example
 
@@ -209,7 +209,7 @@ You now know how to transform, enrich, validate, and work with both generation a
 - **[Bring Your Own Data](/docs/tutorials/bring-your-own-data)** — Use the generic CSV mapper with your own files
 - **[Data Engineer Integration Guide](/docs/guides/data-engineers)** — Pipeline patterns for ETL teams
 - **[Schema Reference](/docs/schemas/overview)** — Full field definitions for energy-timeseries and asset-metadata
-- **[Transforms](/docs/transforms/supported-oems)** — Support matrix for all 10 OEMs
+- **[Transforms](/docs/transforms/supported-oems)** — Support matrix for all 16 OEMs
 - **[Post-Transform Enrichment](/docs/trading-integration/enrichment)** — Inject settlement, tariff, and topology context
 - **[Conformance Profiles](/docs/validation/conformance-profiles)** — Enforce required fields per trading context
 - **[Building Integration](/docs/building-integration/comstock-resstock)** — Join ODS-E data to NREL benchmarks for EUI analysis

@@ -13,7 +13,7 @@
 - [Data Engineer Integration Guide](https://opendataschema.energy/docs/guides/data-engineers): Pipeline patterns for ETL teams — SCADA to Parquet.
 - [CLI Walkthrough](https://opendataschema.energy/docs/guides/cli-walkthrough): Every odse CLI command with real examples.
 - [Transforms Overview](https://opendataschema.energy/docs/transforms/overview): How transforms normalize OEM data into ODS-E records.
-- [Supported OEMs](https://opendataschema.energy/docs/transforms/supported-oems): Support matrix for all 10 OEM connectors.
+- [Supported OEMs](https://opendataschema.energy/docs/transforms/supported-oems): Support matrix for all 16 OEM connectors.
 - [Validation Overview](https://opendataschema.energy/docs/validation/overview): Schema, semantic, and profile validation.
 
 ## Patterns

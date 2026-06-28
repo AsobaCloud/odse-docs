@@ -11,7 +11,7 @@ Complete API reference for the `odse` Python package. Install with `pip install 
 
 ```python
 import odse
-print(odse.__version__)  # "0.4.0"
+print(odse.__version__)  # "0.8.2"
 ```
 
 ## Transform
@@ -46,6 +46,14 @@ Transform OEM data to ODS-E records.
 | Fronius | `fronius` | JSON | |
 | SMA | `sma` | JSON | `interval_minutes` |
 | Solis | `solis`, `soliscloud` | JSON | `interval_minutes` |
+| Higeco | `higeco` | JSON | `interval_minutes` (default: 5) |
+| Sungrow iSolarCloud | `sungrow` | JSON | `interval_minutes` |
+| Sungrow PowerTitan BESS | `sungrow_bess`, `sungrow-bess` | JSON | `interval_minutes` |
+| BYD BatteryBox BESS | `byd_bess`, `byd-bess` | CSV | `interval_minutes` |
+| Vestas Online | `vestas`, `vestas-online` | CSV | `interval_minutes` (default: 10) |
+| Siemens Gamesa | `siemens_gamesa`, `siemens-gamesa`, `sgre` | CSV | `interval_minutes` (default: 10) |
+| Nordex Control | `nordex`, `nordex-control` | CSV | `interval_minutes` (default: 10) |
+| Terraco SCADA | `terraco`, `terraco-historian` | JSON or CSV | `interval_minutes` (default: 10) |
 | Generic CSV | `csv`, `generic` | CSV | `mapping` (required), `default_error_type`, `interval_minutes` |
 
 **Example:**
@@ -212,7 +220,7 @@ Dictionary of available conformance profiles. Keys are profile names, values are
 from odse import PROFILES
 
 print(list(PROFILES.keys()))
-# ['bilateral', 'wheeling', 'sawem_brp', 'municipal_recon']
+# ['bilateral', 'wheeling', 'sawem_brp', 'municipal_recon', 'bess_dispatch', 'wind_scada']
 ```
 
 ---

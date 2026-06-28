@@ -7,11 +7,11 @@ nav_order: 9
 
 # Conformance Profile Validation
 
-Conformance profiles enforce required-field sets for specific SA trading contexts. They are a validator-level concept layered on top of the schema -- the schema itself is unchanged.
+Conformance profiles enforce required-field sets for specific SA trading and operational contexts. They are a validator-level concept layered on top of the schema -- the schema itself is unchanged.
 
 ## What Conformance Profiles Do
 
-The `energy-timeseries` schema has ~50 properties but only 3 are required (`timestamp`, `kWh`, `error_type`). All trading fields are optional. Profiles close this gap by making minimum field sets machine-checkable per operating context.
+The `energy-timeseries` schema has ~70 properties but only 3 are required (`timestamp`, `kWh`, `error_type`). All trading and operational fields are optional. Profiles close this gap by making minimum field sets machine-checkable per operating context.
 
 ## Available Profiles
 
@@ -21,6 +21,8 @@ The `energy-timeseries` schema has ~50 properties but only 3 are required (`time
 | `wheeling` | Wheeled energy across networks | all bilateral fields + network operator, wheeling type/status, injection/offtake points, loss factor |
 | `sawem_brp` | Wholesale market (SAWEM) settlement | seller, BRP, settlement type (SAWEM values only), forecast, settlement window |
 | `municipal_recon` | Municipal billing / reconciliation | buyer, billing period, billed kWh, billing status |
+| `bess_dispatch` | Battery storage dispatch tracking | `dispatch_mode`, `soc` |
+| `wind_scada` | Wind turbine SCADA telemetry | `wind_speed_ms` |
 
 ## Example
 
@@ -58,7 +60,7 @@ print(result.errors[0].code)  # PROFILE_FIELD_MISSING
 
 | Code | Meaning |
 |------|---------|
-| `UNKNOWN_PROFILE` | The profile name is not one of the 4 defined profiles |
+| `UNKNOWN_PROFILE` | The profile name is not one of the 6 defined profiles |
 | `PROFILE_FIELD_MISSING` | A field required by the profile is not present in the record |
 | `PROFILE_VALUE_MISMATCH` | A field is present but its value violates the profile's value constraint |
 
@@ -68,6 +70,8 @@ Some profiles constrain specific field values:
 
 - **`bilateral`** and **`wheeling`**: `settlement_type` must be `"bilateral"`
 - **`sawem_brp`**: `settlement_type` must be one of `"sawem_day_ahead"`, `"sawem_intra_day"`, `"balancing"`, `"ancillary"`
+- **`bess_dispatch`**: `dispatch_mode` must be one of `"charging"`, `"discharging"`, `"standby"`, `"balancing"`
+- **`wind_scada`**: no value constraints beyond requiring `wind_speed_ms` to be present
 
 ## Validation Gating
 
@@ -81,7 +85,7 @@ The `PROFILES` dict is exported for programmatic access:
 from odse import PROFILES
 
 print(list(PROFILES.keys()))
-# ['bilateral', 'wheeling', 'sawem_brp', 'municipal_recon']
+# ['bilateral', 'wheeling', 'sawem_brp', 'municipal_recon', 'bess_dispatch', 'wind_scada']
 
 print(PROFILES["bilateral"]["required_fields"])
 # ['seller_party_id', 'buyer_party_id', 'settlement_period_start', ...]

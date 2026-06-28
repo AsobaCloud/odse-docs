@@ -15,5 +15,5 @@ Hands-on guides and tutorials for working with ODS-E. Start with the Quickstart,
 - [Data Engineer Integration Guide](/docs/guides/data-engineers) — Full ETL pipeline from SCADA to data lake
 - [CLI Walkthrough](/docs/guides/cli-walkthrough) — Every CLI command with examples
 - [Transforms Overview](/docs/transforms/overview) — How transforms work and when to use them
-- [Supported OEMs](/docs/transforms/supported-oems) — Transform coverage for 10 OEM platforms
+- [Supported OEMs](/docs/transforms/supported-oems) — Transform coverage for 16 OEM platforms
 - [Validation Overview](/docs/validation/overview) — Schema, semantic, and profile validation

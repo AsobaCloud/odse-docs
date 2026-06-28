@@ -7,7 +7,9 @@ nav_order: 7
 
 # Supported OEMs
 
-ODS-E currently ships transform support for the following OEM ecosystems.
+ODS-E currently ships transform support for 16 OEM ecosystems across solar, BESS, wind, and SCADA historian sources.
+
+## Solar Inverters
 
 | OEM | Typical Input | Notes |
 |---|---|---|
@@ -22,6 +24,27 @@ ODS-E currently ships transform support for the following OEM ecosystems.
 | SolisCloud | API export | Cloud telemetry with OEM-specific status mappings |
 | SolaX Cloud | API export | Requires vendor-specific field mapping |
 | Higeco | JSON API export | Cloud SCADA platform (docAPI), normalized contract input |
+
+## Battery Energy Storage (BESS)
+
+| OEM | Source Key | Typical Input | Notes |
+|---|---|---|---|
+| Sungrow PowerTitan | `sungrow_bess` | JSON (iSolarCloud) | Charge/discharge, cell-level telemetry, dispatch mode |
+| BYD BatteryBox | `byd_bess` | CSV (BMS export) | Cell voltage/temperature, cycle count, SoC/SoH |
+
+## Wind Turbines
+
+| OEM | Source Key | Typical Input | Notes |
+|---|---|---|---|
+| Vestas | `vestas` | CSV (Vestas Online) | Wind speed, rotor RPM, blade pitch, nacelle direction, turbine state codes |
+| Siemens Gamesa | `siemens_gamesa` | CSV (Diagnostic System) | Nacelle/met mast wind speed fallback, availability status mapping |
+| Nordex | `nordex` | CSV (Nordex Control) | Turbine status string mapping, wind speed, rotor RPM |
+
+## SCADA Historian
+
+| OEM | Source Key | Typical Input | Notes |
+|---|---|---|---|
+| Terraco | `terraco` | JSON (REST API) or CSV (export) | Auto-detects input format, `{AssetName}.{TagName}` pattern mapping, state code mapping |
 
 ## Compatibility Notes
 

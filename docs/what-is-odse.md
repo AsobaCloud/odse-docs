@@ -7,9 +7,15 @@ nav_order: 1
 
 # What is ODS-E?
 
-ODS-E (Open Data Schema for Energy) is an open standard for normalizing distributed energy data across OEM platforms.
+ODS-E (Open Data Schema for Energy) is an open standard for normalizing **asset-level** distributed energy telemetry across OEM platforms.
 
 It gives operators, integrators, and utilities a shared data model so telemetry from Huawei, Enphase, Solarman, and other systems can be transformed into one consistent schema for analysis, validation, and reporting.
+
+## Scope: Asset-Level First
+
+ODS-E is specifically designed for **asset-level telemetry** — the interval-by-interval energy, power, and status data produced by individual inverters, meters, batteries, and other DER devices. Each ODS-E record represents a single asset at a point in time.
+
+This is a deliberate starting point, not a ceiling. The long-term goal is to support aggregation of asset-level records upward into fleet, site, and grid-scale representations — enabling VPP dispatch, utility forecasting, and interoperability with grid-scale standards such as IEEE 2030.5, OpenADR, and CIM. Asset-level data quality is the prerequisite for that integration to be trustworthy.
 
 ## Why It Exists
 

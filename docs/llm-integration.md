@@ -38,8 +38,10 @@ Use this baseline:
 
 - [South Africa SSEG Assistant (RAG + ODS-E metadata)](/docs/llm-integration/south-africa-sseg-rag-example)
 
-## Related Docs
+## Related Docs & Tools
 
+- [ODS-E MCP Server on npm (`@asobacloud/odse-mcp`)](https://www.npmjs.com/package/@asobacloud/odse-mcp)
+- [MCP Server Client Guides](/docs/mcp)
 - [Schema Reference Overview](/docs/schemas/overview)
 - [Energy Timeseries Schema](/docs/schemas/energy-timeseries)
 - [Asset Metadata Schema](/docs/schemas/asset-metadata)

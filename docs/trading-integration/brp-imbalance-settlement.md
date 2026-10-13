@@ -11,7 +11,7 @@ The South African Wholesale Electricity Market (SAWEM) introduces Balance Respon
 
 ## Context
 
-The SAETA "Policy to Power" report describes the SAWEM structure: all generators >= 10MW are automatically BRPs. The Market Operator manages the Day-Ahead Market, Intra-Day Market, and Balancing Market. Market participants submit hourly bids (MW and price) and are settled against actual delivery. Imbalance costs incentivize forecast accuracy (Action 9).
+The [SAETA "Policy to Power" report](/docs/policy-to-power.pdf) describes the SAWEM structure: all generators >= 10MW are automatically BRPs. The Market Operator manages the Day-Ahead Market, Intra-Day Market, and Balancing Market. Market participants submit hourly bids (MW and price) and are settled against actual delivery. Imbalance costs incentivize forecast accuracy (Action 9).
 
 ## Timeseries Fields
 

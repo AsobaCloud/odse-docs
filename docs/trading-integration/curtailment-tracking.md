@@ -11,7 +11,7 @@ Curtailment is a material risk for IPPs and traders. ODS-E provides fields to tr
 
 ## Context
 
-The SAETA "Policy to Power" report notes that the GCAR congestion curtailment mechanism (capped at 4%) is active in the Western and Eastern Cape. Over 100 curtailment events were recorded this financial year, up from fewer than 30 the prior year. IPPs are compensated through existing ancillary-services frameworks, with recoverable costs capped under MYPD6 (Actions 5, 8).
+The [SAETA "Policy to Power" report](/docs/policy-to-power.pdf) notes that the GCAR congestion curtailment mechanism (capped at 4%) is active in the Western and Eastern Cape. Over 100 curtailment events were recorded this financial year, up from fewer than 30 the prior year. IPPs are compensated through existing ancillary-services frameworks, with recoverable costs capped under MYPD6 (Actions 5, 8).
 
 ## Timeseries Fields
 

@@ -7,7 +7,9 @@ nav_order: 1
 
 # Using the ODS-E MCP Server with AI Agents
 
-The ODS-E MCP server runs as a local process and connects to AI coding agents via the [Model Context Protocol](https://modelcontextprotocol.io/) over **stdio**. Once registered, agents can call `ConvertToODSE`, `ValidateODSERecord`, and `ListSupportedOEMs` as structured tool calls — no extra scripting needed.
+[![npm version](https://img.shields.io/npm/v/@asobacloud/odse-mcp.svg)](https://www.npmjs.com/package/@asobacloud/odse-mcp)
+
+The official [`@asobacloud/odse-mcp`](https://www.npmjs.com/package/@asobacloud/odse-mcp) package on npm is the primary distribution of the ODS-E Model Context Protocol server. It runs as a local process and connects to AI coding agents via the [Model Context Protocol](https://modelcontextprotocol.io/) over **stdio**. Once registered, agents can call `ConvertToODSE`, `ValidateODSERecord`, and `ListSupportedOEMs` as structured tool calls — no extra scripting needed.
 
 ## Prerequisites
 
@@ -132,9 +134,11 @@ npx -y @asobacloud/odse-mcp
 
 ---
 
-## Running from source
+## Running from source (Development)
 
-If you prefer to pin to a local build instead of `npx`:
+The official and recommended way to consume the server is via the [`@asobacloud/odse-mcp`](https://www.npmjs.com/package/@asobacloud/odse-mcp) npm package using `npx -y @asobacloud/odse-mcp`.
+
+If you are developing the server itself or want to pin to a local build:
 
 ```bash
 git clone https://github.com/AsobaCloud/odse-mcp.git

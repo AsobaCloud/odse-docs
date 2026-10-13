@@ -7,9 +7,14 @@ has_children: true
 
 # ODS-E MCP Server
 
-The [`@asobacloud/odse-mcp`](https://www.npmjs.com/package/@asobacloud/odse-mcp) package is a [Model Context Protocol](https://modelcontextprotocol.io/) server that lets AI coding agents and data agents call ODS-E tools directly — no manual scripting required.
+[![npm version](https://img.shields.io/npm/v/@asobacloud/odse-mcp.svg)](https://www.npmjs.com/package/@asobacloud/odse-mcp)
+[![npm downloads](https://img.shields.io/npm/dm/@asobacloud/odse-mcp.svg)](https://www.npmjs.com/package/@asobacloud/odse-mcp)
 
-Agents can convert OEM telemetry payloads to ODS-E records, validate batches, and list supported OEMs, all via structured MCP tool calls backed by the published [`odse`](https://pypi.org/project/odse/) Python package.
+The official [`@asobacloud/odse-mcp`](https://www.npmjs.com/package/@asobacloud/odse-mcp) npm package is a [Model Context Protocol](https://modelcontextprotocol.io/) server that lets AI coding agents and data agents call ODS-E tools directly — no manual scripting required.
+
+Published on the [npm Registry](https://www.npmjs.com/package/@asobacloud/odse-mcp) as the primary distribution channel, it allows agents to run directly with `npx -y @asobacloud/odse-mcp`.
+
+Agents can convert OEM telemetry payloads to ODS-E records, validate batches, list supported OEMs, and bridge SCADA data to pvlib structures, all via structured MCP tool calls backed by the published [`odse`](https://pypi.org/project/odse/) Python package.
 
 ## Tools
 

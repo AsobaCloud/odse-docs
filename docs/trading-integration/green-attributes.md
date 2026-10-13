@@ -11,7 +11,7 @@ Access to lower-carbon electricity through wheeling is becoming a commercial and
 
 ## Context
 
-The SAETA "Policy to Power" report highlights EU CBAM, carbon tax, carbon budgets, and NDC targets as drivers for verifiable clean-energy provenance. Traders offer "green power with renewable tradable attributes" and the report mentions "tradable electricity tokens" as a virtual wheeling concept. Energy-intensive exporters need verifiable provenance for CBAM compliance (Actions 7, 8).
+The [SAETA "Policy to Power" report](/docs/policy-to-power.pdf) highlights EU CBAM, carbon tax, carbon budgets, and NDC targets as drivers for verifiable clean-energy provenance. Traders offer "green power with renewable tradable attributes" and the report mentions "tradable electricity tokens" as a virtual wheeling concept. Energy-intensive exporters need verifiable provenance for CBAM compliance (Actions 7, 8).
 
 ## Timeseries Fields
 

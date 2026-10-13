@@ -11,7 +11,7 @@ Grid access is the binding constraint on new generation in South Africa. ODS-E p
 
 ## Context
 
-The SAETA "Policy to Power" report describes the GCAR framework introducing 3 milestones (pre-feasibility, capacity reservation, capacity allocation) to structure the queue and prevent speculative lock-up. The NTCSA must add 14,500km of new lines and 210 transformers by 2034. Non-discriminatory grid access is foundational to the SAWEM (Actions 5, 8).
+The [SAETA "Policy to Power" report](/docs/policy-to-power.pdf) describes the GCAR framework introducing 3 milestones (pre-feasibility, capacity reservation, capacity allocation) to structure the queue and prevent speculative lock-up. The NTCSA must add 14,500km of new lines and 210 transformers by 2034. Non-discriminatory grid access is foundational to the SAWEM (Actions 5, 8).
 
 ## Asset Metadata Fields (under `location`)
 

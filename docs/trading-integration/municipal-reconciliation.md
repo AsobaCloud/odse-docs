@@ -11,7 +11,7 @@ Municipal distributors manage about 40% of South Africa's grid. ODS-E provides f
 
 ## Context
 
-The SAETA "Policy to Power" report notes that municipal arrears to Eskom exceed R105bn. Distribution Agency Agreements are being deployed for 14 high-arrears municipalities, with Eskom acting as agent for billing, collections, and maintenance. Only 10 municipalities have adopted wheeling policies; only 7 have approved tariffs. The report emphasises "performance-based regulation, systematic benchmarking and credible consequence management" as critical to EDI reform (Action 6).
+The [SAETA "Policy to Power" report](/docs/policy-to-power.pdf) notes that municipal arrears to Eskom exceed R105bn. Distribution Agency Agreements are being deployed for 14 high-arrears municipalities, with Eskom acting as agent for billing, collections, and maintenance. Only 10 municipalities have adopted wheeling policies; only 7 have approved tariffs. The report emphasises "performance-based regulation, systematic benchmarking and credible consequence management" as critical to EDI reform (Action 6).
 
 ## Timeseries Fields
 

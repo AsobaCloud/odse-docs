@@ -12,7 +12,7 @@ layout: default
     <span class="version-value">v0.8.2</span>
     <span class="version-separator">|</span>
     <span class="version-label">Python</span>
-    <span class="version-value">v0.8.2</span>
+    <span class="version-value">v0.9.0</span>
     <span class="version-separator">|</span>
     <span class="version-label">License</span>
     <span class="version-value">CC-BY-SA 4.0 / Apache 2.0</span>
@@ -37,7 +37,14 @@ layout: default
       <div class="sdk-icon">&#x1F40D;</div>
       <h3>Python</h3>
       <code class="sdk-install">pip install odse</code>
-      <p>v0.8.2 &bull; Transform + Validate</p>
+      <p>v0.9.0 &bull; Core + pvlib Extra</p>
+    </a>
+
+    <a href="https://www.npmjs.com/package/@asobacloud/odse-mcp" class="sdk-link-card">
+      <div class="sdk-icon">&#x1F916;</div>
+      <h3>MCP Server (npm)</h3>
+      <code class="sdk-install">npx -y @asobacloud/odse-mcp</code>
+      <p>Official npm package for AI Agents</p>
     </a>
 
     <a href="https://github.com/AsobaCloud/odse" class="sdk-link-card">
@@ -185,12 +192,12 @@ print(result.is_valid)  # True</code></pre>
   </div>
 
   <div class="whats-new">
-    <h3>What's New in v0.8.2</h3>
+    <h3>What's New in v0.9.0</h3>
     <ul class="whats-new-list">
-      <li>Wind turbine SCADA transforms for Vestas, Siemens Gamesa, and Nordex (SEP-025) with wind-specific schema fields and <code>wind_scada</code> conformance profile</li>
-      <li>BESS transforms for Sungrow PowerTitan and BYD (SEP-026) with battery-specific schema fields and <code>bess_dispatch</code> conformance profile</li>
-      <li>Terraco SCADA historian transform (SEP-021) with dual JSON/CSV input support and auto-detection</li>
-      <li>16 OEM transforms total: 11 solar/meter + 2 BESS + 3 wind + 1 SCADA historian</li>
+      <li><strong>pvlib-python interoperability adapter</strong> (<code>odse.adapters.pvlib</code>) with zero-drift bidirectional conversion and top-level CLI <code>to-pvlib</code> subcommand</li>
+      <li>Official <code>@asobacloud/odse-mcp</code> npm package release for AI coding agents</li>
+      <li>Comprehensive edge-case troubleshooting guides for photovoltaic performance modeling</li>
+      <li>16 OEM transforms supported across solar, wind, BESS, and SCADA historians</li>
     </ul>
     <a href="https://github.com/AsobaCloud/odse/blob/main/CHANGELOG.md" class="whats-new-link">Read Changelog &rarr;</a>
   </div>

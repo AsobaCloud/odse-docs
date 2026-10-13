@@ -11,7 +11,7 @@ Three wheeling models are active in South Africa: traditional (physical delivery
 
 ## Context
 
-The SAETA "Policy to Power" report identifies fragmented data exchange, manual reconciliation, and inconsistent treatment across networks as barriers to scaling wheeling (Actions 7, 8). It calls for "standardised and automated reconciliation and billing" and "modern digital systems for data exchange, energy accounting and financial settlement."
+The [SAETA "Policy to Power" report](/docs/policy-to-power.pdf) identifies fragmented data exchange, manual reconciliation, and inconsistent treatment across networks as barriers to scaling wheeling (Actions 7, 8). It calls for "standardised and automated reconciliation and billing" and "modern digital systems for data exchange, energy accounting and financial settlement."
 
 These fields complement the existing `wheeling_agent_id`, `seller_party_id`, and `buyer_party_id` from the [market context extensions](https://github.com/AsobaCloud/odse/blob/main/spec/market-context.md).
 

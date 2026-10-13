@@ -31,7 +31,7 @@ ODS-E provides a neutral interoperability layer for:
 
 ## Market Reform Extensions
 
-Aligned with the SAETA "Policy to Power" report (February 2026), ODS-E adds optional fields for 7 reform areas:
+Aligned with the [SAETA "Policy to Power" report](/docs/policy-to-power.pdf) (February 2026), ODS-E adds optional fields for 7 reform areas:
 
 - [Wheeling Transaction Envelope](/docs/trading-integration/wheeling-extensions) -- traditional, virtual, and portfolio wheeling with reconciliation status
 - [Tariff Component Granularity](/docs/trading-integration/tariff-unbundling) -- unbundled generation, transmission, distribution, and ancillary charges

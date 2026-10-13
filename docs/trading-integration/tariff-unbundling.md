@@ -11,7 +11,7 @@ NERSA has separated Eskom's generation, transmission, and distribution charges f
 
 ## Context
 
-The SAETA "Policy to Power" report describes the need for cost-reflective, unbundled tariffs that distinguish fixed from variable costs and make non-bypassable charges transparent (Action 2). The Electricity Pricing Policy revision aims to align regulated pricing with a competitive market. Tariffs rose 937% between 2007 and 2024.
+The [SAETA "Policy to Power" report](/docs/policy-to-power.pdf) describes the need for cost-reflective, unbundled tariffs that distinguish fixed from variable costs and make non-bypassable charges transparent (Action 2). The Electricity Pricing Policy revision aims to align regulated pricing with a competitive market. Tariffs rose 937% between 2007 and 2024.
 
 ## Timeseries Fields
 

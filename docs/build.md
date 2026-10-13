@@ -10,6 +10,7 @@ has_children: true
 Hands-on guides and tutorials for working with ODS-E. Start with the Quickstart, then explore tutorials for your use case.
 
 - [Quickstart](/docs/build/quickstart) — Install, transform, validate in 3 steps
+- [pvlib Integration](/docs/build/pvlib-integration) — Photovoltaic modeling and performance analysis adapter
 - [Multi-OEM Transform Tutorial](/docs/tutorials/multi-oem-transform) — Transform 3 OEMs side-by-side
 - [Bring Your Own Data](/docs/tutorials/bring-your-own-data) — Use the generic CSV mapper for any source
 - [Data Engineer Integration Guide](/docs/guides/data-engineers) — Full ETL pipeline from SCADA to data lake

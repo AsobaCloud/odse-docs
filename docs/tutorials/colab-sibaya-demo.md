@@ -2,7 +2,7 @@
 title: "Colab Demo — Sibaya Distribution-Grid Study"
 layout: default
 parent: "Build"
-nav_order: 3
+nav_order: 4
 ---
 
 # Colab Demo — Sibaya Distribution-Grid Study

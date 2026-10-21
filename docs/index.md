@@ -9,10 +9,10 @@ layout: default
   <h1>ODS-E: Open Data Schema for Energy</h1>
   <div class="version-badge">
     <span class="version-label">Schema</span>
-    <span class="version-value">v0.8.2</span>
+    <span class="version-value">v0.11.0</span>
     <span class="version-separator">|</span>
     <span class="version-label">Python</span>
-    <span class="version-value">v0.9.0</span>
+    <span class="version-value">v0.11.0</span>
     <span class="version-separator">|</span>
     <span class="version-label">License</span>
     <span class="version-value">CC-BY-SA 4.0 / Apache 2.0</span>
@@ -37,7 +37,7 @@ layout: default
       <div class="sdk-icon">&#x1F40D;</div>
       <h3>Python</h3>
       <code class="sdk-install">pip install odse</code>
-      <p>v0.9.0 &bull; Core + pvlib Extra</p>
+      <p>v0.11.0 &bull; Core + pvlib Extra</p>
     </a>
 
     <a href="https://www.npmjs.com/package/@asobacloud/odse-mcp" class="sdk-link-card">
@@ -187,16 +187,17 @@ print(result.is_valid)  # True</code></pre>
 <div class="version-updates-section">
   <div class="version-info">
     <h3>Supported OEMs</h3>
-    <p>Huawei, Enphase, Solarman, SolarEdge, Fronius, Switch, SMA, FIMER, Solis, SolaX, Higeco, Sungrow BESS, BYD, Vestas, Siemens Gamesa, Nordex, Terraco</p>
+    <p>Huawei, Enphase, Solarman, SolarEdge, Fronius, Switch, SMA, FIMER, Solis, SolaX, Higeco, Sungrow, Sungrow BESS, BYD, Vestas, Siemens Gamesa, Nordex, Terraco, IEC 62056 Meter</p>
     <a href="/docs/transforms/supported-oems" class="changelog-link">View Support Matrix &rarr;</a>
   </div>
 
   <div class="whats-new">
-    <h3>What's New in v0.9.0</h3>
+    <h3>What's New in v0.11.0</h3>
     <ul class="whats-new-list">
-      <li><strong>pvlib-python interoperability adapter</strong> (<code>odse.adapters.pvlib</code>) with zero-drift bidirectional conversion and top-level CLI <code>to-pvlib</code> subcommand</li>
-      <li>Official <code>@asobacloud/odse-mcp</code> npm package release for AI coding agents</li>
-      <li>Comprehensive edge-case troubleshooting guides for photovoltaic performance modeling</li>
+      <li><strong>Per-phase electrical fields</strong> (<code>voltage_ac_l1/l2/l3</code>, <code>current_ac_l1/l2/l3</code>) for distribution-grid unbalance analysis (SEP-049, SEP-051)</li>
+      <li><strong>Strict schema conformance harness</strong> — Draft 2020-12 validation of transformer output in CI, plus non-fatal <code>UNKNOWN_FIELD</code> warnings from <code>validate()</code></li>
+      <li><strong>IEC 62056 (OBIS) billing-meter transform</strong> (<code>iec62056_meter</code>) — cumulative registers to interval deltas, import/export directions, multipliers (SEP-052)</li>
+      <li><strong>pvlib adapter realigned to canonical keys</strong> with legacy input aliases retained under a deprecation grace period (SEP-050)</li>
       <li>17 OEM transforms supported across solar, wind, BESS, billing meters, and SCADA historians</li>
     </ul>
     <a href="https://github.com/AsobaCloud/odse/blob/main/CHANGELOG.md" class="whats-new-link">Read Changelog &rarr;</a>

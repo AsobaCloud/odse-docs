@@ -262,34 +262,7 @@ Consistent, machine-validatable production data is the foundation of accurate ri
 
 ODS-E sits between OEM data sources and downstream analytics, forecasting, and decision systems. It is not a platform, a database, or a SaaS product. It is a data interchange layer — a contract between data producers and data consumers.
 
-```
-┌─────────────┐  ┌─────────────┐  ┌─────────────┐
-│   Huawei    │  │   Enphase   │  │  Solarman   │  ... OEM APIs / Exports
-│ FusionSolar │  │   Envoy     │  │   Logger    │
-└──────┬──────┘  └──────┬──────┘  └──────┬──────┘
-       │                │                │
-       ▼                ▼                ▼
-┌─────────────────────────────────────────────────┐
-│              ODS-E Transform Layer               │
-│  Declarative YAML transforms per OEM             │
-│  Error code mapping → standard taxonomy          │
-│  Timestamp normalization → ISO 8601 UTC          │
-│  JSON Schema validation                          │
-└──────────────────────┬──────────────────────────┘
-                       │
-                       ▼
-              ┌─────────────────┐
-              │   ODS-E JSON    │  Standardized, validated,
-              │   Records       │  interoperable data
-              └────────┬────────┘
-                       │
-        ┌──────────────┼──────────────┐
-        ▼              ▼              ▼
-┌──────────────┐ ┌───────────┐ ┌────────────┐
-│  Forecasting │ │  Anomaly  │ │ Compliance │  ... Downstream consumers
-│  & Dispatch  │ │ Detection │ │ Reporting  │
-└──────────────┘ └───────────┘ └────────────┘
-```
+![](/assets/images/odse-architecture.svg)
 
 ### Adoption Paths
 

@@ -21,47 +21,7 @@ This pattern uses five of the seven ERP enrichment schemas to answer these quest
 
 ## Pipeline
 
-```
-SCADA Alarm Fires
-    │
-    ▼
-┌─────────────────────────────────┐
-│  Step 1: Alarm Frequency Check  │
-│  alarm-frequency-profile.json   │
-│                                 │
-│  → Is escalation_rate > 1.0?    │
-│  → How many times in 7/30/90d?  │
-└─────────────────┬───────────────┘
-                  │
-                  ▼
-┌─────────────────────────────────┐
-│  Step 2: History Lookup         │
-│  maintenance-history.json       │
-│  failure-taxonomy.json          │
-│                                 │
-│  → Prior work orders?           │
-│  → Recurrence rate?             │
-│  → Typical MTTR and cost?       │
-└─────────────────┬───────────────┘
-                  │
-                  ▼
-┌─────────────────────────────────┐
-│  Step 3: Parts Check            │
-│  spare-parts.json               │
-│  procurement-context.json       │
-│                                 │
-│  → Parts in stock?              │
-│  → Open PO with ETA?            │
-└─────────────────┬───────────────┘
-                  │
-                  ▼
-┌─────────────────────────────────┐
-│  Step 4: Decision               │
-│                                 │
-│  Escalating × Recurring × Parts │
-│  → DISPATCH / SCHEDULE / DEFER  │
-└─────────────────────────────────┘
-```
+![](/assets/images/maintenance-triage-pipeline.svg)
 
 ## The Scenario
 

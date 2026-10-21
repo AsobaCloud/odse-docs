@@ -1,0 +1,83 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 760" width="100%" height="100%" role="img" aria-label="Maintenance event triage pipeline: four steps from alarm frequency check to dispatch decision">
+  <rect width="960" height="760" rx="16" fill="#4551BF"/>
+  <text x="32" y="36" font-family="'DM Sans', system-ui, sans-serif" font-size="15" font-weight="800" fill="#FFFFFF" letter-spacing="1.2">MAINTENANCE EVENT TRIAGE PIPELINE</text>
+  <line x1="32" y1="48" x2="928" y2="48" stroke="#C7CCF2" stroke-opacity="0.3" stroke-width="1"/>
+
+  <!-- trigger -->
+  <rect x="330" y="66" width="300" height="40" rx="12" fill="#2E378C" stroke="#5C67DE" stroke-width="1.2"/>
+  <text x="480" y="92" text-anchor="middle" font-family="'DM Sans', system-ui, sans-serif" font-size="13" font-weight="800" fill="#FFFFFF">SCADA Alarm Fires</text>
+  <line x1="480" y1="106" x2="480" y2="134" stroke="#8892E0" stroke-width="2.5" stroke-dasharray="4,3"/>
+  <polygon points="480,134 475,125 485,125" fill="#8892E0"/>
+
+  <!-- Step 1 -->
+  <g>
+    <rect x="240" y="142" width="480" height="118" rx="12" fill="#2E378C" stroke="#5C67DE" stroke-width="1.2"/>
+    <rect x="252" y="154" width="6" height="94" rx="3" fill="#5C67DE"/>
+    <rect x="272" y="154" width="60" height="18" rx="4" fill="#5C67DE"/>
+    <text x="302" y="167" text-anchor="middle" font-family="'DM Sans', system-ui, sans-serif" font-size="9" font-weight="800" fill="#FFFFFF" letter-spacing="0.8">STEP 1</text>
+    <text x="344" y="167" font-family="'DM Sans', system-ui, sans-serif" font-size="13" font-weight="800" fill="#FFFFFF">Alarm Frequency Check</text>
+    <text x="272" y="188" font-family="'Courier New', Courier, monospace" font-size="10" fill="#8892E0">alarm-frequency-profile.json</text>
+    <g font-family="'DM Sans', system-ui, sans-serif" font-size="11" font-weight="500" fill="#C7CCF2">
+      <text x="272" y="212">→ Is escalation_rate &gt; 1.0?</text>
+      <text x="272" y="230">→ How many times in 7 / 30 / 90d?</text>
+    </g>
+  </g>
+  <line x1="480" y1="260" x2="480" y2="288" stroke="#8892E0" stroke-width="2.5" stroke-dasharray="4,3"/>
+  <polygon points="480,288 475,279 485,279" fill="#8892E0"/>
+
+  <!-- Step 2 -->
+  <g>
+    <rect x="240" y="296" width="480" height="128" rx="12" fill="#2E378C" stroke="#5C67DE" stroke-width="1.2"/>
+    <rect x="252" y="308" width="6" height="104" rx="3" fill="#5C67DE"/>
+    <rect x="272" y="308" width="60" height="18" rx="4" fill="#5C67DE"/>
+    <text x="302" y="321" text-anchor="middle" font-family="'DM Sans', system-ui, sans-serif" font-size="9" font-weight="800" fill="#FFFFFF" letter-spacing="0.8">STEP 2</text>
+    <text x="344" y="321" font-family="'DM Sans', system-ui, sans-serif" font-size="13" font-weight="800" fill="#FFFFFF">History Lookup</text>
+    <g font-family="'Courier New', Courier, monospace" font-size="10" fill="#8892E0">
+      <text x="272" y="342">maintenance-history.json</text>
+      <text x="272" y="358">failure-taxonomy.json</text>
+    </g>
+    <g font-family="'DM Sans', system-ui, sans-serif" font-size="11" font-weight="500" fill="#C7CCF2">
+      <text x="272" y="382">→ Prior work orders?</text>
+      <text x="272" y="400">→ Recurrence rate?</text>
+      <text x="272" y="418">→ Typical MTTR and cost?</text>
+    </g>
+  </g>
+  <line x1="480" y1="424" x2="480" y2="452" stroke="#8892E0" stroke-width="2.5" stroke-dasharray="4,3"/>
+  <polygon points="480,452 475,443 485,443" fill="#8892E0"/>
+
+  <!-- Step 3 -->
+  <g>
+    <rect x="240" y="460" width="480" height="108" rx="12" fill="#2E378C" stroke="#5C67DE" stroke-width="1.2"/>
+    <rect x="252" y="472" width="6" height="84" rx="3" fill="#5C67DE"/>
+    <rect x="272" y="472" width="60" height="18" rx="4" fill="#5C67DE"/>
+    <text x="302" y="485" text-anchor="middle" font-family="'DM Sans', system-ui, sans-serif" font-size="9" font-weight="800" fill="#FFFFFF" letter-spacing="0.8">STEP 3</text>
+    <text x="344" y="485" font-family="'DM Sans', system-ui, sans-serif" font-size="13" font-weight="800" fill="#FFFFFF">Parts Check</text>
+    <g font-family="'Courier New', Courier, monospace" font-size="10" fill="#8892E0">
+      <text x="272" y="506">spare-parts.json</text>
+      <text x="272" y="522">procurement-context.json</text>
+    </g>
+    <g font-family="'DM Sans', system-ui, sans-serif" font-size="11" font-weight="500" fill="#C7CCF2">
+      <text x="272" y="546">→ Parts in stock?</text>
+      <text x="272" y="562">→ Open PO with ETA?</text>
+    </g>
+  </g>
+  <line x1="480" y1="568" x2="480" y2="596" stroke="#8892E0" stroke-width="2.5" stroke-dasharray="4,3"/>
+  <polygon points="480,596 475,587 485,587" fill="#8892E0"/>
+
+  <!-- Step 4: Decision -->
+  <g>
+    <rect x="240" y="604" width="480" height="108" rx="12" fill="#0A0A0A" stroke="#333333" stroke-width="1.5"/>
+    <rect x="252" y="616" width="6" height="84" rx="3" fill="#FFFFFF"/>
+    <rect x="272" y="616" width="80" height="18" rx="4" fill="#FFFFFF"/>
+    <text x="312" y="629" text-anchor="middle" font-family="'DM Sans', system-ui, sans-serif" font-size="9" font-weight="800" fill="#0A0A0A" letter-spacing="0.8">DECISION</text>
+    <text x="362" y="629" font-family="'DM Sans', system-ui, sans-serif" font-size="13" font-weight="800" fill="#FFFFFF">Step 4: Decision</text>
+    <text x="272" y="656" font-family="'DM Sans', system-ui, sans-serif" font-size="11" font-weight="500" fill="#C7CCF2">Escalating × Recurring × Parts</text>
+    <g font-family="'DM Sans', system-ui, sans-serif" font-size="11" font-weight="700">
+      <text x="272" y="684" fill="#FFFFFF">→ DISPATCH</text>
+      <text x="365" y="684" fill="#C7CCF2">→ SCHEDULE</text>
+      <text x="458" y="684" fill="#8892E0">→ DEFER</text>
+    </g>
+  </g>
+
+  <text x="480" y="742" text-anchor="middle" font-family="'DM Sans', system-ui, sans-serif" font-size="10" font-weight="500" fill="#C7CCF2">Five of the seven ERP enrichment schemas answer the questions in sequence and produce the dispatch recommendation</text>
+</svg>

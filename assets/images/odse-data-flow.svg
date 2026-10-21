@@ -83,5 +83,5 @@
   </g>
 
   <!-- Footer outputs note -->
-  <text x="48" y="262" font-family="'DM Sans', system-ui, sans-serif" font-size="10" font-weight="500" fill="#C7CCF2">Each stage is independent and composable — skip enrichment if you don't need market context, or skip output if feeding records directly into your own analytics.</text>
+  <text x="48" y="262" font-family="'DM Sans', system-ui, sans-serif" font-size="9" font-weight="500" fill="#C7CCF2">Each stage is independent and composable — skip enrichment or output if feeding records into your own analytics.</text>
 </svg>

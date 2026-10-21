@@ -28,42 +28,7 @@ Without a normalization layer, every downstream service — training, inference,
 
 ## Pipeline
 
-```
-OEM APIs / Uploads
-    │
-    ▼
-historical/{client}/{customer}/{region}/{location}/{manufacturer}/raw.csv
-    │
-    │  S3 event trigger (s3:ObjectCreated:*)
-    ▼
-┌─────────────────────────────────┐
-│  dataStandardizationService     │
-│  (ODS-E Transform)              │
-│                                 │
-│  1. Detect OEM type             │
-│  2. Normalize to standard schema│
-│  3. Map error codes             │
-│  4. Aggregate by timestamp      │
-└─────────────────────────────────┘
-    │
-    ▼
-total/{client}/{customer}/{region}/{location}/{manufacturer}/{serial}/total_load.csv
-    │
-    │  S3 event trigger
-    ▼
-┌─────────────────────────────────┐
-│  globalTrainingService          │
-│  (SageMaker Processing +       │
-│   Training)                     │
-│                                 │
-│  1. Discover total_load.csv     │
-│  2. Feature engineering (45+)   │
-│  3. Train LSTM model            │
-└─────────────────────────────────┘
-    │
-    ▼
-forecastingApi (24-hour forecasts)
-```
+![](/assets/images/forecasting-pipeline.svg)
 
 ## Standardized Output Schema
 

@@ -1,0 +1,62 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 720" width="100%" height="100%" role="img" aria-label="Forecasting pipeline: raw OEM uploads through ODS-E standardization to global training and forecasting API">
+  <rect width="960" height="720" rx="16" fill="#4551BF"/>
+  <text x="32" y="36" font-family="'DM Sans', system-ui, sans-serif" font-size="15" font-weight="800" fill="#FFFFFF" letter-spacing="1.2">FORECASTING PIPELINE</text>
+  <text x="32" y="52" font-family="'DM Sans', system-ui, sans-serif" font-size="11" font-weight="500" fill="#C7CCF2" letter-spacing="0.5">Raw OEM uploads → ODS-E standardization → training → 24-hour forecasts</text>
+  <line x1="32" y1="62" x2="928" y2="62" stroke="#C7CCF2" stroke-opacity="0.3" stroke-width="1"/>
+
+  <!-- Stage 1: OEM uploads -->
+  <g>
+    <rect x="300" y="84" width="360" height="40" rx="12" fill="#2E378C" stroke="#5C67DE" stroke-width="1.2"/>
+    <text x="480" y="109" text-anchor="middle" font-family="'DM Sans', system-ui, sans-serif" font-size="13" font-weight="800" fill="#FFFFFF">OEM APIs / Uploads</text>
+    <text x="480" y="140" text-anchor="middle" font-family="'Courier New', Courier, monospace" font-size="10" fill="#C7CCF2">historical/{client}/{customer}/{region}/…/raw.csv</text>
+  </g>
+  <line x1="480" y1="148" x2="480" y2="180" stroke="#8892E0" stroke-width="2.5" stroke-dasharray="4,3"/>
+  <polygon points="480,180 475,171 485,171" fill="#8892E0"/>
+  <rect x="340" y="149" width="280" height="22" rx="11" fill="#2E378C" stroke="#5C67DE" stroke-width="1"/>
+  <text x="480" y="164" text-anchor="middle" font-family="'DM Sans', system-ui, sans-serif" font-size="10" font-weight="700" fill="#C7CCF2" letter-spacing="0.5">S3 EVENT TRIGGER (ObjectCreated)</text>
+
+  <!-- Stage 2: dataStandardizationService -->
+  <g>
+    <rect x="240" y="188" width="480" height="150" rx="12" fill="#2E378C" stroke="#5C67DE" stroke-width="1.2"/>
+    <rect x="252" y="200" width="6" height="126" rx="3" fill="#5C67DE"/>
+    <text x="272" y="214" font-family="'DM Sans', system-ui, sans-serif" font-size="13" font-weight="800" fill="#FFFFFF">dataStandardizationService</text>
+    <text x="272" y="230" font-family="'DM Sans', system-ui, sans-serif" font-size="10" font-weight="500" fill="#8892E0">ODS-E TRANSFORM</text>
+    <g font-family="'DM Sans', system-ui, sans-serif" font-size="11" font-weight="500" fill="#C7CCF2">
+      <text x="272" y="258">1. Detect OEM type</text>
+      <text x="272" y="278">2. Normalize to standard schema</text>
+      <text x="272" y="298">3. Map error codes</text>
+      <text x="272" y="318">4. Aggregate by timestamp</text>
+    </g>
+  </g>
+  <line x1="480" y1="338" x2="480" y2="390" stroke="#8892E0" stroke-width="2.5" stroke-dasharray="4,3"/>
+  <polygon points="480,390 475,381 485,381" fill="#8892E0"/>
+  <rect x="320" y="349" width="320" height="22" rx="11" fill="#2E378C" stroke="#5C67DE" stroke-width="1"/>
+  <text x="480" y="364" text-anchor="middle" font-family="'DM Sans', system-ui, sans-serif" font-size="10" font-weight="700" fill="#C7CCF2" letter-spacing="0.5">total_load.csv (S3 event trigger)</text>
+
+  <!-- Stage 3: globalTrainingService -->
+  <g>
+    <rect x="240" y="398" width="480" height="150" rx="12" fill="#2E378C" stroke="#7B86EE" stroke-width="1.2"/>
+    <rect x="252" y="410" width="6" height="126" rx="3" fill="#7B86EE"/>
+    <text x="272" y="424" font-family="'DM Sans', system-ui, sans-serif" font-size="13" font-weight="800" fill="#FFFFFF">globalTrainingService</text>
+    <text x="272" y="440" font-family="'DM Sans', system-ui, sans-serif" font-size="10" font-weight="500" fill="#8892E0">SAGEMAKER PROCESSING + TRAINING</text>
+    <g font-family="'DM Sans', system-ui, sans-serif" font-size="11" font-weight="500" fill="#C7CCF2">
+      <text x="272" y="468">1. Discover total_load.csv</text>
+      <text x="272" y="488">2. Feature engineering (45+)</text>
+      <text x="272" y="508">3. Train LSTM model</text>
+    </g>
+  </g>
+  <line x1="480" y1="548" x2="480" y2="590" stroke="#8892E0" stroke-width="2.5" stroke-dasharray="4,3"/>
+  <polygon points="480,590 475,581 485,581" fill="#8892E0"/>
+
+  <!-- Stage 4: forecastingApi -->
+  <g>
+    <rect x="240" y="600" width="480" height="64" rx="12" fill="#0A0A0A" stroke="#7B86EE" stroke-width="1.5"/>
+    <rect x="252" y="612" width="6" height="40" rx="3" fill="#FFFFFF"/>
+    <text x="272" y="628" font-family="'DM Sans', system-ui, sans-serif" font-size="13" font-weight="800" fill="#FFFFFF">forecastingApi</text>
+    <text x="272" y="648" font-family="'DM Sans', system-ui, sans-serif" font-size="11" font-weight="500" fill="#C7CCF2">24-hour forecasts</text>
+    <rect x="584" y="616" width="126" height="22" rx="11" fill="#1F1F1F" stroke="#444444" stroke-width="1"/>
+    <text x="647" y="631" text-anchor="middle" font-family="'DM Sans', system-ui, sans-serif" font-size="10" font-weight="700" fill="#C7CCF2">ZERO UNIT DRIFT</text>
+  </g>
+
+  <text x="480" y="702" text-anchor="middle" font-family="'DM Sans', system-ui, sans-serif" font-size="10" font-weight="500" fill="#C7CCF2">Only the standardization step touches ODS-E — training and inference consume the normalized total_load.csv</text>
+</svg>

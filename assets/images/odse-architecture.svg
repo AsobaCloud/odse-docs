@@ -1,0 +1,80 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 640" width="100%" height="100%" role="img" aria-label="ODS-E architecture: OEM sources through the transform layer to standardized records and downstream consumers">
+  <rect width="960" height="640" rx="16" fill="#4551BF"/>
+  <text x="32" y="34" font-family="'DM Sans', system-ui, sans-serif" font-size="15" font-weight="800" fill="#FFFFFF" letter-spacing="1.2">ODS-E ARCHITECTURE</text>
+  <text x="32" y="50" font-family="'DM Sans', system-ui, sans-serif" font-size="11" font-weight="500" fill="#C7CCF2">A data interchange layer — a contract between producers and consumers, not a platform</text>
+  <line x1="32" y1="62" x2="928" y2="62" stroke="#C7CCF2" stroke-opacity="0.3" stroke-width="1"/>
+
+  <!-- OEM sources row -->
+  <g>
+    <rect x="60" y="84" width="220" height="64" rx="12" fill="#2E378C" stroke="#5C67DE" stroke-width="1"/>
+    <text x="170" y="110" text-anchor="middle" font-family="'DM Sans', system-ui, sans-serif" font-size="12" font-weight="700" fill="#FFFFFF">Huawei FusionSolar</text>
+    <text x="170" y="130" text-anchor="middle" font-family="'DM Sans', system-ui, sans-serif" font-size="10" font-weight="500" fill="#C7CCF2">API + CSV export</text>
+  </g>
+  <g>
+    <rect x="370" y="84" width="220" height="64" rx="12" fill="#2E378C" stroke="#5C67DE" stroke-width="1"/>
+    <text x="480" y="110" text-anchor="middle" font-family="'DM Sans', system-ui, sans-serif" font-size="12" font-weight="700" fill="#FFFFFF">Enphase Envoy</text>
+    <text x="480" y="130" text-anchor="middle" font-family="'DM Sans', system-ui, sans-serif" font-size="10" font-weight="500" fill="#C7CCF2">JSON API</text>
+  </g>
+  <g>
+    <rect x="680" y="84" width="220" height="64" rx="12" fill="#2E378C" stroke="#5C67DE" stroke-width="1"/>
+    <text x="790" y="110" text-anchor="middle" font-family="'DM Sans', system-ui, sans-serif" font-size="12" font-weight="700" fill="#FFFFFF">Solarman Logger</text>
+    <text x="790" y="130" text-anchor="middle" font-family="'DM Sans', system-ui, sans-serif" font-size="10" font-weight="500" fill="#C7CCF2">CSV export</text>
+  </g>
+  <text x="920" y="120" text-anchor="end" font-family="'DM Sans', system-ui, sans-serif" font-size="10" font-weight="700" fill="#8892E0">… OEM APIs / EXPORTS</text>
+
+  <!-- arrows down -->
+  <g stroke="#8892E0" stroke-width="2.5" stroke-dasharray="4,3">
+    <line x1="170" y1="148" x2="400" y2="196"/><line x1="480" y1="148" x2="480" y2="196"/><line x1="790" y1="148" x2="560" y2="196"/>
+  </g>
+  <g fill="#8892E0">
+    <polygon points="400,196 393,189 403,187"/><polygon points="480,196 475,187 485,187"/><polygon points="560,196 554,187 564,189"/>
+  </g>
+
+  <!-- Transform layer -->
+  <g>
+    <rect x="160" y="204" width="640" height="130" rx="12" fill="#2A3390" stroke="#7B86EE" stroke-width="1.5"/>
+    <text x="188" y="230" font-family="'DM Sans', system-ui, sans-serif" font-size="14" font-weight="800" fill="#FFFFFF">ODS-E TRANSFORM LAYER</text>
+    <g font-family="'DM Sans', system-ui, sans-serif" font-size="11" font-weight="500" fill="#C7CCF2">
+      <text x="188" y="256">Declarative YAML transforms per OEM</text>
+      <text x="188" y="274">Error code mapping → standard taxonomy</text>
+      <text x="188" y="292">Timestamp normalization → ISO 8601 UTC</text>
+      <text x="188" y="310">JSON Schema validation</text>
+    </g>
+  </g>
+
+  <!-- arrow to records -->
+  <line x1="480" y1="334" x2="480" y2="368" stroke="#8892E0" stroke-width="2.5" stroke-dasharray="4,3"/>
+  <polygon points="480,368 475,359 485,359" fill="#8892E0"/>
+
+  <!-- Records -->
+  <g>
+    <rect x="330" y="376" width="300" height="70" rx="12" fill="#0A0A0A" stroke="#333333" stroke-width="1.5"/>
+    <text x="480" y="404" text-anchor="middle" font-family="'DM Sans', system-ui, sans-serif" font-size="13" font-weight="800" fill="#FFFFFF">ODS-E JSON Records</text>
+    <text x="480" y="424" text-anchor="middle" font-family="'DM Sans', system-ui, sans-serif" font-size="10" font-weight="500" fill="#C7CCF2">Standardized · validated · interoperable</text>
+  </g>
+
+  <!-- fan-out to consumers -->
+  <line x1="480" y1="446" x2="480" y2="482" stroke="#8892E0" stroke-width="2.5" stroke-dasharray="4,3"/>
+  <line x1="180" y1="482" x2="780" y2="482" stroke="#8892E0" stroke-width="2.5" stroke-dasharray="4,3"/>
+  <line x1="180" y1="482" x2="180" y2="500" stroke="#8892E0" stroke-width="2.5" stroke-dasharray="4,3"/><polygon points="180,500 175,491 185,491" fill="#8892E0"/>
+  <line x1="480" y1="482" x2="480" y2="500" stroke="#8892E0" stroke-width="2.5" stroke-dasharray="4,3"/><polygon points="480,500 475,491 485,491" fill="#8892E0"/>
+  <line x1="780" y1="482" x2="780" y2="500" stroke="#8892E0" stroke-width="2.5" stroke-dasharray="4,3"/><polygon points="780,500 775,491 785,491" fill="#8892E0"/>
+
+  <!-- consumers row -->
+  <g>
+    <rect x="60" y="508" width="240" height="64" rx="12" fill="#2E378C" stroke="#5C67DE" stroke-width="1"/>
+    <text x="180" y="534" text-anchor="middle" font-family="'DM Sans', system-ui, sans-serif" font-size="12" font-weight="700" fill="#FFFFFF">Forecasting &amp; Dispatch</text>
+    <text x="180" y="554" text-anchor="middle" font-family="'DM Sans', system-ui, sans-serif" font-size="10" font-weight="500" fill="#C7CCF2">LSTM + inference</text>
+  </g>
+  <g>
+    <rect x="360" y="508" width="240" height="64" rx="12" fill="#2E378C" stroke="#5C67DE" stroke-width="1"/>
+    <text x="480" y="534" text-anchor="middle" font-family="'DM Sans', system-ui, sans-serif" font-size="12" font-weight="700" fill="#FFFFFF">Anomaly Detection</text>
+    <text x="480" y="554" text-anchor="middle" font-family="'DM Sans', system-ui, sans-serif" font-size="10" font-weight="500" fill="#C7CCF2">JEPA world models</text>
+  </g>
+  <g>
+    <rect x="660" y="508" width="240" height="64" rx="12" fill="#2E378C" stroke="#5C67DE" stroke-width="1"/>
+    <text x="780" y="534" text-anchor="middle" font-family="'DM Sans', system-ui, sans-serif" font-size="12" font-weight="700" fill="#FFFFFF">Compliance Reporting</text>
+    <text x="780" y="554" text-anchor="middle" font-family="'DM Sans', system-ui, sans-serif" font-size="10" font-weight="500" fill="#C7CCF2">auditable exports</text>
+  </g>
+  <text x="920" y="622" text-anchor="end" font-family="'DM Sans', system-ui, sans-serif" font-size="10" font-weight="700" fill="#8892E0">… DOWNSTREAM CONSUMERS</text>
+</svg>

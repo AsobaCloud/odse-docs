@@ -45,19 +45,7 @@ The open source energy stack spans multiple dimensions: **Asset vs. Grid level**
 
 Here is how each major open source pillar functions and where ODS-E interacts with it:
 
-```
-┌─────────────────────────────────────────────────────────────────────────────┐
-│                       OPEN SOURCE ENERGY STACK MATRIX                       │
-├───────────────────┬──────────────────┬─────────────────┬────────────────────┤
-│ Library / Project │ Abstraction      │ Domain Focus    │ Primary Role       │
-├───────────────────┼──────────────────┼─────────────────┼────────────────────┤
-│ ODS-E (ona)       │ Asset-Level      │ Data Substrate  │ Normalization/ETL  │
-│ pvlib-python      │ Asset-Level      │ Solar (PV)      │ Physical Modeling  │
-│ OpenOA (NREL)     │ Asset / Plant    │ Wind Generation │ Operational Audits │
-│ NREL SAM / Stock  │ Regional / Grid  │ Macro / Demand  │ Techno-Economics   │
-│ PowerAgent        │ Fleet / Control  │ Agentic AI / AI │ Autonomous Ops     │
-└───────────────────┴──────────────────┴─────────────────┴────────────────────┘
-```
+![](/assets/images/open-source-stack-matrix.svg)
 
 ---
 

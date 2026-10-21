@@ -11,15 +11,7 @@ This guide shows how ODS-E fits into a typical energy data pipeline — from SCA
 
 ## Where ODS-E Fits
 
-```
-┌─────────────┐     ┌─────────────┐     ┌───────────┐     ┌──────────┐     ┌──────────────┐
-│  SCADA /     │     │  Extract    │     │  ODS-E    │     │  Store   │     │  Analytics   │
-│  OEM Portal  │────▶│  (CSV/JSON) │────▶│  Pipeline │────▶│  (Lake)  │────▶│  (BI / ML)   │
-│              │     │             │     │           │     │          │     │              │
-│ FusionSolar  │     │ Scheduled   │     │ Transform │     │ Parquet  │     │ PowerBI      │
-│ Enlighten    │     │ API pulls   │     │ Validate  │     │ S3/GCS   │     │ Jupyter      │
-│ SolarEdge    │     │ FTP drops   │     │ Enrich    │     │ BigQuery │     │ dbt          │
-└─────────────┘     └─────────────┘     └───────────┘     └──────────┘     └──────────────┘
+![](/assets/images/odse-pipeline-fit.svg)
 ```
 
 ODS-E handles the middle step: normalizing raw OEM data into a single schema, validating it, and writing it to storage. Everything before (extraction) and after (analytics) stays in your existing stack.
@@ -106,8 +98,9 @@ This creates a Hive-partitioned directory structure:
 
 ```
 /data/lake/energy/
-├── asset_id=SITE-ALPHA/year=2026/month=02/day=09/part-00000.parquet
-└── asset_id=SITE-BETA/year=2026/month=02/day=09/part-00000.parquet
+├── asset_id=SITE-EN/year=2026/month=02/day=09/part-00000.parquet
+├── asset_id=SITE-HW/year=2026/month=02/day=09/part-00000.parquet
+└── asset_id=SITE-SE/year=2026/month=02/day=09/part-00000.parquet
 ```
 
 Compatible with Spark, BigQuery external tables, AWS Athena, DuckDB, and pandas.

@@ -13,35 +13,7 @@ The ERP enrichment schemas bridge operational data from ERP/EAM systems (work or
 
 The seven schemas form a tightly coupled system linked by three shared keys: `equipment_id`, `part_id`, and `failure_code`.
 
-```
-                          ┌─────────────────────┐
-                          │  Equipment ID Map    │
-                          │  (identity linchpin) │
-                          └──────────┬──────────┘
-                                     │ equipment_id
-                    ┌────────────────┼────────────────┐
-                    │                │                 │
-                    ▼                ▼                 ▼
-        ┌───────────────┐  ┌─────────────────┐  ┌──────────────────────┐
-        │  Equipment     │  │  Maintenance    │  │  Alarm Frequency     │
-        │  Register      │  │  History        │  │  Profile             │
-        │                │  │                 │  │  (derived)           │
-        └───────────────┘  └────────┬────────┘  └──────────────────────┘
-                                    │
-                           failure_code    part_id
-                           ┌────────┴────────┐
-                           │                 │
-                           ▼                 ▼
-                ┌───────────────┐  ┌───────────────┐
-                │  Failure      │  │  Spare Parts  │
-                │  Taxonomy     │  │               │
-                └───────────────┘  └───────┬───────┘
-                                           │ part_id
-                                           ▼
-                                   ┌───────────────┐
-                                   │  Procurement  │
-                                   │  Context      │
-                                   └───────────────┘
+![](/assets/images/erp-enrichment-architecture.svg)
 ```
 
 ## Equipment ID Map

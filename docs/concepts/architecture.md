@@ -13,7 +13,7 @@ This page explains how ODS-E works and where it fits in your data pipeline. Read
 
 Every ODS-E pipeline follows the same pattern:
 
-![ODS-E data flow: Raw Source → Transform → Validate → Enrich → Output](/docs/assets/odse-data-flow.svg)
+![ODS-E data flow: Raw Source → Transform → Validate → Enrich → Output](/assets/images/odse-data-flow.svg)
 
 Each stage is independent and composable. You can skip enrichment if you don't need market context, or skip output if you're feeding records directly into your own analytics.
 

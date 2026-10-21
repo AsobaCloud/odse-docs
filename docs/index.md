@@ -58,7 +58,7 @@ layout: default
       <div class="sdk-icon">&#x1F527;</div>
       <h3>Transform Specs</h3>
       <code class="sdk-install">transforms/*.yaml</code>
-      <p>16 OEM mappings</p>
+      <p>17 OEM mappings</p>
     </a>
   </div>
 </div>
@@ -153,7 +153,7 @@ print(result.is_valid)  # True</code></pre>
   <div class="product-categories-grid">
     <a href="/docs/schemas/energy-timeseries" class="product-category-card">
       <h4>Generation</h4>
-      <p>Solar, wind, BESS, SCADA &mdash; 16 OEM transforms included</p>
+      <p>Solar, wind, BESS, SCADA &mdash; 17 OEM transforms included</p>
     </a>
 
     <a href="/docs/schemas/energy-timeseries" class="product-category-card">
@@ -197,7 +197,7 @@ print(result.is_valid)  # True</code></pre>
       <li><strong>pvlib-python interoperability adapter</strong> (<code>odse.adapters.pvlib</code>) with zero-drift bidirectional conversion and top-level CLI <code>to-pvlib</code> subcommand</li>
       <li>Official <code>@asobacloud/odse-mcp</code> npm package release for AI coding agents</li>
       <li>Comprehensive edge-case troubleshooting guides for photovoltaic performance modeling</li>
-      <li>16 OEM transforms supported across solar, wind, BESS, and SCADA historians</li>
+      <li>17 OEM transforms supported across solar, wind, BESS, billing meters, and SCADA historians</li>
     </ul>
     <a href="https://github.com/AsobaCloud/odse/blob/main/CHANGELOG.md" class="whats-new-link">Read Changelog &rarr;</a>
   </div>

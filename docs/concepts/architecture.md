@@ -13,20 +13,7 @@ This page explains how ODS-E works and where it fits in your data pipeline. Read
 
 Every ODS-E pipeline follows the same pattern:
 
-```
-┌──────────────┐     ┌───────────┐     ┌──────────┐     ┌──────────┐     ┌──────────┐
-│  Raw Source   │────▶│ Transform │────▶│ Validate  │────▶│  Enrich  │────▶│  Output  │
-│ (CSV / JSON)  │     │           │     │           │     │          │     │          │
-│               │     │ source=   │     │ level=    │     │ context= │     │ format=  │
-│ Huawei CSV    │     │ "huawei"  │     │ "schema"  │     │ {seller,  │     │ parquet  │
-│ Enphase JSON  │     │ "enphase" │     │ "semantic"│     │  tariff,  │     │ csv      │
-│ SCADA export  │     │ "csv"     │     │ profile=  │     │  topo}   │     │ json     │
-│               │     │           │     │ "bilateral│     │          │     │          │
-└──────────────┘     └───────────┘     └──────────┘     └──────────┘     └──────────┘
-                          │                  │                │                │
-                     ODS-E Records      ValidationResult  Same Records     File/Stream
-                     (list of dicts)    (is_valid, errors) (enriched)
-```
+![ODS-E data flow: Raw Source → Transform → Validate → Enrich → Output](/docs/assets/odse-data-flow.svg)
 
 Each stage is independent and composable. You can skip enrichment if you don't need market context, or skip output if you're feeding records directly into your own analytics.
 

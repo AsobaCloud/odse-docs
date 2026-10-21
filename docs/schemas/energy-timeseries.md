@@ -48,6 +48,37 @@ These fields capture real-time electrical measurements from inverters, BESS, win
 | `soh` | number | State of health (0–100, for BESS) |
 | `capacity_kwh` | number | Nameplate capacity in kWh |
 
+## Per-Phase Fields (SEP-049)
+
+All optional; emitted by per-phase-capable transforms (e.g., Huawei FusionSolar `a_u`/`b_u`/`c_u`, Sungrow). The bare `voltage_ac` is the mean across phases and `current_ac` the sum, so aggregates are retained alongside phase detail for unbalance analysis.
+
+| Field | Type | Notes |
+|---|---|---|
+| `voltage_ac_l1` | number >= 0 | Phase L1 (A) AC voltage in volts |
+| `voltage_ac_l2` | number >= 0 | Phase L2 (B) AC voltage in volts |
+| `voltage_ac_l3` | number >= 0 | Phase L3 (C) AC voltage in volts |
+| `current_ac_l1` | number >= 0 | Phase L1 (A) AC current in amperes |
+| `current_ac_l2` | number >= 0 | Phase L2 (B) AC current in amperes |
+| `current_ac_l3` | number >= 0 | Phase L3 (C) AC current in amperes |
+
+## Weather & Measurement Fields (SEP-049)
+
+| Field | Type | Notes |
+|---|---|---|
+| `ambient_temperature_c` | number | Ambient air temperature in °C |
+| `module_temperature_c` | number | PV module temperature in °C |
+| `poa_irradiance` | number >= 0 | Plane-of-array irradiance in W/m² |
+| `ghi` | number >= 0 | Global horizontal irradiance in W/m² |
+| `dni` | number >= 0 | Direct normal irradiance in W/m² |
+| `dhi` | number >= 0 | Diffuse horizontal irradiance in W/m² |
+
+## Identification Fields
+
+| Field | Type | Notes |
+|---|---|---|
+| `asset_id` | string | Asset identifier the record belongs to (`asset-metadata` `asset_id` or OEM serial) |
+| `oem_error_code` | string | Raw OEM status/error code before normalization (diagnostics) |
+
 ## BESS Fields
 
 Battery energy storage specific fields (SEP-026). All optional; use the `bess_dispatch` conformance profile to require `dispatch_mode` and `soc`.

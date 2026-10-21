@@ -7,7 +7,7 @@ nav_order: 7
 
 # Supported OEMs
 
-ODS-E currently ships transform support for 16 OEM ecosystems across solar, BESS, wind, and SCADA historian sources.
+ODS-E currently ships transform support for 17 OEM ecosystems across solar, BESS, wind, billing meters, and SCADA historian sources.
 
 ## Solar Inverters
 
@@ -24,6 +24,12 @@ ODS-E currently ships transform support for 16 OEM ecosystems across solar, BESS
 | SolisCloud | API export | Cloud telemetry with OEM-specific status mappings |
 | SolaX Cloud | API export | Requires vendor-specific field mapping |
 | Higeco | JSON API export | Cloud SCADA platform (docAPI), normalized contract input |
+
+## Billing Meters
+
+| Source | Source Key | Typical Input | Notes |
+|---|---|---|---|
+| IEC 62056 (OBIS) | `iec62056_meter` | JSON (Huawei FusionSolar northbound meter export) | Cumulative OBIS registers → interval deltas; import (`…1.1.12`) → `direction: consumption`, export (`…1.15.12`) → `direction: generation`; multipliers applied; rollover handled (SEP-052) |
 
 ## Battery Energy Storage (BESS)
 
